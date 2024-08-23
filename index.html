@@ -11,6 +11,191 @@
     <title>雨猫岛</title>
 </head>
 <body>
-    
+    <style>
+        /* 全局样式 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            height: 100%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* 标签栏样式 */
+        .navbar {
+            background-color: #ADD8E6;
+            padding: 5px 40px; /* 减少导航栏高度 */
+            display: flex;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            margin-right: 20px; /* 标签栏和搜索框之间的间距 */
+        }
+
+        .navbar .logo img {
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            margin-left: auto; /* 标签栏右边对齐 */
+        }
+
+        .navbar ul li {
+            margin-left: 20px;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .navbar ul li a:hover {
+            color: #007BFF;
+        }
+
+        /* 搜索框样式 */
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin-right: 20px; /* 确保搜索框和标签之间有空间 */
+        }
+
+        .search-icon {
+            width: 30px;
+            height: 30px;
+            background: url('./Mainpage/re.png') no-repeat center center; /* 替换为你自己的图标 */
+            background-size: contain;
+            cursor: default; /* 改为默认光标 */
+            transition: transform 0.3s ease;
+        }
+
+        .search-bar {
+            position: absolute;
+            left: 0; /* 移除左边空间 */
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            padding: 5px;
+            font-size: 16px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            outline: none;
+            opacity: 0;
+            transition: width 0.3s ease, opacity 0.3s ease;
+        }
+
+        .search-container:hover .search-bar {
+            width: 200px;
+            opacity: 1;
+        }
+
+        .search-container:hover .search-icon {
+            transform: rotate(90deg);
+        }
+
+        /* 背景图像和标题区域 */
+        .hero {
+            background-image: url('your-background.gif');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 50px;
+            margin: 0;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin: 10px 0 0;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 预留扩展区域 */
+        .content {
+            padding: 50px 20px;
+            background-color: #f4f4f4;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 标签栏 -->
+    <div class="navbar">
+        <!-- 搜索框 -->
+        <div class="search-container">
+            <div class="search-icon"></div>
+            <input type="text" id="searchInput" class="search-bar" placeholder="搜索内容...">
+        </div>
+        <div class="logo">
+            <img src="your-logo.png" alt="图标"> <!-- 替换为你的图标 -->
+            雨猫岛
+        </div>
+        <ul>
+            <li><a href="#intro">简介</a></li>
+            <li><a href="#contact">联系猫猫</a></li>
+            <li><a href="#projects">项目</a></li>
+            <li><a href="#feedback">提出意见</a></li>
+        </ul>
+    </div>
+
+    <!-- 动图背景与标题 -->
+    <div class="hero">
+        <h1>雨猫岛</h1>
+        <p>一只猫猫的个人网站</p>
+    </div>
+
+    <!-- 预留扩展区域 -->
+    <div class="content" id="intro">
+        <h2>简介</h2>
+        <p>这里是雨猫岛的简介部分。你可以在这里添加更多内容。</p>
+    </div>
+
+    <div class="content" id="contact">
+        <h2>联系猫猫</h2>
+        <p>这里是联系猫猫的部分。你可以在这里添加联系信息。</p>
+    </div>
+
+    <div class="content" id="projects">
+        <h2>项目</h2>
+        <p>这里是展示项目的部分。你可以在这里添加相关项目内容。</p>
+    </div>
+
+    <div class="content" id="feedback">
+        <h2>提出意见</h2>
+        <p>这里是收集意见的部分。你可以在这里添加反馈表单或其他内容。</p>
+    </div>
+
 </body>
 </html>
