@@ -61,6 +61,18 @@
         .navbar ul li {
             margin-left: 20px;
         }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .navbar ul li a:hover {
+            color: #007BFF;
+        }
+
         /* 搜索框样式 */
         .search-container {
             position: relative;
@@ -102,18 +114,6 @@
             transform: rotate(90deg);
         }
 
-        .navbar ul li a {
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
-            transition: color 0.3s ease;
-        }
-
-        .navbar ul li a:hover {
-            color: #007BFF;
-        }
-
-
         /* 背景图像和标题区域 */
         .hero {
             background-image: url('your-background.gif');
@@ -153,18 +153,16 @@
 
     <!-- 标签栏 -->
     <div class="navbar">
-
-            <img src="./Mainpage/re.png" alt="图标"> <!-- 替换为你的图标 -->
-            雨猫岛
-        </div>
         <!-- 搜索框 -->
         <div class="search-container">
             <div class="search-icon"></div>
-            <input type="text" id="searchInput" class="search-bar" placeholder="别搜，没用...">
+            <input type="text" id="searchInput" class="search-bar" placeholder="搜索内容...">
         </div>
         <div class="logo">
+            <img src="" alt="图标"> <!-- 替换为你的图标 -->
+            雨猫岛
+        </div>
         <ul>
-            
             <li><a href="#intro">简介</a></li>
             <li><a href="#contact">联系猫猫</a></li>
             <li><a href="#projects">项目</a></li>
