@@ -2,15 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!--Bing SEO-->
     <meta name="msvalidate.01" content="B71C8408EDA264902581D401CB093BD9" />
-    <!--Bing SEO-->
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
-    <meta name="description" content="雨猫的个人网站，欢迎来看一看呀">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="雨猫的个人网站,欢迎来看一看呀">
     <meta name="keywords" content="雨猫岛, RaincatIsland, 雨猫的个人网站, 雨猫的岛屿, 雨猫猫">
     <title>雨猫岛</title>
-</head>
-<body>
     <style>
         /* 全局样式 */
         body, html {
@@ -25,7 +21,7 @@
         /* 标签栏样式 */
         .navbar {
             background-color: #ADD8E6;
-            padding: 5px 40px; /* 减少导航栏高度 */
+            padding: 0.5rem 2.5rem;
             display: flex;
             align-items: center;
             position: fixed;
@@ -37,16 +33,16 @@
         }
 
         .navbar .logo {
-            font-size: 24px;
+            font-size: 1.5rem;
             font-weight: bold;
             display: flex;
             align-items: center;
-            margin-right: 20px; /* 标签栏和搜索框之间的间距 */
+            margin-right: 1.25rem;
         }
 
         .navbar .logo img {
-            height: 30px;
-            margin-right: 10px;
+            height: 1.875rem;
+            margin-right: 0.625rem;
         }
 
         .navbar ul {
@@ -55,11 +51,11 @@
             padding: 0;
             display: flex;
             align-items: center;
-            margin-left: auto; /* 标签栏右边对齐 */
+            margin-left: auto;
         }
 
         .navbar ul li {
-            margin-left: 20px;
+            margin-left: 1.25rem;
         }
 
         .navbar ul li a {
@@ -78,27 +74,27 @@
             position: relative;
             display: flex;
             align-items: center;
-            margin-right: 20px; /* 确保搜索框和标签之间有空间 */
+            margin-right: 1.25rem;
         }
 
         .search-icon {
-            width: 30px;
-            height: 30px;
-            background: url('./Mainpage/re.png') no-repeat center center; /* 替换为你自己的图标 */
+            width: 1.875rem;
+            height: 1.875rem;
+            background: url('./Mainpage/re.png') no-repeat center center;
             background-size: contain;
-            cursor: default; /* 改为默认光标 */
+            cursor: default;
             transition: transform 0.3s ease;
         }
 
         .search-bar {
             position: absolute;
-            left: 0; /* 移除左边空间 */
+            left: 0;
             top: 50%;
             transform: translateY(-50%);
             width: 0;
-            padding: 5px;
-            font-size: 16px;
-            border-radius: 20px;
+            padding: 0.3125rem;
+            font-size: 1rem;
+            border-radius: 1.25rem;
             border: 1px solid #ccc;
             outline: none;
             opacity: 0;
@@ -106,7 +102,7 @@
         }
 
         .search-container:hover .search-bar {
-            width: 200px;
+            width: 12.5rem;
             opacity: 1;
         }
 
@@ -130,33 +126,32 @@
         }
 
         .hero h1 {
-            font-size: 50px;
+            font-size: 3.125rem;
             margin: 0;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
         }
 
         .hero p {
-            font-size: 20px;
-            margin: 10px 0 0;
+            font-size: 1.25rem;
+            margin: 0.625rem 0 0;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }
 
         /* 预留扩展区域 */
         .content {
-            padding: 50px 20px;
+            padding: 3.125rem 1.25rem;
             background-color: #f4f4f4;
             min-height: 100vh;
         }
     </style>
 </head>
 <body>
-
     <!-- 标签栏 -->
     <div class="navbar">
         <!-- 搜索框 -->
         <div class="search-container">
             <div class="search-icon"></div>
-            <input type="text" id="searchInput" class="search-bar" placeholder="别搜，没用...">
+            <input type="text" id="searchInput" class="search-bar" placeholder="别搜,没用...">
         </div>
         <div class="logo">
             <img src="" alt="图标"> <!-- 替换为你的图标 -->
@@ -196,6 +191,5 @@
         <h2>提出意见</h2>
         <p>这里是收集意见的部分。你可以在这里添加反馈表单或其他内容。</p>
     </div>
-
 </body>
 </html>
