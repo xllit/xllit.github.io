@@ -8,12 +8,6 @@
     <meta name="keywords" content="雨猫岛, RaincatIsland, 雨猫的个人网站, 雨猫的岛屿, 雨猫猫">
     <title>雨猫岛</title>
     <style>
-        /*下面的模块样式*/
-        div.content{
-            font-size: medium;
-            
-
-        }
         /* 全局样式 */
         body, html {
             margin: 0;
@@ -149,6 +143,76 @@
             min-height: 100vh;
         }
 
+        /* 音乐播放器样式 */
+        .player-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #87CEFA;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: width 0.3s, border-radius 0.3s;
+            z-index: 1001; /* 确保播放器在其他内容之上 */
+        }
+
+        .player-controls {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            width: 100%;
+            height: 100%;
+            color: white;
+        }
+
+        .player-btn.expanded {
+            width: 160px;
+            border-radius: 30px;
+        }
+
+        .player-btn.expanded .player-controls {
+            display: flex;
+        }
+
+        .play-list {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 160px;
+            max-height: 200px;
+            background-color: #87CEFA;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            overflow-y: auto;
+            padding: 10px 0;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            transform: translateY(20px);
+        }
+
+        .play-list.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .play-list .song {
+            padding: 10px 20px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .play-list .song:hover {
+            background-color: #00BFFF;
+        }
     </style>
 </head>
 <body>
@@ -197,5 +261,62 @@
         <h2>提出意见</h2>
         <p>这里是收集意见的部分。你可以在这里添加反馈表单或其他内容。</p>
     </div>
+
+    <!-- 音乐播放器 -->
+    <div class="player-btn" id="player-btn">
+        <div class="player-controls">
+            <span id="play-pause">▶️</span>
+        </div>
+    </div>
+    <div class="play-list" id="play-list">
+        <div class="song">Song 1</div>
+        <div class="song">Song 2</div>
+        <div class="song">Song 3</div>
+        <!-- More song items can be added here -->
+    </div>
+
+    <audio id="audio-player"></audio>
+
+    <script>
+        const playerBtn = document.getElementById('player-btn');
+        const playList = document.getElementById('play-list');
+        const playPause = document.getElementById('play-pause');
+        const audioPlayer = document.getElementById('audio-player');
+
+        let isPlaying = false;
+
+        playerBtn.addEventListener('click', () => {
+            if (playList.classList.contains('active')) {
+                playList.classList.remove('active');
+                playerBtn.classList.remove('expanded');
+            } else {
+                playList.classList.add('active');
+                playerBtn.classList.add('expanded');
+            }
+        });
+
+        document.querySelectorAll('.song').forEach((song, index) => {
+            song.addEventListener('click', () => {
+                audioPlayer.src = `song${index + 1}.mp3`; // Replace with actual song paths
+                audioPlayer.play();
+                isPlaying = true;
+                playPause.textContent = '⏸️';
+                playList.classList.remove('active');
+                playerBtn.classList.remove('expanded');
+            });
+        });
+
+        playPause.addEventListener('click', () => {
+            if (isPlaying) {
+                audioPlayer.pause();
+                isPlaying = false;
+                playPause.textContent = '▶️';
+            } else {
+                audioPlayer.play();
+                isPlaying = true;
+                playPause.textContent = '⏸️';
+            }
+        });
+    </script>
 </body>
 </html>
