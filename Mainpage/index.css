@@ -237,3 +237,9 @@ body, html {
     color: #aaa;
     cursor: not-allowed;
 }
+button.player-icon{
+    /*播放器按钮*/
+    background:transparent; /*按钮背景透明*/
+    border-width:0px; /*边框透明*/
+    outline:none; /*点击后没边框*/
+}
