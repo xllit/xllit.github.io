@@ -147,12 +147,12 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: width 0.3s, border-radius 0.3s;
+    transition: width 0.3s ease, border-radius 0.3s ease;
     z-index: 1001; /* 确保播放器在其他内容之上 */
 }
 
 .player-btn .player-controls {
-    display: none;
+    display: none; /* 默认隐藏 */
     align-items: center;
     justify-content: center;
     padding: 0 10px;
@@ -167,7 +167,7 @@ body, html {
 }
 
 .player-btn.expanded .player-controls {
-    display: flex;
+    display: flex; /* 展开时显示播放控件 */
 }
 
 .play-list {
@@ -184,7 +184,7 @@ body, html {
     overflow-y: auto; /* 允许垂直滚动 */
     padding: 10px 0;
     opacity: 0;
-    transition: opacity 0.3s, transform 0.3s;
+    transition: opacity 0.3s ease, transform 0.3s ease;
     transform: translateY(20px);
 }
 
@@ -193,6 +193,7 @@ body, html {
     opacity: 1;
     transform: translateY(0);
 }
+
 
 .play-list .song {
     padding: 10px 20px;
