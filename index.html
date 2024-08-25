@@ -161,7 +161,7 @@
             z-index: 1001; /* 确保播放器在其他内容之上 */
         }
 
-        .player-controls {
+        .player-btn .player-controls {
             display: none;
             align-items: center;
             justify-content: space-between;
@@ -184,14 +184,14 @@
             position: fixed;
             bottom: 90px;
             right: 20px;
-            width: 160px;
-            max-height: 200px;
+            width: 220px; /* 调整宽度以容纳翻页按钮 */
+            max-height: 400px; /* 你可以调整这个值来适应需要显示的歌曲数量 */
             background-color: #87CEFA;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: none;
             flex-direction: column;
-            overflow-y: auto;
+            overflow-y: auto; /* 允许垂直滚动 */
             padding: 10px 0;
             opacity: 0;
             transition: opacity 0.3s, transform 0.3s;
@@ -213,6 +213,39 @@
         .play-list .song:hover {
             background-color: #00BFFF;
         }
+
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            color: white;
+            background-color: #87CEFA;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .pagination button {
+            background-color: #00BFFF;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.25rem;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .pagination button:hover {
+            background-color: #1E90FF;
+            transform: scale(1.1);
+        }
+
+        .pagination button:disabled {
+            background-color: #87CEFA;
+            color: #aaa;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -224,7 +257,6 @@
             <input type="text" id="searchInput" class="search-bar" placeholder="别搜,没用...">
         </div>
         <div class="logo">
-            <img src="" alt="图标"> <!-- 替换为你的图标 -->
             雨猫岛
         </div>
         <ul>
@@ -244,80 +276,129 @@
     <!-- 预留扩展区域 -->
     <div class="content" id="intro">
         <h2>简介</h2>
-        <p>我在不久的将来会创建雨猫工作室RaincatProduction。<br>一个专注于创造的团队。<br>可惜我学业比较繁忙，才来不及追求自己想要的。<br>属实是遗憾啊！</p><br>
+        <p>我在这里分享我的项目和想法。</p>
     </div>
 
     <div class="content" id="contact">
         <h2>联系猫猫</h2>
-        <p>为了防止有不明来意的人恶意添加我的好友，请给以下</p>
+        <p>如果你想联系我，可以通过以下方式：</p>
+        <p>Email: raincat@example.com</p>
+        <p>电话: +123456789</p>
     </div>
 
     <div class="content" id="projects">
         <h2>项目</h2>
-        <p>倒是有一些现在的项目，但是没什么用，我挺废物。<br>你可以点击以下链接以访问半成品项目目录</p><br>
+        <p>目前正在进行中... <br>更多项目请关注！</p>
     </div>
 
     <div class="content" id="feedback">
         <h2>提出意见</h2>
-        <p>这里是收集意见的部分。你可以在这里添加反馈表单或其他内容。</p>
+        <p>有任何意见和建议请联系我！</p>
     </div>
 
     <!-- 音乐播放器 -->
-    <div class="player-btn" id="player-btn">
+    <div class="player-btn">
+        <div class="player-icon" id="playerIcon"></div>
         <div class="player-controls">
-            <span id="play-pause">▶️</span>
+            <button id="playPause">▶️</button>
         </div>
     </div>
-    <div class="play-list" id="play-list">
-        <div class="song">Song 1</div>
-        <div class="song">Song 2</div>
-        <div class="song">Song 3</div>
-        <!-- More song items can be added here -->
+
+    <!-- 播放列表 -->
+    <div class="play-list" id="playList">
+        <div class="song" data-src="song1.mp3">Song 1</div>
+        <div class="song" data-src="song2.mp3">Song 2</div>
+        <div class="song" data-src="song3.mp3">Song 3</div>
+        <div class="song" data-src="song4.mp3">Song 4</div>
+        <div class="song" data-src="song5.mp3">Song 5</div>
+        <div class="song" data-src="song6.mp3">Song 6</div>
+        <div class="pagination">
+            <button id="prevPage" disabled>←</button>
+            <button id="nextPage">→</button>
+        </div>
     </div>
 
-    <audio id="audio-player"></audio>
-
     <script>
-        const playerBtn = document.getElementById('player-btn');
-        const playList = document.getElementById('play-list');
-        const playPause = document.getElementById('play-pause');
-        const audioPlayer = document.getElementById('audio-player');
+        document.addEventListener('DOMContentLoaded', () => {
+            const playerBtn = document.querySelector('.player-btn');
+            const playerIcon = document.getElementById('playerIcon');
+            const playList = document.getElementById('playList');
+            const playPause = document.getElementById('playPause');
+            const prevPage = document.getElementById('prevPage');
+            const nextPage = document.getElementById('nextPage');
+            let isExpanded = false;
+            let isPlaying = false;
+            let currentPage = 0;
+            const itemsPerPage = 5;
+            let audio = new Audio(); // 创建音频对象
 
-        let isPlaying = false;
-
-        playerBtn.addEventListener('click', () => {
-            if (playList.classList.contains('active')) {
-                playList.classList.remove('active');
-                playerBtn.classList.remove('expanded');
-            } else {
-                playList.classList.add('active');
-                playerBtn.classList.add('expanded');
-            }
-        });
-
-        document.querySelectorAll('.song').forEach((song, index) => {
-            song.addEventListener('click', () => {
-                audioPlayer.src = `song${index + 1}.mp3`; // Replace with actual song paths
-                audioPlayer.play();
-                isPlaying = true;
-                playPause.textContent = '⏸️';
-                playList.classList.remove('active');
-                playerBtn.classList.remove('expanded');
+            // 播放按钮点击事件
+            playerBtn.addEventListener('click', () => {
+                isExpanded = !isExpanded;
+                playerBtn.classList.toggle('expanded', isExpanded);
+                playList.classList.toggle('active', isExpanded);
+                if (isExpanded) {
+                    // 扩展时显示播放控制按钮
+                    playPause.textContent = isPlaying ? '⏸️' : '▶️';
+                } else {
+                    // 收起时隐藏播放控制按钮
+                    playPause.textContent = '';
+                    audio.pause(); // 收起时暂停音乐
+                }
             });
-        });
 
-        playPause.addEventListener('click', () => {
-            if (isPlaying) {
-                audioPlayer.pause();
-                isPlaying = false;
-                playPause.textContent = '▶️';
-            } else {
-                audioPlayer.play();
-                isPlaying = true;
-                playPause.textContent = '⏸️';
+            // 播放/暂停按钮点击事件
+            playPause.addEventListener('click', () => {
+                if (isPlaying) {
+                    audio.pause();
+                    playPause.textContent = '▶️';
+                } else {
+                    audio.play();
+                    playPause.textContent = '⏸️';
+                }
+                isPlaying = !isPlaying;
+            });
+
+            // 播放列表项点击事件
+            playList.addEventListener('click', (event) => {
+                if (event.target.classList.contains('song')) {
+                    const src = event.target.getAttribute('data-src');
+                    audio.src = src;
+                    audio.play();
+                    playPause.textContent = '⏸️';
+                    isPlaying = true;
+                }
+            });
+
+            // 翻页按钮点击事件
+            prevPage.addEventListener('click', () => {
+                if (currentPage > 0) {
+                    currentPage--;
+                    updatePlayList();
+                }
+            });
+
+            nextPage.addEventListener('click', () => {
+                const totalItems = document.querySelectorAll('.play-list .song').length;
+                if ((currentPage + 1) * itemsPerPage < totalItems) {
+                    currentPage++;
+                    updatePlayList();
+                }
+            });
+
+            // 更新播放列表显示
+            function updatePlayList() {
+                const songs = document.querySelectorAll('.play-list .song');
+                songs.forEach((song, index) => {
+                    song.style.display = (index >= currentPage * itemsPerPage && index < (currentPage + 1) * itemsPerPage) ? 'block' : 'none';
+                });
+                prevPage.disabled = currentPage === 0;
+                nextPage.disabled = (currentPage + 1) * itemsPerPage >= songs.length;
             }
+
+            // 初始化播放列表显示
+            updatePlayList();
         });
     </script>
-    
 </body>
 </html>
