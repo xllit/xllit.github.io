@@ -12,17 +12,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 播放按钮点击事件
     playerBtn.addEventListener('click', () => {
-        isExpanded = !isExpanded;
-        playerBtn.classList.toggle('expanded', isExpanded);
-        playList.classList.toggle('active', isExpanded);
-        if (isExpanded) {
-            // 扩展时显示播放控制按钮
-            playPause.textContent = isPlaying ? '⏸️' : '▶️';
+        if (!isExpanded) {
+            // 展开播放器
+            playerBtn.classList.add('expanded');
+            playList.classList.add('active');
+            isExpanded = true;
         } else {
-            // 收起时隐藏播放控制按钮
-            playPause.textContent = '';
-            audio.pause(); // 收起时暂停音乐
-            isPlaying = false;
+            // 收起播放器
+            playerBtn.classList.remove('expanded');
+            playList.classList.remove('active');
+            isExpanded = false;
         }
     });
 
