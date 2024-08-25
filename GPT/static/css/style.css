@@ -1,0 +1,438 @@
+:root[bg-theme='light'] {
+  /* 背景颜色 */
+  --bg-color: white;
+  /* 聊天框的分割线线条颜色 */
+  --inferior-color: #c0c0c0;
+  /* 字体颜色 */
+  --font-color: #292929;
+}
+
+:root[bg-theme='dark'] {
+  --bg-color: #21252B;
+  --inferior-color: #616161;
+  --font-color: #dddddd;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--font-color) !important;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: none;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: none;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background-color: none;
+}
+
+@media screen and (max-width: 768px) {
+  .answer .others .common .settings-common span {
+    font-size: 85%;
+  }
+
+  .foot p:first-child {
+    font-size: 14px !important;
+  }
+
+  .foot p a {
+    font-size: 13px !important;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #chatWindow::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  #chatWindow::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
+
+  #chatWindow::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+.container {
+  width: 100% !important;
+}
+
+.form-control {
+  border-color: #1ab394 !important;
+  padding: 6px 6px !important;
+}
+
+pre {
+  position: relative;
+  color: #adbac7;
+  background: #2b2a2a;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #686666;
+  color: #e2dfea;
+  cursor: pointer;
+}
+
+.title {
+  width: 100%;
+}
+
+.title h2 {
+  margin-bottom: 20px;
+  color: #4aa593;
+}
+
+.answer {
+  width: 100%;
+  position: relative;
+  height: calc(100vh - 20px);
+}
+
+.answer .tips {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.answer .tips h4 {
+  color: red;
+}
+
+.answer .tips img {
+  margin-top: 30px;
+  border: 1px solid #7eecd6;
+  box-shadow: 0px 1px 10px 0px #7defd8;
+  border-radius: 10px;
+  width: 200px;
+}
+
+.answer .function {
+  padding: 0 15px;
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+}
+
+.answer .others {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+  height: 30px;
+  margin-bottom: 10px;
+}
+
+.answer .others .left,
+.right {
+  display: flex;
+}
+
+.answer .others .common {
+  width: 30px;
+  height: 30px;
+  display: flex;
+}
+
+.answer .others .common .settings-common {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.answer .others .common .settings-common:hover {
+  background-color: rgba(148, 163, 184, .2);
+}
+
+.answer .others .common .settings-common:last-child {
+  border-bottom: 0;
+}
+
+.answer .others .common .settings-common .ipt-common {
+  width: 70%;
+  opacity: .8;
+}
+
+.answer .others .common .settings-common span {
+  color: #1ab394;
+  cursor: default;
+}
+
+.answer .others .common .settings-common a {
+  font-size: 14px;
+  color: #1ab394;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* 按钮样式 */
+.chck-btn {
+  display: flex;
+  justify-content: center;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide the input */
+input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+
+.check-trail {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(148, 163, 184, .4);
+  border-radius: 15px;
+  transition: all 0.5s ease;
+  cursor: pointer;
+}
+
+.check-handler {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 34px;
+  height: 34px;
+  background: rgb(148 163 184 / 85%);
+  border-radius: 50%;
+  transition: all 0.5s ease;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+.check-handler:before {
+  content: "×";
+  color: white;
+  font-weight: bold;
+}
+
+input[type="checkbox"]:checked+.check-trail {
+  background: #1ab394a3;
+}
+
+input[type="checkbox"]:checked+.check-trail .check-handler {
+  margin-left: 26px;
+  background: #1ab394;
+}
+
+input[type="checkbox"]:checked+.check-trail .check-handler::before {
+  content: "✔";
+}
+
+.answer .others .right .screenshot {
+  margin-right: 10px;
+}
+
+.answer .others .icon-style {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  color: #1ab394;
+  cursor: pointer;
+}
+
+.answer .others .icon-style:hover {
+  background-color: rgba(26, 179, 148, .1);
+}
+
+.center>span {
+  color: #1ab394;
+  font-weight: bold;
+}
+
+.answer .ipt {
+  display: flex;
+  align-items: center;
+  padding-right: 15px;
+  border-radius: 10px;
+  min-height: 50px;
+  border: 1px solid rgba(26, 179, 148, 0.8);
+  box-shadow: 0px 0px 10px 0px rgba(26, 179, 148, 0.2);
+}
+
+.answer .ipt textarea {
+  resize: none;
+  overflow-y: auto;
+  border: none;
+  box-shadow: none;
+  height: 34px;
+  background-color: var(--bg-color);
+  color: var(--font-color);
+}
+
+.answer .ipt textarea:focus {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.answer #chatWindow {
+  max-height: calc(100% - 100px);
+  height: auto;
+  overflow-y: auto;
+}
+
+.message-bubble {
+  padding: 10px;
+  margin: 5px;
+  display: flex;
+  align-items: flex-start;
+  border-bottom: 1px dashed var(--inferior-color);
+}
+
+.message-bubble .message-text {
+  font-size: 18px;
+  margin-left: 15px;
+  word-break: break-all;
+}
+
+.message-bubble .message-text p {
+  white-space: pre-wrap;
+}
+
+.message-bubble .response ol,
+ul {
+  padding-left: 2em;
+}
+
+/* 错误信息样式 */
+.message-bubble .message-text p.error {
+  color: red;
+  height: auto;
+  display: block;
+  white-space: normal;
+  word-break: break-all;
+}
+
+.message-bubble .chat-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 3px;
+}
+
+.message-bubble .response .loading-icon {
+  color: #1ab394;
+}
+
+.answer #chatBtn {
+  background-color: #1ab394;
+  border-color: #1ab394;
+}
+
+.foot p:first-child {
+  margin-bottom: 10px;
+  opacity: .9;
+}
+
+.foot p:nth-child(2) {
+  margin-bottom: 0;
+}
+
+.foot p a {
+  margin-right: 10px;
+  font-weight: 400;
+  font-size: 14px;
+  color: #1ab394;
+  text-decoration: none;
+}
+
+.dropdown-menu {
+  box-shadow: 0 0 4px var(--inferior-color);
+  transform: translateY(-20px);
+}
+
+#myModal .modal-content {
+  background-color: var(--bg-color);
+}
+
+#myModal .modal-content .close {
+  color: var(--font-color);
+}
+
+.modal-body-list {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+  max-height: 50vh;
+  overflow-y: scroll;
+  padding: 10px;
+}
+
+.modal-body-list>div {
+  display: inline-block;
+  padding: 3px 6px;
+  border-radius: 5px;
+  margin: 4px;
+  border: 1px solid var(--font-color);
+  cursor: pointer;
+  user-select: none;
+}
+
+.center {
+  user-select: none;
+  cursor: pointer;
+}
+
+.user-modall {
+  width: 100%;
+  padding: 10px;
+  border-bottom: 1px solid var(--inferior-color);
+}
+
+#customPrompt {
+  width: 100%;
+  max-height: 6em;
+  height: 6em;
+  line-height: 1.5em;
+  border-radius: 5px;
+  outline: none;
+  padding: 10px;
+  color: #1ab394;
+  background-color: var(--bg-color);
+  resize: none;
+  border: 1px solid var(--inferior-color);
+}
+
+.user-modall>button {
+  width: 100%;
+}
