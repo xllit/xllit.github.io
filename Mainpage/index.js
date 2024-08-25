@@ -1,83 +1,38 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const playerBtn = document.querySelector('.player-btn');
-    const playList = document.getElementById('playList');
-    const playPause = document.getElementById('playPause');
-    const prevPage = document.getElementById('prevPage');
-    const nextPage = document.getElementById('nextPage');
-    let isExpanded = false;
-    let isPlaying = false;
-    let currentPage = 0;
-    const itemsPerPage = 5;
-    let audio = new Audio(); // 创建音频对象
+// 获取相关元素
+const playerBtn = document.querySelector('.player-btn');
+const playList = document.querySelector('.play-list');
+const playPauseBtn = document.getElementById('playPause');
+const audioPlayer = document.querySelector('audio'); // 确保有音频播放器元素
+let isExpanded = false;
 
-    // 播放按钮点击事件
-    playerBtn.addEventListener('click', () => {
-        if (!isExpanded) {
-            // 展开播放器
-            playerBtn.classList.add('expanded');
-            playList.classList.add('active');
-            isExpanded = true;
-        } else {
-            // 收起播放器
-            playerBtn.classList.remove('expanded');
-            playList.classList.remove('active');
-            isExpanded = false;
-        }
-    });
-
-    // 播放/暂停按钮点击事件
-    playPause.addEventListener('click', () => {
-        if (isPlaying) {
-            audio.pause();
-            playPause.textContent = '▶️';
-        } else {
-            audio.play();
-            playPause.textContent = '⏸️';
-        }
-        isPlaying = !isPlaying;
-    });
-
-    // 播放列表项点击事件
-    playList.addEventListener('click', (event) => {
-        if (event.target.classList.contains('song')) {
-            const src = event.target.getAttribute('data-src');
-            audio.src = src;
-            audio.play();
-            playPause.textContent = '⏸️';
-            isPlaying = true;
-            // 收起按钮并播放音乐
-            if (isExpanded) {
-                playerBtn.click(); // 点击按钮收起
-            }
-        }
-    });
-
-    // 翻页按钮点击事件
-    prevPage.addEventListener('click', () => {
-        if (currentPage > 0) {
-            currentPage--;
-            updatePlayList();
-        }
-    });
-
-    nextPage.addEventListener('click', () => {
-        const totalItems = document.querySelectorAll('.play-list .song').length;
-        if ((currentPage + 1) * itemsPerPage < totalItems) {
-            currentPage++;
-            updatePlayList();
-        }
-    });
-
-    // 更新播放列表显示
-    function updatePlayList() {
-        const songs = document.querySelectorAll('.play-list .song');
-        songs.forEach((song, index) => {
-            song.style.display = (index >= currentPage * itemsPerPage && index < (currentPage + 1) * itemsPerPage) ? 'block' : 'none';
-        });
-        prevPage.disabled = currentPage === 0;
-        nextPage.disabled = (currentPage + 1) * itemsPerPage >= songs.length;
+// 添加点击事件监听器
+playerBtn.addEventListener('click', () => {
+    if (isExpanded) {
+        // 收起播放器
+        playerBtn.classList.remove('expanded');
+        playList.classList.remove('active');
+        // 隐藏播放控件
+        document.querySelector('.player-controls').style.display = 'none';
+        isExpanded = false;
+    } else {
+        // 展开播放器
+        playerBtn.classList.add('expanded');
+        playList.classList.add('active');
+        // 显示播放控件
+        document.querySelector('.player-controls').style.display = 'flex';
+        isExpanded = true;
     }
+});
 
-    // 初始化播放列表显示
-    updatePlayList();
+// 确保按钮点击时音乐继续播放
+playPauseBtn.addEventListener('click', () => {
+    if (audioPlayer) {
+        if (audioPlayer.paused) {
+            audioPlayer.play(); // 播放音乐
+            playPauseBtn.textContent = '❚❚'; // 更改为暂停图标
+        } else {
+            audioPlayer.pause(); // 暂停音乐
+            playPauseBtn.textContent = '▶️'; // 更改为播放图标
+        }
+    }
 });
