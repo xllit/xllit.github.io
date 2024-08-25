@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     const playerBtn = document.querySelector('.player-btn');
-    const playerIcon = document.getElementById('playerIcon');
     const playList = document.getElementById('playList');
     const playPause = document.getElementById('playPause');
     const prevPage = document.getElementById('prevPage');
