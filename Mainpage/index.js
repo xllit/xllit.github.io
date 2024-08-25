@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // 收起时隐藏播放控制按钮
             playPause.textContent = '';
             audio.pause(); // 收起时暂停音乐
+            isPlaying = false;
         }
     });
 
@@ -46,6 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
             audio.play();
             playPause.textContent = '⏸️';
             isPlaying = true;
+            // 收起按钮并播放音乐
+            if (isExpanded) {
+                playerBtn.click(); // 点击按钮收起
+            }
         }
     });
 
