@@ -71,7 +71,7 @@ body, html {
 .search-icon {
     width: 1.875rem;
     height: 1.875rem;
-    background: url('./Mainpage/re.png') no-repeat center center;
+    background: url('./re.png') no-repeat center center;
     background-size: contain;
     cursor: default;
     transition: transform 0.3s ease;
@@ -103,7 +103,7 @@ body, html {
 
 /* 背景图像和标题区域 */
 .hero {
-    background-image: url('./Mainpage/background.png');
+    background-image: url('./background.png');
     background-size: cover;
     background-position: center;
     height: 100vh;
