@@ -14,6 +14,7 @@
             background-size: cover;
             background-position: center;
             animation: hero-animation 10s linear infinite;
+            transition: background-position 1s ease-in-out;
         }
         @keyframes hero-animation {
             0% {
@@ -22,6 +23,23 @@
             100% {
                 background-position: 100% 0%;
             }
+        }
+        .hero .prev-btn, .hero .next-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .hero .prev-btn {
+            left: 20px;
+        }
+        .hero .next-btn {
+            right: 20px;
         }
     </style>
 </head>
@@ -46,6 +64,8 @@
 
     <!-- 动图背景与标题 -->
     <div class="hero">
+        <button class="prev-btn">上一个</button>
+        <button class="next-btn">下一个</button>
         <h1>雨猫岛</h1>
         <p>一只猫猫的个人网站</p>
     </div>
@@ -73,59 +93,43 @@
     </div>
     <script>
         // 获取相关元素
-const playerBtn = document.querySelector('.player-btn');
-const playList = document.querySelector('.play-list');
-const playPauseBtn = document.getElementById('playPause');
-const audioPlayer = new Audio(); // 创建一个新的音频播放器
-let isExpanded = false;
+const hero = document.querySelector('.hero');
+const prevBtn = document.querySelector('.hero .prev-btn');
+const nextBtn = document.querySelector('.hero .next-btn');
+let currentBackground = 0;
+let totalBackgrounds = 3; // 假设有3个背景图片
+
+// 初始化背景图片
+function initBackground() {
+    hero.style.backgroundImage = `url('./Mainpage/hero-animation-${currentBackground}.gif')`;
+}
+
+// 切换背景图片
+function switchBackground(direction) {
+    if (direction === 'next') {
+        currentBackground = (currentBackground + 1) % totalBackgrounds;
+    } else if (direction === 'prev') {
+        currentBackground = (currentBackground - 1 + totalBackgrounds) % totalBackgrounds;
+    }
+    initBackground();
+}
+
+// 每60秒切换背景图片
+setInterval(() => {
+    switchBackground('next');
+}, 60000);
 
 // 添加点击事件监听器
-playerBtn.addEventListener('click', () => {
-    if (isExpanded) {
-        // 收起播放器
-        playerBtn.classList.remove('expanded');
-        playList.classList.remove('active');
-        // 隐藏播放控件
-        document.querySelector('.player-controls').style.display = 'none';
-        isExpanded = false;
-    } else {
-        // 展开播放器
-        playerBtn.classList.add('expanded');
-        playList.classList.add('active');
-        // 显示播放控件
-        document.querySelector('.player-controls').style.display = 'flex';
-        isExpanded = true;
-    }
+prevBtn.addEventListener('click', () => {
+    switchBackground('prev');
 });
 
-// 确保按钮点击时音乐继续播放
-playPauseBtn.addEventListener('click', () => {
-    if (audioPlayer.src) {
-        if (audioPlayer.paused) {
-            audioPlayer.play(); // 播放音乐
-            playPauseBtn.textContent = '❚❚'; // 更改为暂停图标
-        } else {
-            audioPlayer.pause(); // 暂停音乐
-            playPauseBtn.textContent = '▶️'; // 更改为播放图标
-        }
-    }
+nextBtn.addEventListener('click', () => {
+    switchBackground('next');
 });
 
-// 点击歌曲播放音乐并收回播放器
-document.querySelectorAll('.play-list .song').forEach(song => {
-    song.addEventListener('click', () => {
-        const songSrc = song.getAttribute('data-src');
-        audioPlayer.src = songSrc; // 设置音乐源
-        audioPlayer.play(); // 播放音乐
-        playPauseBtn.textContent = '❚❚'; // 更改为暂停图标
-
-        // 收起播放器
-        playerBtn.classList.remove('expanded');
-        playList.classList.remove('active');
-        document.querySelector('.player-controls').style.display = 'none';
-        isExpanded = false;
-    });
-});
+// 初始化背景图片
+initBackground();
     </script>
 </body>
 </html>
