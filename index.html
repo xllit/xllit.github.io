@@ -1,131 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="msvalidate.01" content="B71C8408EDA264902581D401CB093BD9" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="雨猫的个人网站,欢迎来看一看呀">
-    <meta name="keywords" content="雨猫岛, RaincatIsland, 雨猫的个人网站, 雨猫的岛屿, 雨猫猫">
-    <title>雨猫岛</title>
-    <link rel="stylesheet" type="text/css" href="./Mainpage/index.css">
-    <style>
-        .hero {
-            background-image: url('./Mainpage/hero-animation.gif');
-            background-size: cover;
-            background-position: center;
-            animation: hero-animation 10s linear infinite;
-        }
-        @keyframes hero-animation {
-            0% {
-                background-position: 0% 0%;
-            }
-            100% {
-                background-position: 100% 0%;
-            }
-        }
-    </style>
+    <title>灵动风格静态网站</title>
+    <link rel="stylesheet" href="./mainpage/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <!-- 标签栏 -->
-    <div class="navbar">
-        <!-- 搜索框 -->
-        <div class="search-container">
-            <div class="search-icon"></div>
-            <input type="text" id="searchInput" class="search-bar" placeholder="别搜,没用...">
+    <!-- 固定导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">网站Logo</a>
+            <ul class="nav-links">
+                <li><a href="#about">关于我们</a></li>
+                <li><a href="#gallery">画廊</a></li>
+                <li><a href="#contact">联系</a></li>
+            </ul>
         </div>
-        <div class="logo">
-            雨猫岛
+    </nav>
+
+    <!-- 背景图像和引人注目的标题 -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>欢迎来到我们的灵动网站</h1>
+            <p>体验美丽与功能的完美结合</p>
         </div>
-        <ul>
-            <li><a href="#intro">简介</a></li>
-            <li><a href="#contact">联系猫猫</a></li>
-            <li><a href="#projects">项目</a></li>
-            <li><a href="#feedback">提出意见</a></li>
-        </ul>
-    </div>
+    </header>
 
-    <!-- 动图背景与标题 -->
-    <div class="hero">
-        <h1>雨猫岛</h1>
-        <p>一只猫猫的个人网站</p>
-    </div>
-
-    <!-- 音乐播放器 -->
-    <div class="player-btn">
-        <div class="player-icon" id="playerIcon"></div>
-        <div class="player-controls">
-            <button id="playPause" style="background:transparent; border-width:0px; outline:none;">▶️</button>
+    <!-- 信息卡片 -->
+    <section id="about" class="info-cards">
+        <div class="container">
+            <div class="card">
+                <i class="fas fa-bolt"></i>
+                <h3>快速</h3>
+                <p>我们的服务快速且高效。</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-heart"></i>
+                <h3>可靠</h3>
+                <p>我们提供可靠的解决方案。</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-star"></i>
+                <h3>优质</h3>
+                <p>我们致力于提供优质的服务。</p>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <!-- 播放列表 -->
-    <div class="play-list" id="playList">
-        <div class="song" data-src="./Mainpage/Music/All_Falls_down.mp3">All Falls Down</div>
-        <div class="song" data-src="./Mainpage/Music/we_dont_talk_to_anymore.mp3">We don't talk to anymore</div>
-        <div class="song" data-src="./Mainpage/Music/cotton_eye_joe.mp3">出生的小曲</div>
-        <div class="song" data-src="./Mainpage/Music/bones.mp3">bones</div>
-        <div class="song" data-src="./Mainpage/Music/deathstranding.mp3">Death Stranding</div>
-        <div class="song" data-src="song6.mp3">Song 6</div>
-        <div class="pagination">
-            <button id="prevPage" disabled>←</button>
-            <button id="nextPage">→</button>
+    <!-- 图像画廊 -->
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <h2>我们的作品</h2>
+            <div class="gallery-grid">
+                <img src="image1.jpg" alt="作品1">
+                <img src="image2.jpg" alt="作品2">
+                <img src="image3.jpg" alt="作品3">
+            </div>
         </div>
-    </div>
-    <script>
-        // 获取相关元素
-const playerBtn = document.querySelector('.player-btn');
-const playList = document.querySelector('.play-list');
-const playPauseBtn = document.getElementById('playPause');
-const audioPlayer = new Audio(); // 创建一个新的音频播放器
-let isExpanded = false;
+    </section>
 
-// 添加点击事件监听器
-playerBtn.addEventListener('click', () => {
-    if (isExpanded) {
-        // 收起播放器
-        playerBtn.classList.remove('expanded');
-        playList.classList.remove('active');
-        // 隐藏播放控件
-        document.querySelector('.player-controls').style.display = 'none';
-        isExpanded = false;
-    } else {
-        // 展开播放器
-        playerBtn.classList.add('expanded');
-        playList.classList.add('active');
-        // 显示播放控件
-        document.querySelector('.player-controls').style.display = 'flex';
-        isExpanded = true;
-    }
-});
+    <!-- 联系表单 -->
+    <section id="contact" class="contact-form">
+        <div class="container">
+            <h2>联系我们</h2>
+            <form>
+                <input type="text" placeholder="姓名" required>
+                <input type="email" placeholder="邮箱" required>
+                <textarea placeholder="留言" required></textarea>
+                <button type="submit">发送</button>
+            </form>
+        </div>
+    </section>
 
-// 确保按钮点击时音乐继续播放
-playPauseBtn.addEventListener('click', () => {
-    if (audioPlayer.src) {
-        if (audioPlayer.paused) {
-            audioPlayer.play(); // 播放音乐
-            playPauseBtn.textContent = '❚❚'; // 更改为暂停图标
-        } else {
-            audioPlayer.pause(); // 暂停音乐
-            playPauseBtn.textContent = '▶️'; // 更改为播放图标
-        }
-    }
-});
+    <!-- FAQ部分 -->
+    <section class="faq">
+        <div class="container">
+            <h2>常见问题</h2>
+            <div class="faq-item">
+                <h3>问题1</h3>
+                <p>这是问题1的答案。</p>
+            </div>
+            <div class="faq-item">
+                <h3>问题2</h3>
+                <p>这是问题2的答案。</p>
+            </div>
+        </div>
+    </section>
 
-// 点击歌曲播放音乐并收回播放器
-document.querySelectorAll('.play-list .song').forEach(song => {
-    song.addEventListener('click', () => {
-        const songSrc = song.getAttribute('data-src');
-        audioPlayer.src = songSrc; // 设置音乐源
-        audioPlayer.play(); // 播放音乐
-        playPauseBtn.textContent = '❚❚'; // 更改为暂停图标
-
-        // 收起播放器
-        playerBtn.classList.remove('expanded');
-        playList.classList.remove('active');
-        document.querySelector('.player-controls').style.display = 'none';
-        isExpanded = false;
-    });
-});
-    </script>
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <p>© 2023 灵动网站. 保留所有权利.</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
