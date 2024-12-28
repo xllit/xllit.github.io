@@ -15,15 +15,16 @@
             background-color: #add8ee;
             color: #fff;
             position: fixed;
-            width: 100%; /* 修改宽度为100%以适应整个页面 */
+            width: 100%;
             top: 0;
             z-index: 5000;
-            border-radius: 0; /* 移除圆角以适应全宽 */
-            transition: transform 1.5s ease, background-color 1.5s ease;
+            border-radius: 15px; /* 将导航栏改成圆角 */
+            transition: transform 0.5s ease, background-color 0.5s ease; /* 缩短过渡时间以增强灵动性 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影以增加视觉效果 */
         }
         .navbar.scrolled {
             transform: translateY(-80px);
-            background-color: #add8ee;
+            background-color: #82c4e8; /* 改变滚动时的背景颜色 */
         }
         .container {
             display: flex;
