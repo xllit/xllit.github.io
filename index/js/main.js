@@ -1,4 +1,4 @@
-const photoCount = 5; // 修改为你的图片数量
+const photoCount = 1; // 修改为你的图片数量
 const photos = Array.from({length: photoCount}, (_, i) => `index/photos/${i+1}.jpg`);
 const slideshow = document.querySelector('.bg-slideshow');
 let current = 0;
