@@ -2,8 +2,6 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80') no-repeat center center fixed;
-    background-size: cover;
     font-family: 'Segoe UI', Arial, sans-serif;
 }
 .overlay {
@@ -17,7 +15,7 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     align-items: stretch;
-    height: 100vh;
+    min-height: 100vh;
     width: 100vw;
     position: relative;
     z-index: 2;
@@ -41,12 +39,12 @@ body {
 }
 .main-content h1 {
     margin: 0 0 20px 0;
-    font-size: 2.8em;
+    font-size: 2.2em;
     color: #222;
     letter-spacing: 2px;
 }
 .main-content p {
-    font-size: 1.3em;
+    font-size: 1.1em;
     color: #333;
     margin-bottom: 30px;
 }
@@ -91,14 +89,14 @@ body {
         width: 90vw;
     }
     .main-content h1 {
-        font-size: 2em;
+        font-size: 1.5em;
     }
 }
 @media (max-width: 900px) {
     .main-contents {
         flex-direction: column;
         align-items: center;
-        height: auto;
+        min-height: auto;
         padding: 2vh 2vw;
     }
     .main-content {
