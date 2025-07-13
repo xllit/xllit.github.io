@@ -3,77 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="refresh" content="0; url=http://106.53.104.199:23333/" />
-  <title>正在跳转...</title>
-  <style>
-    /* 页面全屏居中 */
-    html, body {
-      height: 100%;
-      margin: 0;
-      font-family: "微软雅黑", "Microsoft YaHei", Tahoma, sans-serif;
-      background: #f0f4f8;
-      color: #333;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      user-select: none;
-    }
 
-    p {
-      font-size: 1.2rem;
-      margin-bottom: 20px;
-    }
-
-    a {
-      color: #1e90ff;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-
-    /* 简单加载动画：三个跳动的小点 */
-    .loading-dots {
-      display: flex;
-      gap: 6px;
-      margin-top: 10px;
-    }
-    .loading-dots span {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      background-color: #1e90ff;
-      border-radius: 50%;
-      animation: bounce 1.4s infinite ease-in-out both;
-    }
-    .loading-dots span:nth-child(1) {
-      animation-delay: -0.32s;
-    }
-    .loading-dots span:nth-child(2) {
-      animation-delay: -0.16s;
-    }
-
-    @keyframes bounce {
-      0%, 80%, 100% {
-        transform: scale(0);
-        opacity: 0.3;
-      }
-      40% {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
-  </style>
   <script>
     // 防止部分浏览器不支持 meta refresh，使用JS跳转
     window.location.href = "http://106.53.104.199:23333/";
   </script>
 </head>
 <body>
-  <p>正在跳转到 <a href="http://106.53.104.199:23333/">http://106.53.104.199:23333/</a> ...</p>
-  <div class="loading-dots">
-    <span></span><span></span><span></span>
+    <div style="text-align: center; margin-top: 20px;">
+        <h1>正在跳转...</h1>
+        <p>如果没有自动跳转，请点击以下链接：</p>
+        <a href="http://106.53.104.199:23333/">点击这里访问</a>
+        <p>如果链接无法访问，请检查网络连接或稍后再试。</p>
+        <p>感谢您的耐心等待！</p>
   </div>
 </body>
 </html>
