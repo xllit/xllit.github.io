@@ -1,0 +1,261 @@
+@font-face {
+    font-family: 'Meo';
+    src: url('meo.ttf') format('truetype');
+    font-display: swap;
+    font-size: larger;
+}
+
+/* 全局应用 meo.ttf 字体 */
+html, body, * {
+    font-family: 'Meo', sans-serif;
+}
+
+html, body {
+    font-size: 19px;               /* 调大基础字号，让所有rem单位的字体相应变大 */
+    scrollbar-width: none;         /* Firefox 隐藏滚动条 */
+    -ms-overflow-style: none;      /* IE/Edge 隐藏滚动条 */
+    scroll-behavior: smooth;       /* 平滑滚动 */
+    overflow-x: hidden;            /* 彻底禁止水平滚动 */
+}
+body::-webkit-scrollbar, html::-webkit-scrollbar {
+    display: none;                 /* Chrome/Safari 隐藏滚动条 */
+}
+
+/* 全局链接样式 */
+a {
+    color: #3498db; /* 浅蓝色 */
+    text-decoration: none; /* 移除下划线 */
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #2980b9; /* 鼠标悬停时颜色变深 */
+    text-decoration: underline; /* 鼠标悬停时显示下划线以增强可点击性 */
+}
+.main-article {
+    width: 70vw;
+    max-width: 900px;
+    margin: 40px auto;
+    background: rgba(255,255,255,0.85);
+    border-radius: 18px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.main-title-area {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 20px; /* 减小顶部外边距，使标题区域上移 */
+    margin-bottom: 0;   /* 移除底部外边距，由内部元素控制 */
+}
+.main-title {
+    font-family: 'Meo', monospace;
+    font-size: 1.5rem;         /* 字体更小 */
+    text-align: center;
+    margin: 10px auto 20px auto; /* 减小标题自身的上下外边距 */
+    font-weight: bold;
+    letter-spacing: 2px;
+    white-space: pre-line;
+    min-height: 4em;
+}
+.gallery {
+    width: 100%;
+    min-height: 120px;
+    background: rgba(220,220,220,0.5);
+    border-radius: 12px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: #555;
+}
+.content {
+    width: 100%;
+    margin-bottom: 32px;
+    font-size: 1.15rem;
+    color: #222;
+    line-height: 1.8;
+    text-align: left;
+}
+.code-typing::after {
+    content: '|';
+    animation: blink 1s steps(1) infinite;
+}
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+.feature-cards-container {
+    width: 70vw;
+    max-width: 900px;
+    margin: 20px auto 0 auto; /* 减小与上方元素的间距 */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.feature-cards {
+    width: 100%;
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    background: rgba(255,255,255,0.6);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    padding: 24px;
+}
+
+.feature-card {
+    background: rgba(255,255,255,0.85);
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+    flex: 0 1 120px;        /* 基础宽度120px, 可收缩, 不放大 */
+    height: 120px;          /* 固定高度，形成正方形 */
+    padding: 12px 8px;      /* 调整内边距 */
+    transition: transform 0.3s, box-shadow 0.3s; /* 保持过渡效果 */
+    position: relative;
+    overflow: hidden;       /* 确保内容不会溢出卡片 */
+    cursor: pointer;
+}
+.feature-card:hover {
+    transform: translateY(-6px) scale(1.04);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    background: rgba(255,255,255,0.95);
+}
+
+/* JS会创建一个.card-content来包裹卡片内容，我们需要为它添加样式 */
+.card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+.card-icon {
+    font-size: 1.5rem;      /* 调整图标大小 */
+    margin-bottom: 8px;
+}
+.card-title {
+    font-size: 0.9rem;        /* 调整标题大小 */
+    font-weight: bold;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+}
+.card-desc {
+    font-size: 0.8rem;     /* 调整描述大小 */
+    color: #444;
+    text-align: center;
+    line-height: 1.5;
+    padding: 0 4px;
+    /* 防止长单词或链接溢出 */
+    word-break: break-all;
+}
+
+/*======================================*/
+/*         Content Card Area            */
+/*======================================*/
+.content-card-container {
+    width: 70vw;
+    max-width: 900px;
+    margin: 30px auto; /* 减小与上方元素的间距 */
+    display: flex;
+    justify-content: center;
+}
+
+.content-card {
+    background: rgba(255,255,255,0.85);
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+    width: 100%;
+    padding: 30px 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: default;
+}
+
+.content-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+}
+
+.content-card .card-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+.content-card .card-text {
+    font-size: 1rem;
+    color: #444;
+    line-height: 1.7;
+    text-align: left;
+}
+
+/* 响应式调整 */
+@media (max-width: 900px) {
+    .main-article {
+        width: 95vw;
+        padding: 16px 4vw;
+    }
+    .main-title {
+        font-size: 2rem;
+    }
+    .feature-cards-container {
+        width: 90vw;
+    }
+    .feature-cards {
+        gap: 16px;
+        padding: 16px;
+    }
+    .content-card-container {
+        width: 90vw;
+    }
+    .content-card .card-title {
+        font-size: 1.2rem;
+    }
+    .content-card .card-text {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .main-article {
+        width: 100vw;
+  margin: 0;
+        border-radius: 0;
+        padding: 8px 2vw;
+    }
+    .main-title {
+        font-size: 1.3rem;
+    }
+    .feature-cards-container {
+        width: 95vw;
+        margin: 16px auto 0 auto;
+    }
+    .feature-cards {
+        gap: 16px;
+        padding: 16px;
+    }
+    .content-card-container {
+        width: 95vw;
+        margin: 20px auto;
+    }
+    .content-card {
+        padding: 20px 15px;
+    }
+    .content-card .card-title {
+        font-size: 1.1rem;
+    }
+    .content-card .card-text {
+        font-size: 0.9rem;
+    }
+}

@@ -1,0 +1,108 @@
+#bg {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: -999;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 1s;
+    opacity: 1;
+    pointer-events: none;
+}
+
+.bg-fade {
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0;
+    z-index: -999;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 2s;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.bg-fade.active {
+    opacity: 1;
+}
+
+/* 通过伪元素统一调整背景图片整体透明度为60% */
+.bg-fade::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    opacity: 0.6;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* 移动设备隐藏背景图 */
+/*
+@media (max-width: 767px) {
+    #bg,
+    .bg-fade {
+        display: none !important;
+    }
+}
+*/
+
+.main-article {
+    width: 70vw;
+    max-width: 900px;
+    margin: 40px auto;
+    background: rgba(255,255,255,0.85);
+    border-radius: 18px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.main-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 32px;
+    text-align: center;
+}
+.gallery {
+    width: 100%;
+    min-height: 120px;
+    background: rgba(220,220,220,0.5);
+    border-radius: 12px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: #555;
+}
+.content {
+    width: 100%;
+    margin-bottom: 32px;
+    font-size: 1.15rem;
+    color: #222;
+    line-height: 1.8;
+    text-align: left;
+}
+@media (max-width: 900px) {
+    .main-article {
+        width: 95vw;
+        padding: 16px 4vw;
+    }
+    .main-title {
+        font-size: 2rem;
+    }
+}
+@media (max-width: 767px) {
+    .main-article {
+        width: 100vw;
+        margin: 0;
+        border-radius: 0;
+        padding: 8px 2vw;
+    }
+    .main-title {
+        font-size: 1.3rem;
+    }
+}
