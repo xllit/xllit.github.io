@@ -1,4 +1,4 @@
-const bgCount = 2; // 图片数量，请确保 background 文件夹内有 1.png、2.png
+const bgCount = 10; // 图片数量，请确保 background 文件夹内有 1.png、2.png
 const bgFolder = 'indexpage/background/';
 const bgSwitchInterval = 60000; // 背景切换间隔
 let currentBg = 0;
