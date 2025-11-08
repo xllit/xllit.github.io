@@ -2,8 +2,8 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>HLS直播播放器</title>
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <title>直播播放器</title>
+  <script src="https://cdn.jsdelivr.net/npm/flv.js@latest"></script>
   <style>
     html, body {
       margin: 0;
@@ -15,15 +15,17 @@
       font-family: sans-serif;
       color: white;
     }
+
     #video {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      object-fit: cover;
+      object-fit: cover; /* 填满全屏 */
       background: black;
     }
+
     #noLive {
       position: fixed;
       top: 50%;
@@ -43,30 +45,30 @@
 <script>
 const video = document.getElementById('video');
 const noLive = document.getElementById('noLive');
-const streamURL = 'http://83.229.123.157:8080/live/stream.m3u8'; // HLS 流地址
+const streamURL = 'http://83.229.123.157:8080/live/stream.flv'; // 替换你的流地址
 
 function checkStreamAndPlay() {
-  fetch(streamURL, { method: 'HEAD' })
+  fetch(streamURL, { method: 'HEAD' }) // 先检测流是否在线
     .then(response => {
       if(response.ok) {
-        // 流在线
+        // 流在线，隐藏提示，播放视频
         noLive.style.display = 'none';
 
-        if(Hls.isSupported()) {
-          const hls = new Hls();
-          hls.loadSource(streamURL);
-          hls.attachMedia(video);
-          hls.startLoad();
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-          // Safari/iOS 原生支持
-          video.src = streamURL;
-          video.play();
+        if(flvjs.isSupported()) {
+          const flvPlayer = flvjs.createPlayer({
+            type: 'flv',
+            url: streamURL,
+            isLive: true
+          });
+          flvPlayer.attachMediaElement(video);
+          flvPlayer.load();
+          flvPlayer.play();
         } else {
-          noLive.textContent = '浏览器不支持 HLS 播放';
+          noLive.textContent = '浏览器不支持 FLV 播放';
           noLive.style.display = 'block';
         }
       } else {
-        // 流不在线
+        // 流不在线，显示提示
         noLive.style.display = 'block';
       }
     })
