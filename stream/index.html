@@ -38,6 +38,7 @@
 <body>
     <link type="text/css" rel="stylesheet" href="/ckplayer/ckplayer/css/ckplayer.css" />
     <script type="text/javascript" src="/ckplayer/ckplayer/js/ckplayer.js" charset="UTF-8"></script>
+    
     <div class="video-wrapper">
         <div class="video">播放器容器</div>
     </div>
@@ -48,11 +49,89 @@
         container: '.video', 
         variable: 'player', 
         
-        // 确保你的 SRS 服务器已经开启 HTTPS 服务
-        video: 'https://stream.yvmao.top/live/stream.flv', 
+        // 👇 1. 视频地址：***改为 HLS (.m3u8) 格式的地址***
+        video: 'https://stream.yvmao.top/live/stream.m3u8', 
         
-        type: 'flv', 
+        // 👇 2. 显式指定类型为 m3u8
+        type: 'm3u8', 
+        
+        // 👇 3. 强制 PC 端使用 H5 播放 m3u8
+        html5m3u8: true, 
+        
+        // 4. 直播开关保持 true
         live: true, 
+        
+        autoplay: true,
+    };
+
+    // 初始化播放器
+    var player = new ckplayer(videoObject);
+    </script>
+    
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雨猫直播站</title>
+    
+    <style>
+        /* 1. 消除默认边距，让播放器贴合屏幕 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* 防止出现滚动条 */
+            background-color: #000; /* 播放器没撑满时，背景是黑色 */
+        }
+
+        /* 2. 播放器容器，实现 16:9 宽高比自适应 */
+        .video-wrapper {
+            width: 100%; /* 宽度占满父容器 */
+            /* 关键魔法：通过内边距保持宽高比（100 / 16 * 9 = 56.25%） */
+            padding-bottom: 56.25%; 
+            height: 0; /* 必须设为 0 */
+            position: relative;
+        }
+
+        /* 3. ckplayer 实际容器：绝对定位充满父容器 */
+        .video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <link type="text/css" rel="stylesheet" href="/ckplayer/ckplayer/css/ckplayer.css" />
+    <script type="text/javascript" src="/ckplayer/ckplayer/js/ckplayer.js" charset="UTF-8"></script>
+    
+    <div class="video-wrapper">
+        <div class="video">播放器容器</div>
+    </div>
+
+    <script type="text/javascript">
+    // 定义一个变量：videoObject，用来做为视频初始化配置
+    var videoObject = {
+        container: '.video', 
+        variable: 'player', 
+        
+        // 👇 1. 视频地址：***改为 HLS (.m3u8) 格式的地址***
+        video: 'https://stream.yvmao.top/live/stream.m3u8', 
+        
+        // 👇 2. 显式指定类型为 m3u8
+        type: 'm3u8', 
+        
+        // 👇 3. 强制 PC 端使用 H5 播放 m3u8
+        html5m3u8: true, 
+        
+        // 4. 直播开关保持 true
+        live: true, 
+        
         autoplay: true,
     };
 
