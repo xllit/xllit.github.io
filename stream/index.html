@@ -7,15 +7,19 @@ var videoObject = {
     container: '.video', 
     variable: 'player', 
     
-    // 👇 1. 视频地址：直接放你的 .m3u8 地址
-    video: 'http://83.229.123.157:8080/live/stream.m3u8', 
+    // 👇 1. 视频地址：***改为 FLV 格式的地址***
+    // 路径：http://IP:端口/应用名/流名.flv
+    // 请确认 'stream' 是你实际的流名称哦！
+    video: 'http://83.229.123.157:8080/live/stream.flv', 
     
-    // 👇 2. 直播开关：必须设置为 true，隐藏进度条
+    // 👇 2. ***新增：明确告诉播放器这是 FLV 格式！***
+    type: 'flv', 
+    
+    // 👇 3. 直播开关：必须设置为 true，隐藏进度条
     live: true, 
     
-    // 👇 3. 兼容性优化 (PC端)：
-    // 告诉PC浏览器环境，也要用H5播放器来播放m3u8，而不是尝试Flash
-    html5m3u8: true, 
+    // 👇 4. 原来的 html5m3u8 属性可以删除或忽略，因为现在是 FLV 啦！
+    // html5m3u8: true, 
     
     // 其他可选设置，比如自动播放：
     autoplay: true,
