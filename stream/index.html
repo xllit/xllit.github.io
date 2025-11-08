@@ -1,137 +1,85 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>雨猫直播平台</title>
+  <title>HLS直播播放器</title>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <style>
-    /* 1. 使用 CSS 自定义属性 (变量) 方便主题管理 */
-    :root {
-      --background-color: #000;
-      --text-color: #fff;
-      --font-family-base: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      --message-font-size: clamp(1.5rem, 5vw, 2.25rem); /* 响应式字体 */
-    }
-
     html, body {
       margin: 0;
       padding: 0;
       width: 100%;
       height: 100%;
-      background-color: var(--background-color);
+      background: black;
       overflow: hidden;
-      font-family: var(--font-family-base);
-      color: var(--text-color);
+      font-family: sans-serif;
+      color: white;
     }
-
-    /* 2. 视频元素样式保持不变，已经很好了 */
     #video {
       position: fixed;
-      inset: 0; /* inset: 0; 是 top:0; right:0; bottom:0; left:0; 的简写 */
-      width: 100%;
-      height: 100%;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       object-fit: cover;
-      background-color: var(--background-color);
+      background: black;
     }
-
-    /* 3. 使用 Grid 布局来居中提示信息，更现代简洁 */
     #noLive {
-      display: grid; /* 默认隐藏，由 JS 控制 */
-      place-items: center; /* 水平垂直居中 */
       position: fixed;
-      inset: 0;
-      font-size: var(--message-font-size);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2em;
       text-align: center;
-      padding: 1rem; /* 增加内边距，防止文本紧贴屏幕边缘 */
-      
-      /* 4. 增加一个平滑的过渡效果 */
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-
-    /* 5. 新增一个 .visible 类来控制显示，而不是直接操作 style */
-    #noLive.visible {
-      opacity: 1;
-      visibility: visible;
+      display: none;
     }
   </style>
 </head>
 <body>
 
-<video id="video" autoplay playsinline muted></video>
+<video id="video" autoplay playsinline></video>
 <div id="noLive">好像没有在直播欸</div>
 
-<script src="https://cdn.jsdelivr.net/npm/flv.js@latest"></script>
 <script>
-  const video = document.getElementById('video');
-  const noLive = document.getElementById('noLive');
-  // 建议将流地址也定义为常量
-  const STREAM_URL = 'http://83.229.123.157:8080/live/stream.flv';
+const video = document.getElementById('video');
+const noLive = document.getElementById('noLive');
+const streamURL = 'http://83.229.123.157:8080/live/stream.m3u8'; // HLS 流地址
 
-  let flvPlayer = null; // 保持对播放器的引用
-  let isChecking = false; // 防止重复检测
+function checkStreamAndPlay() {
+  fetch(streamURL, { method: 'HEAD' })
+    .then(response => {
+      if(response.ok) {
+        // 流在线
+        noLive.style.display = 'none';
 
-  function setupPlayer() {
-    if (flvPlayer) {
-      flvPlayer.destroy(); // 如果已存在，先销毁
-    }
-    if (flvjs.isSupported()) {
-      flvPlayer = flvjs.createPlayer({
-        type: 'flv',
-        url: STREAM_URL,
-        isLive: true
-      });
-      flvPlayer.attachMediaElement(video);
-      flvPlayer.load();
-      flvPlayer.play().catch(error => {
-        console.error("Autoplay was prevented:", error);
-        // 自动播放失败时，视频通常需要用户交互才能播放
-        // muted 属性可以提高自动播放成功率
-        noLive.textContent = '自动播放失败，请点击屏幕。';
-        noLive.classList.add('visible');
-        document.body.addEventListener('click', () => video.play(), { once: true });
-      });
-    } else {
-      noLive.textContent = '浏览器不支持 FLV 播放';
-      noLive.classList.add('visible');
-    }
-  }
-
-  function checkStreamAndPlay() {
-    if (isChecking) return;
-    isChecking = true;
-
-    // 使用 AbortController 设置超时
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 4000); // 4秒超时
-
-    fetch(STREAM_URL, { method: 'HEAD', signal: controller.signal })
-      .then(response => {
-        clearTimeout(timeoutId);
-        if (response.ok) {
-          noLive.classList.remove('visible');
-          if (!flvPlayer || flvPlayer.isDestroyed) {
-             setupPlayer();
-          }
+        if(Hls.isSupported()) {
+          const hls = new Hls();
+          hls.loadSource(streamURL);
+          hls.attachMedia(video);
+          hls.startLoad();
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+          // Safari/iOS 原生支持
+          video.src = streamURL;
+          video.play();
         } else {
-          noLive.classList.add('visible');
+          noLive.textContent = '浏览器不支持 HLS 播放';
+          noLive.style.display = 'block';
         }
-      })
-      .catch(() => {
-        clearTimeout(timeoutId);
-        noLive.classList.add('visible');
-      })
-      .finally(() => {
-        isChecking = false;
-      });
-  }
+      } else {
+        // 流不在线
+        noLive.style.display = 'block';
+      }
+    })
+    .catch(() => {
+      noLive.style.display = 'block';
+    });
+}
 
-  // 首次检测
-  checkStreamAndPlay();
+// 首次检测
+checkStreamAndPlay();
 
-  // 每 5 秒检测一次
-  setInterval(checkStreamAndPlay, 5000);
+// 每 5 秒检测一次，直播开播自动刷新
+setInterval(checkStreamAndPlay, 5000);
 </script>
 
 </body>
