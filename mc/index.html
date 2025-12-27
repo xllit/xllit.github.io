@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>落雨岛</title>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+
+<body>
+  <!-- 背景层 -->
+  <div id="bg-layer"></div>
+
+  <!-- 主容器 -->
+  <div class="app">
+
+    <!-- 顶部导航 -->
+    <header class="nav">
+      <div class="logo">
+        <img src="mc/pic/avatar.png" alt="logo" />
+        <span>落雨岛</span>
+      </div>
+      <nav class="menu">
+        <a class="active">连接</a>
+        <a>简介</a>
+        <a>客户端</a>
+        <a>教程</a>
+      </nav>
+      <div class="theme-btn">🌙</div>
+    </header>
+
+    <!-- 内容区 -->
+    <main class="content">
+
+      <!-- 连接信息 -->
+      <section class="card">
+        <h2>连接 · 公测阶段</h2>
+        <div class="ip-box">
+          <span id="server-ip">106.53.104.199</span>
+          <button onclick="copyIP()">复制</button>
+        </div>
+      </section>
+
+      <!-- 简介 -->
+      <section class="card">
+        <h2>简介</h2>
+        <p class="desc">
+          欢迎来到落雨岛，这是一个温柔又自由的世界。
+        </p>
+      </section>
+
+      <!-- 客户端 -->
+      <section class="card">
+        <h2>客户端</h2>
+        <div class="client-list">
+          <div class="client-btn">💻 电脑版<br><span>点击查看</span></div>
+          <div class="client-btn">📱 手机版<br><span>点击查看</span></div>
+        </div>
+      </section>
+
+      <!-- 预留大区域 -->
+      <section class="card large">
+        <!-- 以后你想放公告 / 图片 / iframe 都行 -->
+      </section>
+
+    </main>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
