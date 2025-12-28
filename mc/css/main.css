@@ -11,7 +11,7 @@ html {
 
 body {
   height: 100vh;
-  overflow: hidden;
+  overflow: auto;
   color: #1f2937;
 }
 
@@ -27,10 +27,9 @@ body {
 
 /* 主体 */
 .app {
-  height: 100vh;
+  min-height: 100vh;
   padding: 24px;
   backdrop-filter: blur(14px);
-  overflow-y: auto;
 }
 
 /* 导航栏 */
