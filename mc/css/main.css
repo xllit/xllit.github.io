@@ -5,6 +5,10 @@
   font-family: "Segoe UI", "PingFang SC", sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   height: 100vh;
   overflow: hidden;
@@ -26,6 +30,7 @@ body {
   height: 100vh;
   padding: 24px;
   backdrop-filter: blur(14px);
+  overflow-y: auto;
 }
 
 /* 导航栏 */

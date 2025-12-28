@@ -30,3 +30,13 @@ function copyIP() {
   alert("IP 已复制！");
 }
 
+// 菜单点击处理
+document.querySelectorAll('.menu a').forEach(link => {
+  link.addEventListener('click', function(e) {
+    // 移除所有active
+    document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
+    // 添加active到当前
+    this.classList.add('active');
+  });
+});
+
