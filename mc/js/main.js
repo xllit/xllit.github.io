@@ -1,5 +1,5 @@
 const bgLayer = document.getElementById("bg-layer");
-const bgPath = "mc/pic/";
+const bgPath = "/mc/pic";
 const bgList = [
   "bg1.png",
   "bg2.png",
