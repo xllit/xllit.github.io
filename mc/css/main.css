@@ -21,7 +21,6 @@ body {
   inset: 0;
   background-size: cover;
   background-position: center;
-  transition: opacity 1.5s ease;
   z-index: -1;
 }
 
@@ -40,6 +39,7 @@ body {
   background: rgba(255,255,255,0.65);
   border-radius: 18px;
   padding: 14px 24px;
+  margin-bottom: 24px;
 }
 
 .logo {
@@ -55,9 +55,12 @@ body {
   border-radius: 50%;
 }
 
+.menu {
+  display: flex;
+}
+
 .menu a {
   margin: 0 12px;
-  cursor: pointer;
   color: #374151;
   text-decoration: none;
 }
@@ -73,7 +76,6 @@ body {
 
 /* 内容 */
 .content {
-  margin-top: 24px;
   display: grid;
   grid-template-columns: 1fr;
   gap: 20px;
@@ -123,7 +125,7 @@ body {
   border-radius: 18px;
   background: rgba(255,255,255,0.6);
   cursor: pointer;
-  transition: transform .2s ease;
+  transition: transform 0.2s ease;
 }
 
 .client-btn:hover {
@@ -132,9 +134,30 @@ body {
 
 .client-btn span {
   font-size: 12px;
-  opacity: .7;
+  opacity: 0.7;
 }
 
 .large {
   min-height: 160px;
+}
+
+/* 页脚 */
+.footer {
+  text-align: center;
+  margin-top: 40px;
+  color: #6b7280;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .nav {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .menu {
+    flex-wrap: wrap;
+  }
+  .client-list {
+    flex-direction: column;
+  }
 }
