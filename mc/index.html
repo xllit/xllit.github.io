@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>落雨岛</title>
   <link rel="stylesheet" href="css/main.css" />
-  <link rel="icon" href="mc/pic/avatar.png" />
+  <link rel="icon" href="pic/avatar.png" />
 </head>
 
 <body>
@@ -15,9 +15,9 @@
   <!-- 主容器 -->
   <div class="app">
     <!-- 顶部导航 -->
-    <header class="nav">
+    <header class="nav" data-animate-on-scroll>
       <div class="logo">
-        <img src="mc/pic/avatar.png" alt="logo" />
+        <img src="pic/avatar.png" alt="logo" />
         <span>落雨岛</span>
       </div>
       <nav class="menu">
@@ -33,22 +33,22 @@
     <!-- 内容区 -->
     <main class="content">
       <!-- 连接信息 -->
-      <section id="connect" class="card">
+      <section id="connect" class="card" data-animate-on-scroll>
         <h2>连接 · 公测阶段</h2>
         <div class="ip-box">
           <span id="server-ip">106.53.104.199</span>
-          <button onclick="copyIP()">复制</button>
+          <button id="copy-ip-btn">复制</button>
         </div>
       </section>
 
       <!-- 简介 -->
-      <section id="intro" class="card">
+      <section id="intro" class="card" data-animate-on-scroll data-animation-delay="100">
         <h2>简介</h2>
         <p>欢迎来到落雨岛，Minecraft互通生存服务器</p>
       </section>
 
       <!-- 客户端 -->
-      <section id="client" class="card">
+      <section id="client" class="card" data-animate-on-scroll data-animation-delay="200">
         <h2>客户端</h2>
         <div class="client-list">
           <div class="client-btn">💻 电脑版<br><span>点击查看</span></div>
@@ -57,13 +57,13 @@
       </section>
 
       <!-- 公告 -->
-      <section id="announce" class="card large">
+      <section id="announce" class="card large" data-animate-on-scroll data-animation-delay="300">
         <h2>公告</h2>
         <p>更多内容，敬请期待！</p>
       </section>
 
       <!-- 教程 -->
-      <section id="tutorial" class="card">
+      <section id="tutorial" class="card" data-animate-on-scroll data-animation-delay="400">
         <h2>教程</h2>
         <p>新手教程，帮助你快速上手落雨岛服务器。</p>
       </section>

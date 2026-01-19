@@ -1,0 +1,117 @@
+:root {
+    --bg-color: #f8f9fa;
+    --text-color: #212529;
+    --card-bg: #ffffff;
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --card-shadow-hover: 0 8px 12px rgba(0, 0, 0, 0.15);
+    --title-color: #343a40;
+    --subtitle-color: #6c757d;
+    --border-radius: 16px;
+    --transition-duration: 400ms;
+    --transition-timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    color: var(--title-color);
+    margin-bottom: 10px;
+}
+
+.header .subtitle {
+    font-size: 1.1rem;
+    color: var(--subtitle-color);
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.project-card {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--transition-duration) var(--transition-timing), box-shadow var(--transition-duration) var(--transition-timing);
+}
+
+.project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--card-shadow-hover);
+}
+
+.project-card .card-image {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+}
+
+.project-card .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.project-card .card-content {
+    padding: 24px;
+}
+
+.project-card h2 {
+    font-size: 1.4rem;
+    color: var(--title-color);
+    margin-bottom: 8px;
+}
+
+.project-card p {
+    font-size: 1rem;
+    color: var(--subtitle-color);
+}
+
+.project-card.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 2px dashed #dee2e6;
+    background: transparent;
+    box-shadow: none;
+}
+.project-card.placeholder:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: #ced4da;
+}
+
+
+.footer {
+    text-align: center;
+    margin-top: 80px;
+    color: var(--subtitle-color);
+}

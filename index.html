@@ -1,11 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>xllit's Projects</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    
+
+    <div class="container">
+        <header class="header" data-animate-on-scroll>
+            <h1>xllit's Projects</h1>
+            <p class="subtitle">一个用于存放项目的静态空间</p>
+        </header>
+
+        <main class="project-grid">
+            <a href="mc/" class="project-card" data-animate-on-scroll data-animation-delay="100">
+                <div class="card-image">
+                    <img src="mc/pic/avatar.png" alt="Minecraft Server Project">
+                </div>
+                <div class="card-content">
+                    <h2>落雨岛 Minecraft</h2>
+                    <p>一个使用原生 HTML/CSS/JS 构建的 Minecraft 服务器主页。</p>
+                </div>
+            </a>
+            
+            <!-- 更多项目可以被添加在这里 -->
+            <div class="project-card placeholder" data-animate-on-scroll data-animation-delay="200">
+                <div class="card-content">
+                    <h2>敬请期待</h2>
+                    <p>更多有趣的项目正在路上。</p>
+                </div>
+            </div>
+
+        </main>
+
+        <footer class="footer">
+            <p>© 2024 xllit</p>
+        </footer>
+    </div>
+
+    <script src="assets/js/main.js"></script>
 </body>
 </html>

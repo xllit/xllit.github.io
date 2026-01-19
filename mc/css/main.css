@@ -1,8 +1,32 @@
+:root {
+  --font-family: "Segoe UI", "PingFang SC", sans-serif;
+  --text-primary: #1f2937;
+  --text-secondary: #374151;
+  --text-muted: #6b7280;
+  --bg-app: transparent;
+  --bg-nav: rgba(255, 255, 255, 0.65);
+  --bg-card: rgba(255, 255, 255, 0.7);
+  --bg-inner-item: rgba(255, 255, 255, 0.6);
+  --primary-color: #3b82f6;
+  --primary-color-text: white;
+  --transition-duration: 300ms;
+  --transition-timing: ease-out;
+}
+
+body.dark {
+  --text-primary: #f9fafb;
+  --text-secondary: #e5e7eb;
+  --text-muted: #9ca3af;
+  --bg-nav: rgba(20, 20, 22, 0.65);
+  --bg-card: rgba(30, 30, 32, 0.7);
+  --bg-inner-item: rgba(40, 40, 42, 0.6);
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Segoe UI", "PingFang SC", sans-serif;
+  font-family: var(--font-family);
 }
 
 html {
@@ -12,7 +36,9 @@ html {
 body {
   height: 100vh;
   overflow: auto;
-  color: #1f2937;
+  color: var(--text-primary);
+  background-color: #000; /* fallback for bg layer */
+  transition: color var(--transition-duration) var(--transition-timing), background-color var(--transition-duration) var(--transition-timing);
 }
 
 /* 背景 */
@@ -22,13 +48,16 @@ body {
   background-size: cover;
   background-position: center;
   z-index: -1;
+  transition: opacity 800ms ease;
 }
 
 /* 主体 */
 .app {
   min-height: 100vh;
   padding: 24px;
+  background-color: var(--bg-app);
   backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 /* 导航栏 */
@@ -36,10 +65,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(255,255,255,0.65);
+  background: var(--bg-nav);
   border-radius: 18px;
   padding: 14px 24px;
   margin-bottom: 24px;
+  transition: background-color var(--transition-duration) var(--transition-timing);
 }
 
 .logo {
@@ -61,18 +91,30 @@ body {
 
 .menu a {
   margin: 0 12px;
-  color: #374151;
+  color: var(--text-secondary);
   text-decoration: none;
+  position: relative;
+  transition: color var(--transition-duration) var(--transition-timing);
+}
+
+.menu a:hover {
+  color: var(--primary-color);
 }
 
 .menu a.active {
-  color: #3b82f6;
+  color: var(--primary-color);
   font-weight: 600;
 }
 
 .theme-btn {
   cursor: pointer;
+  user-select: none;
+  transition: transform 200ms ease-out;
 }
+.theme-btn:active {
+  transform: scale(0.9);
+}
+
 
 /* 内容 */
 .content {
@@ -83,9 +125,10 @@ body {
 
 /* 卡片 */
 .card {
-  background: rgba(255,255,255,0.7);
+  background: var(--bg-card);
   border-radius: 22px;
   padding: 22px;
+  transition: background-color var(--transition-duration) var(--transition-timing);
 }
 
 .card h2 {
@@ -98,19 +141,30 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255,255,255,0.6);
+  background: var(--bg-inner-item);
   padding: 14px 18px;
   border-radius: 14px;
+  transition: background-color var(--transition-duration) var(--transition-timing);
 }
 
 .ip-box button {
   border: none;
-  background: #3b82f6;
-  color: white;
-  padding: 6px 14px;
+  background: var(--primary-color);
+  color: var(--primary-color-text);
+  padding: 8px 16px;
   border-radius: 10px;
   cursor: pointer;
+  font-weight: 500;
+  transition: transform var(--transition-duration) var(--transition-timing), background-color var(--transition-duration) var(--transition-timing);
 }
+
+.ip-box button:hover {
+  transform: scale(1.05);
+}
+.ip-box button:active {
+  transform: scale(0.98);
+}
+
 
 /* 客户端 */
 .client-list {
@@ -123,18 +177,22 @@ body {
   text-align: center;
   padding: 26px;
   border-radius: 18px;
-  background: rgba(255,255,255,0.6);
+  background: var(--bg-inner-item);
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: transform var(--transition-duration) var(--transition-timing), background-color var(--transition-duration) var(--transition-timing);
 }
 
 .client-btn:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px) scale(1.02);
+}
+
+.client-btn:active {
+  transform: translateY(-2px) scale(0.99);
 }
 
 .client-btn span {
   font-size: 12px;
-  opacity: 0.7;
+  color: var(--text-muted);
 }
 
 .large {
@@ -145,17 +203,23 @@ body {
 .footer {
   text-align: center;
   margin-top: 40px;
-  color: #6b7280;
+  color: var(--text-muted);
 }
 
 /* 响应式 */
 @media (max-width: 768px) {
+  .app {
+    padding: 16px;
+  }
   .nav {
     flex-direction: column;
-    gap: 10px;
+    gap: 16px;
+    padding: 16px;
   }
   .menu {
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 0;
   }
   .client-list {
     flex-direction: column;
