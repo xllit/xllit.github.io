@@ -15,14 +15,36 @@
 
     function randomBg() {
         if (!bgLayer) return;
-        const img = bgList[Math.floor(Math.random() * bgList.length)];
-        if (bgLayer.style.opacity === '1') {
-            bgLayer.style.opacity = 0;
+
+        // 1. 选择一张新图片
+        const imgName = bgList[Math.floor(Math.random() * bgList.length)];
+        const newImgSrc = `${bgPath}/${imgName}`;
+
+        // 如果新图片和当前图片相同，则不执行任何操作 (对于只有两张图片的情况，这会减少不必要的刷新)
+        if (bgLayer.style.backgroundImage.includes(newImgSrc)) {
+            return;
         }
-        setTimeout(() => {
-            bgLayer.style.backgroundImage = `url(${bgPath}/${img})`;
-            bgLayer.style.opacity = 1;
-        }, 800);
+
+        // 2. 在后台预加载新图片
+        const img = new Image();
+        img.src = newImgSrc;
+
+        // 3. 当图片加载成功后执行切换动画
+        img.onload = () => {
+            // a. 淡出当前背景
+            bgLayer.style.opacity = 0;
+            
+            // b. 在淡出动画（800ms）结束后，更换图片并淡入
+            setTimeout(() => {
+                bgLayer.style.backgroundImage = `url(${newImgSrc})`;
+                bgLayer.style.opacity = 1;
+            }, 800); // 这个时间必须和CSS中的 transition-duration 一致
+        };
+
+        // 4. 处理图片加载失败的情况
+        img.onerror = () => {
+            console.error(`背景图片加载失败: ${newImgSrc}`);
+        };
     }
 
     // 复制 IP
@@ -54,8 +76,49 @@
     // 主题切换
     const themeBtn = document.querySelector('.theme-btn');
     if (themeBtn) {
-        themeBtn.addEventListener('click', () => {
-            document.body.classList.toggle('dark');
+        themeBtn.addEventListener('click', (e) => {
+            const isDark = document.body.classList.contains('dark');
+
+            // 浏览器不支持 View Transitions API 或设置了 prefers-reduced-motion
+            if (!document.startViewTransition || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.body.classList.toggle('dark');
+                themeBtn.innerText = isDark ? '🌙' : '☀️';
+                return;
+            }
+
+            // 获取点击位置
+            const x = e.clientX;
+            const y = e.clientY;
+            // 计算到最远角的距离，作为最终的半径
+            const endRadius = Math.hypot(
+                Math.max(x, window.innerWidth - x),
+                Math.max(y, window.innerHeight - y)
+            );
+
+            // 开始视图过渡
+            const transition = document.startViewTransition(() => {
+                document.body.classList.toggle('dark');
+                themeBtn.innerText = isDark ? '🌙' : '☀️';
+            });
+
+            // 当新旧DOM都准备好，可以开始动画
+            transition.ready.then(() => {
+                // 使用 Web Animations API 制作剪裁动画
+                document.documentElement.animate(
+                    {
+                        clipPath: [
+                            `circle(0% at ${x}px ${y}px)`,
+                            `circle(${endRadius}px at ${x}px ${y}px)`
+                        ]
+                    },
+                    {
+                        duration: 500, // 动画时长
+                        easing: 'ease-in-out', // 缓动函数
+                        // 指定要应用动画的伪元素
+                        pseudoElement: '::view-transition-new(root)'
+                    }
+                );
+            });
         });
     }
 
