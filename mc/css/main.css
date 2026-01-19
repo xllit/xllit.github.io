@@ -37,7 +37,7 @@ body {
   height: 100vh;
   overflow: auto;
   color: var(--text-primary);
-  background-color: #000; /* fallback for bg layer */
+  background-color: skyblue; /* fallback for bg layer */
   transition: color var(--transition-duration) var(--transition-timing), background-color var(--transition-duration) var(--transition-timing);
 }
 
@@ -49,6 +49,7 @@ body {
   background-position: center;
   z-index: -1;
   transition: opacity 800ms ease;
+  background-color: skyblue;
 }
 
 /* 主体 */
@@ -56,12 +57,13 @@ body {
   min-height: 100vh;
   padding: 24px;
   background-color: var(--bg-app);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
 }
 
 /* 导航栏 */
 .nav {
+  position: sticky;
+  top: 24px; /* 顶部偏移 */
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -69,7 +71,13 @@ body {
   border-radius: 18px;
   padding: 14px 24px;
   margin-bottom: 24px;
-  transition: background-color var(--transition-duration) var(--transition-timing);
+  transition: background-color var(--transition-duration) var(--transition-timing), 
+              box-shadow var(--transition-duration) var(--transition-timing),
+              transform 400ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.nav.sticky {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
 
 .logo {
@@ -128,7 +136,11 @@ body {
   background: var(--bg-card);
   border-radius: 22px;
   padding: 22px;
-  transition: background-color var(--transition-duration) var(--transition-timing);
+  border: 2px solid transparent;
+  transition: background-color var(--transition-duration) var(--transition-timing), border-color var(--transition-duration) var(--transition-timing);
+}
+.card:hover {
+    border-color: #add8ee;
 }
 
 .card h2 {
@@ -224,4 +236,55 @@ body {
   .client-list {
     flex-direction: column;
   }
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-duration) ease-out;
+}
+
+.modal-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background: var(--bg-card);
+  border-radius: 22px;
+  padding: 30px;
+  width: 90%;
+  max-width: 600px;
+  position: relative;
+  transform: scale(0.95);
+  transition: transform var(--transition-duration) ease-out;
+}
+
+.modal-overlay.visible .modal-content {
+  transform: scale(1);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color var(--transition-duration) ease-out;
+}
+
+.modal-close-btn:hover {
+  color: var(--text-primary);
 }
