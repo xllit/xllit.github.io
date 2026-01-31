@@ -312,6 +312,29 @@
             }
         }
 
+        /* 场景2卡片内容整体缩放自适应 */
+        #scene-2 .glass-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* 垂直居中对齐 */
+            align-items: center; /* 水平居中对齐 */
+            overflow: hidden; /* 限制内容在卡片内 */
+            padding: 1rem; /* 增加内边距 */
+        }
+
+        #scene-2 .glass-panel > * {
+            max-width: 100%; /* 确保内容宽度自适应 */
+            word-wrap: break-word; /* 自动换行 */
+            transform: scale(1); /* 默认缩放比例 */
+            transition: transform 0.3s ease-in-out; /* 平滑缩放动画 */
+        }
+
+        @media (max-width: 768px) {
+            #scene-2 .glass-panel > * {
+                transform: scale(0.9); /* 小屏幕下整体缩放 */
+            }
+        }
+
         /* 修复场景 4 的居中问题 */
         #scene-4 {
             display: flex;
@@ -330,7 +353,12 @@
             margin: auto; /* 确保玻璃面板居中 */
         }
 
-        /* 场景 4 和场景 5 的暗色背景样式 */
+        /* 场景4和场景5的深邃背景颜色调整 */
+        #scene-4, #scene-5 {
+            background: rgba(20, 20, 20, 0.95); /* 深色深邃背景 */
+            color: #e5e7eb; /* 浅色文字 */
+        }
+
         #scene-4 .glass-panel, #scene-5 .glass-panel {
             background: rgba(30, 30, 30, 0.9); /* 深色背景 */
             color: #e5e7eb; /* 浅色文字 */
