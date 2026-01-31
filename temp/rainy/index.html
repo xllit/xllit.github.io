@@ -283,17 +283,26 @@
         
         <div class="absolute bottom-8 text-slate-400 text-xs flex items-center space-x-2">
             <i class="fa-solid fa-music"></i>
-            <span>Now Playing: Silence is broken by your voice</span>
+            <span>Now Playing: Magic waltz</span>
         </div>
     </div>
 
     <script>
         // 播放音乐
         function playMusic() {
-            const audio = document.querySelector('audio');
-            if (audio) {
-                audio.play();
+            const url = 'http://83.229.123.157:12345/down/115F87beWFUq.mp3';
+            let audio = document.getElementById('bg-audio') || document.querySelector('audio');
+            if (!audio) {
+                audio = document.createElement('audio');
+                audio.id = 'bg-audio';
+                audio.preload = 'auto';
+                audio.loop = true;
+                document.body.appendChild(audio);
             }
+            if (audio.src !== url) {
+                audio.src = url;
+            }
+            audio.play().catch(err => console.warn('播放失败：', err));
         }
 
         // 状态管理
