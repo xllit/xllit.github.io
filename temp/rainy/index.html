@@ -279,14 +279,23 @@
             justify-content: center;
             text-align: center; /* 确保内容居中对齐 */
             padding: 1rem; /* 增加内边距，避免内容贴边 */
+            max-width: 90%; /* 限制场景宽度 */
+            max-height: 90%; /* 限制场景高度 */
+            margin: auto; /* 居中对齐 */
         }
 
         #scene-2 .glass-panel {
             margin: auto; /* 确保玻璃面板居中 */
+            width: 100%; /* 确保宽度自适应 */
+            max-width: 600px; /* 限制玻璃面板的最大宽度 */
+            aspect-ratio: 4 / 3; /* 设置长宽比例为4:3 */
         }
 
-        #scene-2 .glass-panel > * {
-            margin: 0 auto; /* 确保文字和按钮居中 */
+        @media (max-width: 768px) {
+            #scene-2 .glass-panel {
+                aspect-ratio: 3 / 4; /* 小屏幕下调整为3:4比例 */
+                max-width: 90%; /* 限制宽度为屏幕的90% */
+            }
         }
 
         /* 修复场景 4 的居中问题 */
@@ -333,16 +342,8 @@
             margin: auto; /* 居中对齐 */
         }
 
-        /* 场景3第二个卡片样式调整 */
-        #scene-3 #card-3-2 {
-            aspect-ratio: 4 / 3; /* 设置卡片的长宽比例为4:3 */
-            width: 100%; /* 确保卡片宽度自适应 */
-            max-width: 400px; /* 限制卡片的最大宽度 */
-            margin: auto; /* 居中对齐 */
-        }
-
         @media (max-width: 768px) {
-            #scene-3 #card-3-2 {
+            #scene-3 .glass-panel {
                 aspect-ratio: 3 / 4; /* 小屏幕下调整为3:4比例 */
                 max-width: 90%; /* 限制卡片宽度为屏幕的90% */
             }
