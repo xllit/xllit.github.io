@@ -18,6 +18,7 @@
             overflow: hidden;
             font-family: 'Noto Serif SC', serif;
             transition: background 1.5s ease-in-out;
+            font-size: 16px; /* 基础字体大小 */
         }
 
         /* 场景容器 */
@@ -101,6 +102,8 @@
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
+            padding: 1rem 1.5rem; /* 增加按钮的内边距 */
+            font-size: 1rem; /* 增大字体 */
         }
         .btn-interact::before {
             content: '';
@@ -116,6 +119,157 @@
             left: 100%;
         }
 
+        /* 调整按钮组的布局，适配小屏幕 */
+        .button-group {
+            display: flex;
+            flex-direction: column; /* 默认垂直排列 */
+            gap: 1rem; /* 按钮之间的间距 */
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .button-group {
+                flex-direction: row; /* 在大屏幕上水平排列 */
+            }
+        }
+
+        /* 调整场景的内边距，避免按钮被遮挡 */
+        .scene {
+            padding: 1rem; /* 增加场景的内边距 */
+        }
+
+        /* 调整按钮的最小宽度，确保在小屏幕上易于点击 */
+        .btn-interact {
+            min-width: 150px;
+        }
+
+        /* 全局自适应样式 */
+        @media (max-width: 768px) {
+            body, html {
+                font-size: 14px; /* 小屏幕时减小字体大小 */
+            }
+
+            .scene {
+                padding: 1rem; /* 增加场景的内边距，避免内容贴边 */
+            }
+
+            .glass-panel, .glass-panel-light {
+                padding: 1.5rem; /* 减少内边距，适配小屏幕 */
+            }
+
+            h1, h2, h3 {
+                font-size: 1.5rem; /* 调整标题字体大小 */
+            }
+
+            .button-group {
+                flex-direction: column; /* 按钮在小屏幕上垂直排列 */
+                gap: 1rem; /* 增加按钮间距 */
+            }
+
+            .btn-interact {
+                font-size: 0.9rem; /* 减小按钮字体大小 */
+                padding: 0.8rem 1rem; /* 减少按钮内边距 */
+                min-width: 120px; /* 确保按钮在小屏幕上易于点击 */
+            }
+
+            .max-w-xl {
+                max-width: 90%; /* 限制内容宽度，适配小屏幕 */
+            }
+
+            .text-lg {
+                font-size: 1rem; /* 调整正文字体大小 */
+            }
+
+            .text-base {
+                font-size: 0.9rem; /* 调整次要文字字体大小 */
+            }
+
+            .absolute {
+                position: relative; /* 避免绝对定位元素在小屏幕上超出视图 */
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            body, html {
+                font-size: 15px; /* 平板设备字体稍微减小 */
+            }
+
+            .scene {
+                padding: 2rem; /* 增加场景的内边距 */
+            }
+
+            .glass-panel, .glass-panel-light {
+                padding: 2rem; /* 调整内边距 */
+            }
+
+            h1, h2, h3 {
+                font-size: 2rem; /* 调整标题字体大小 */
+            }
+
+            .button-group {
+                flex-direction: row; /* 平板设备上按钮水平排列 */
+                gap: 1.5rem; /* 增加按钮间距 */
+            }
+
+            .btn-interact {
+                font-size: 1rem; /* 调整按钮字体大小 */
+                padding: 1rem 1.5rem; /* 调整按钮内边距 */
+                min-width: 140px; /* 确保按钮宽度 */
+            }
+
+            .max-w-xl {
+                max-width: 80%; /* 调整内容宽度 */
+            }
+
+            .text-lg {
+                font-size: 1.1rem; /* 调整正文字体大小 */
+            }
+
+            .text-base {
+                font-size: 1rem; /* 调整次要文字字体大小 */
+            }
+        }
+
+        @media (min-width: 1025px) {
+            body, html {
+                font-size: 16px; /* 桌面设备使用默认字体大小 */
+            }
+
+            .scene {
+                padding: 3rem; /* 增加场景的内边距 */
+            }
+
+            .glass-panel, .glass-panel-light {
+                padding: 3rem; /* 增加内边距 */
+            }
+
+            h1, h2, h3 {
+                font-size: 2.5rem; /* 增大标题字体 */
+            }
+
+            .button-group {
+                flex-direction: row; /* 桌面设备上按钮水平排列 */
+                gap: 2rem; /* 增加按钮间距 */
+            }
+
+            .btn-interact {
+                font-size: 1.1rem; /* 增大按钮字体 */
+                padding: 1.2rem 2rem; /* 增加按钮内边距 */
+                min-width: 160px; /* 确保按钮宽度 */
+            }
+
+            .max-w-xl {
+                max-width: 60%; /* 限制内容宽度 */
+            }
+
+            .text-lg {
+                font-size: 1.2rem; /* 增大正文字体 */
+            }
+
+            .text-base {
+                font-size: 1.1rem; /* 增大次要文字字体 */
+            }
+        }
     </style>
 </head>
 <body id="body-bg" class="bg-slate-950 text-slate-200" scroll="no">
@@ -270,7 +424,7 @@
                 </p>
             </div>
 
-            <div class="mt-12 flex flex-col md:flex-row items-center justify-center gap-4">
+            <div class="mt-12 button-group">
                 <button onclick="handleAccept()" class="px-8 py-3 bg-slate-800 text-white rounded-full shadow-lg hover:bg-slate-700 hover:shadow-xl transition-all active:scale-95 flex items-center w-full md:w-auto justify-center">
                     <i class="fa-solid fa-sun mr-2 text-yellow-300"></i>
                     和好 (谢谢哦,呜呜呜~)
@@ -278,7 +432,6 @@
                 <button onclick="handleTsundere()" class="px-8 py-3 bg-white text-slate-600 border border-slate-200 rounded-full hover:bg-slate-50 transition-all active:scale-95 w-full md:w-auto justify-center">
                     哼 (还得再哄哄)
                 </button>
-                <!-- 新增的“重开”按钮 -->
                 <button onclick="restartScene()" class="px-8 py-3 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-500 hover:shadow-xl transition-all active:scale-95 w-full md:w-auto justify-center">
                     <i class="fa-solid fa-rotate-right mr-2"></i>
                     重开
@@ -438,16 +591,23 @@
             alert('咕咕使用了技能「傲娇」！雨猫感到一阵心痛，但依然决定继续守护你。💕');
         }
 
-        // 修复后的重开函数
+        // 修复后的重开函数，区分首次进入和重开
         function restartScene() {
             // 隐藏当前场景
             document.getElementById(`scene-${currentScene}`).classList.remove('active');
+            
+            // 判断是否为重开
+            if (currentScene !== 0) {
+                alert('系统已重启，欢迎回来！');
+            }
+
             // 重置状态
             currentScene = 0;
             body.className = ''; // 清除所有类
             body.style.background = ''; // 重置背景颜色
             body.classList.add(bgColors[currentScene]);
             body.classList.add('text-slate-200');
+            
             // 显示第一个场景
             document.getElementById(`scene-${currentScene}`).classList.add('active');
             fxLayer.innerHTML = ''; // 清空特效层
