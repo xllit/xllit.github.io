@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>逻辑之外的你 | To APC-Tang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;700&family=JetBrains+Mono:wght@300&display=swap" rel="stylesheet">
+    <style>
+        /* 全局样式设定 */
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Noto Serif SC', serif;
+            transition: background 1.5s ease-in-out;
+        }
+
+        /* 场景容器 */
+        .scene {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease-in-out, transform 1s ease-out;
+            transform: translateY(20px);
+            z-index: 10;
+        }
+
+        .scene.active {
+            opacity: 1;
+            pointer-events: all;
+            transform: translateY(0);
+        }
+
+        /* 字体样式 */
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* 动画关键帧 */
+        @keyframes blink { 50% { opacity: 0; } }
+        @keyframes rain { 
+            0% { transform: translateY(-10vh); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(110vh); opacity: 0; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes star-twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* 特效组件 */
+        .cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+
+        .rain-drop {
+            position: absolute;
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, transparent, rgba(165, 200, 255, 0.4));
+            animation: rain 0.8s linear infinite;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: star-twinkle 3s ease-in-out infinite;
+        }
+
+        /* 玻璃拟态 */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-panel-light {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 20px 40px -10px rgba(255, 100, 100, 0.1);
+        }
+
+        /* 按钮动效 */
+        .btn-interact {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .btn-interact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        .btn-interact:hover::before {
+            left: 100%;
+        }
+
+    </style>
+</head>
+<body id="body-bg" class="bg-slate-950 text-slate-200">
+
+    <!-- 背景特效层 -->
+    <div id="fx-layer" class="absolute inset-0 pointer-events-none z-0 overflow-hidden"></div>
+
+    <!-- 🎵 Scene 0: Error / Intro -->
+    <div id="scene-0" class="scene active">
+        <div class="relative mb-8">
+            <div class="w-24 h-24 rounded-full border border-slate-700 flex items-center justify-center relative">
+                <div class="absolute inset-0 border-t border-slate-500 rounded-full animate-spin" style="animation-duration: 3s;"></div>
+                <i class="fa-solid fa-terminal text-3xl text-slate-500"></i>
+            </div>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-light tracking-[0.3em] text-slate-400 mb-4 text-center">SYSTEM HALTED</h1>
+        <div class="font-mono text-xs text-slate-600 tracking-widest mb-16">
+            ERROR_CODE: LOGIC_OVERFLOW<br>
+            EMOTION_MODULE: NOT_FOUND
+        </div>
+        <button onclick="nextScene()" class="group text-slate-500 hover:text-white transition-colors text-sm tracking-widest border-b border-transparent hover:border-slate-500 pb-1">
+            [ 重启系统，读取记忆碎片 ]
+        </button>
+    </div>
+
+    <!-- 🌧️ Scene 1: Collapse / Rain -->
+    <div id="scene-1" class="scene">
+        <div class="max-w-xl w-full mx-6 glass-panel p-8 md:p-12 rounded-2xl border-l-4 border-red-400/50">
+            <div class="flex items-center space-x-3 mb-6 text-red-300/70 font-mono text-xs uppercase tracking-wider">
+                <i class="fa-solid fa-bolt"></i>
+                <span>Memory Fragment: 01-31</span>
+            </div>
+            
+            <div class="space-y-6 text-slate-300 leading-loose text-lg font-light">
+                <p id="typewriter-1" class="min-h-[3rem]"></p>
+                <div id="text-1-2" class="opacity-0 transition-opacity duration-1000 delay-500 text-base text-slate-400">
+                    <br>
+                    我自以为那些关于“生存”、“现实”的话是保护伞，<br>
+                    但在那一刻，它们变成了夹杂着冰雹的暴雨，<br>
+                    把你淋得湿透。
+                </div>
+            </div>
+        </div>
+        
+        <button onclick="nextScene()" class="mt-12 px-8 py-3 rounded-full border border-slate-600 text-slate-400 hover:text-white hover:bg-slate-800 transition-all flex items-center gap-3 btn-interact opacity-0 animate-pulse" style="animation-delay: 4s; animation-fill-mode: forwards;">
+            <i class="fa-solid fa-wind"></i>
+            <span>让雨停下</span>
+        </button>
+    </div>
+
+    <!-- 🌌 Scene 2: The Void / Reflection -->
+    <div id="scene-2" class="scene">
+        <div class="absolute w-96 h-96 bg-indigo-500/10 rounded-full blur-[100px] animate-[pulse_4s_infinite]"></div>
+        
+        <div class="z-10 text-center max-w-lg mx-6">
+            <i class="fa-solid fa-ghost text-4xl text-slate-600 mb-6 animate-[float_6s_infinite]"></i>
+            <h2 class="text-2xl md:text-3xl font-light text-slate-200 mb-8">逻辑的尽头是荒原</h2>
+            
+            <div class="space-y-6 text-slate-400 font-light leading-relaxed">
+                <p>
+                    你离开后，我的系统恢复了“完美”的运转。<br>
+                    没有变量，没有情绪波动，没有不可控的风险。
+                </p>
+                <p class="text-white scale-110 transition-transform duration-1000">
+                    但我发现，这里太安静了。
+                </p>
+                <p>
+                    所谓的纯粹理性，<br>
+                    如果失去了感性作为坐标，<br>
+                    不过是在黑暗宇宙里空转的死循环代码。
+                </p>
+            </div>
+
+            <div class="mt-12">
+                <div class="text-indigo-400/60 text-xs mb-4 font-mono">正在尝试重新连接信号...</div>
+                <button onclick="nextScene()" class="px-8 py-3 bg-indigo-900/30 border border-indigo-500/30 text-indigo-300 rounded-lg hover:bg-indigo-900/50 hover:text-indigo-100 transition-all btn-interact">
+                    <i class="fa-solid fa-signal mr-2"></i> 发送信号
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✨ Scene 3: Reconstruction / Understanding -->
+    <div id="scene-3" class="scene">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl w-full px-6">
+            <!-- Card 1 -->
+            <div class="glass-panel p-8 rounded-xl transform translate-y-10 opacity-0 transition-all duration-1000 delay-300" id="card-3-1">
+                <h3 class="text-xl text-amber-100 mb-4 flex items-center">
+                    <i class="fa-solid fa-sparkles mr-3 text-amber-300"></i>
+                    重新定义：强大
+                </h3>
+                <p class="text-slate-300 leading-7 font-light text-sm">
+                    我认为“弱”，其实是因为<strong class="text-white mx-1">我不敢放心</strong>。<br>
+                    我用厚厚的逻辑装甲把自己包起来，那是胆怯。<br><br>
+                    而你敢把真心捧出来给这个世界看，哪怕会受伤，<br>
+                    这种在混沌中依然保持赤诚的能力，<br>
+                    才是真正的“真正的智慧”。
+                </p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="glass-panel p-8 rounded-xl transform translate-y-10 opacity-0 transition-all duration-1000 delay-700" id="card-3-2">
+                <h3 class="text-xl text-sky-100 mb-4 flex items-center">
+                    <i class="fa-solid fa-anchor mr-3 text-sky-300"></i>
+                    关于依靠
+                </h3>
+                <p class="text-slate-300 leading-7 font-light text-sm">
+                    我说“没人能为你付出一辈子”，<br>
+                    潜台词其实是——我恐慌我做不到永远保护你，<br>
+                    所以我...显然你变强。<br><br>
+                    <span class="text-sky-200 italic">“雨猫会一直帮你”</span><br>
+                    这不是居高临下的施舍，<br>
+                    是一只笨拙的猫，想把自己藏的小鱼干都留给你的私心。
+                </p>
+            </div>
+        </div>
+
+        <button onclick="nextScene()" class="mt-16 text-slate-500 hover:text-white transition-colors flex flex-col items-center group opacity-0 transition-opacity duration-1000 delay-[1500ms]" id="btn-3">
+            <span class="text-xs tracking-[0.3em] mb-2 uppercase group-hover:-translate-y-1 transition-transform">Look Up</span>
+            <i class="fa-solid fa-chevron-up"></i>
+        </button>
+    </div>
+
+    <!-- ☀️ Scene 4: Sunrise / Reconciliation -->
+    <div id="scene-4" class="scene text-slate-800">
+        <!-- 背景光晕 -->
+        <div class="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-yellow-200/40 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-rose-200/40 rounded-full blur-[100px]"></div>
+
+        <div class="glass-panel-light max-w-2xl w-full mx-6 p-10 md:p-14 rounded-[2rem] transform scale-95 opacity-0 transition-all duration-1000" id="final-card">
+            <div class="flex justify-center mb-8">
+                <div class="p-4 bg-rose-100 rounded-full text-rose-500 shadow-inner">
+                    <i class="fa-solid fa-heart text-2xl animate-[pulse_2s_infinite]"></i>
+                </div>
+            </div>
+
+            <h1 class="text-3xl md:text-4xl text-slate-800 text-center mb-8 font-serif">致 咕咕</h1>
+            
+            <div class="space-y-6 text-slate-600 font-light text-base md:text-lg text-center leading-relaxed">
+                <p>
+                    我不会再非要"看透"你，也不用变得世故圆滑。<br>
+                    在这个灰色的世界里，你是唯一的色彩。
+                </p>
+                <p>
+                    你就做那只快乐的、偶尔迷糊的、充满灵气的唐咕咕就好。<br>
+                    那些复杂的、算计的、挡雨的逻辑题，<br>
+                    <strong class="text-slate-800">交给雨猫去处理。</strong>
+                </p>
+                <p class="pt-4 text-slate-800 font-medium text-sm">
+                    我们要不要把那些大道理扔进垃圾桶，<br>
+                    然后去吃点好吃的？
+                </p>
+            </div>
+
+            <div class="mt-12 flex flex-col md:flex-row items-center justify-center gap-4">
+                <button onclick="handleAccept()" class="px-8 py-3 bg-slate-800 text-white rounded-full shadow-lg hover:bg-slate-700 hover:shadow-xl transition-all active:scale-95 flex items-center w-full md:w-auto justify-center">
+                    <i class="fa-solid fa-sun mr-2 text-yellow-300"></i>
+                    和好 (谢谢哦,呜呜呜~)
+                </button>
+                <button onclick="handleTsundere()" class="px-8 py-3 bg-white text-slate-600 border border-slate-200 rounded-full hover:bg-slate-50 transition-all active:scale-95 w-full md:w-auto justify-center">
+                    哼 (还得再哄哄)
+                </button>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-8 text-slate-400 text-xs flex items-center space-x-2">
+            <i class="fa-solid fa-music"></i>
+            <span>Now Playing: Silence is broken by your voice</span>
+        </div>
+    </div>
+
+    <script>
+        // 状态管理
+        let currentScene = 0;
+        const body = document.getElementById('body-bg');
+        const fxLayer = document.getElementById('fx-layer');
+        
+        // 场景背景色配置
+        const bgColors = [
+            'bg-slate-950', // 0: Error
+            'bg-slate-900', // 1: Rain
+            'bg-slate-800', // 2: Void
+            'bg-indigo-950',// 3: Stars
+            'bg-orange-50'  // 4: Sunrise (Gradient handled via class removal)
+        ];
+
+        // 打字机效果函数
+        function typeWriter(elementId, text, speed = 50, callback) {
+            let i = 0;
+            const element = document.getElementById(elementId);
+            element.innerHTML = '';
+            element.classList.add('cursor');
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    element.classList.remove('cursor');
+                    if(callback) callback();
+                }
+            }
+            type();
+        }
+
+        // 创建雨滴
+        function createRain() {
+            fxLayer.innerHTML = '';
+            for(let i=0; i<40; i++) {
+                const drop = document.createElement('div');
+                drop.className = 'rain-drop';
+                drop.style.left = Math.random() * 100 + '%';
+                drop.style.animationDuration = (0.5 + Math.random() * 0.5) + 's';
+                drop.style.animationDelay = Math.random() + 's';
+                fxLayer.appendChild(drop);
+            }
+        }
+
+        // 创建星星
+        function createStars() {
+            fxLayer.innerHTML = '';
+            for(let i=0; i<50; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 3 + 'px';
+                star.style.width = size;
+                star.style.height = size;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                fxLayer.appendChild(star);
+            }
+        }
+
+        // 场景切换逻辑
+        function nextScene() {
+            // 隐藏当前场景
+            document.getElementById(`scene-${currentScene}`).classList.remove('active');
+            
+            // 更新状态
+            currentScene++;
+            
+            // 更改背景
+            body.className = ''; // 清除所有类
+            if (currentScene === 4) {
+                // 特殊处理最后一个场景的渐变背景
+                body.style.background = 'linear-gradient(to bottom, #fff7ed, #ffe4e6)'; 
+                body.classList.add('text-slate-800');
+            } else {
+                body.classList.add(bgColors[currentScene]);
+                body.classList.add('text-slate-200');
+            }
+
+            // 显示新场景
+            const nextSceneEl = document.getElementById(`scene-${currentScene}`);
+            nextSceneEl.classList.add('active');
+
+            // 场景特定逻辑
+            if (currentScene === 1) {
+                createRain();
+                setTimeout(() => {
+                    typeWriter('typewriter-1', '那天，我试图用一把生锈的手术刀，去解剖一只蝴蝶的翅膀。', 60, () => {
+                        document.getElementById('text-1-2').classList.remove('opacity-0');
+                    });
+                }, 800);
+            } 
+            else if (currentScene === 2) {
+                fxLayer.innerHTML = ''; // 清除雨滴
+            }
+            else if (currentScene === 3) {
+                createStars();
+                setTimeout(() => {
+                    document.getElementById('card-3-1').classList.remove('opacity-0', 'translate-y-10');
+                }, 500);
+                setTimeout(() => {
+                    document.getElementById('card-3-2').classList.remove('opacity-0', 'translate-y-10');
+                }, 1500);
+                setTimeout(() => {
+                    document.getElementById('btn-3').classList.remove('opacity-0');
+                }, 3000);
+            }
+            else if (currentScene === 4) {
+                fxLayer.innerHTML = ''; // 清除星星
+                setTimeout(() => {
+                    document.getElementById('final-card').classList.remove('scale-95', 'opacity-0');
+                }, 500);
+            }
+        }
+
+        // 按钮交互
+        function handleAccept() {
+            alert('雨猫收到指令：逻辑防御系统已永久关闭。正在全速奔向你 🐈💨');
+        }
+
+        function handleTsundere() {
+            alert('咕咕使用了技能「傲娇」！雨猫受到了 10000 点暴击，并决定立刻带你去吃好吃的作为赔罪。');
+        }
+    </script>
+</body>
+</html>
