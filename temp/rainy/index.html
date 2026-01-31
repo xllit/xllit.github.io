@@ -19,6 +19,8 @@
             font-family: 'Noto Serif SC', serif;
             transition: background 1.5s ease-in-out;
             font-size: 16px; /* 基础字体大小 */
+            overflow-x: hidden; /* 禁止左右滑动 */
+            overflow-y: auto; /* 允许上下滚动 */
         }
 
         /* 场景容器 */
@@ -300,15 +302,15 @@
 
         #scene-2 .glass-panel {
             margin: auto; /* 确保玻璃面板居中 */
-            width: 100%; /* 确保宽度自适应 */
-            max-width: 600px; /* 限制玻璃面板的最大宽度 */
-            aspect-ratio: 4 / 3; /* 设置长宽比例为4:3 */
+            width: 90%; /* 增大卡片宽度占比 */
+            max-width: 800px; /* 增大卡片的最大宽度 */
+            aspect-ratio: 16 / 9; /* 调整长宽比例为16:9 */
         }
 
         @media (max-width: 768px) {
             #scene-2 .glass-panel {
-                aspect-ratio: 3 / 4; /* 小屏幕下调整为3:4比例 */
-                max-width: 90%; /* 限制宽度为屏幕的90% */
+                aspect-ratio: 4 / 3; /* 小屏幕下调整为4:3比例 */
+                max-width: 95%; /* 小屏幕下卡片宽度占比更大 */
             }
         }
 
