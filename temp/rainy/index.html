@@ -288,15 +288,15 @@
 
         /* 修复场景2文字飘走问题，确保文字限定在框内 */
         #scene-2 .glass-panel {
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* 垂直居中对齐 */
-            align-items: center; /* 水平居中对齐 */
-            overflow: hidden; /* 限制文字在框内 */
+            display: inline-block; /* 使卡片大小随内容变化 */
+            padding: 1rem; /* 增加内边距 */
+            margin: auto; /* 确保卡片居中 */
+            max-width: 90%; /* 限制卡片最大宽度 */
+            box-sizing: border-box; /* 包括内边距在内计算宽度 */
         }
 
         #scene-2 .glass-panel > * {
-            max-width: 100%; /* 确保文字不会超出框的宽度 */
+            max-width: 100%; /* 确保内容不会超出卡片宽度 */
             word-wrap: break-word; /* 自动换行 */
         }
 
