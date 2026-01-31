@@ -566,9 +566,12 @@
             body.className = ''; // 清除所有类
             if (currentScene === 4) {
                 // 特殊处理最后一个场景的渐变背景
+                body.style.transition = 'background 1.5s ease-in-out'; // 添加背景渐变过渡
                 body.style.background = 'linear-gradient(to bottom, #fff7ed, #ffe4e6)'; 
                 body.classList.add('text-slate-800');
             } else {
+                body.style.transition = ''; // 清除背景渐变过渡
+                body.style.background = ''; // 重置背景颜色
                 body.classList.add(bgColors[currentScene]);
                 body.classList.add('text-slate-200');
             }
