@@ -278,6 +278,15 @@
             align-items: center;
             justify-content: center;
             text-align: center; /* 确保内容居中对齐 */
+            padding: 1rem; /* 增加内边距，避免内容贴边 */
+        }
+
+        #scene-2 .glass-panel {
+            margin: auto; /* 确保玻璃面板居中 */
+        }
+
+        #scene-2 .glass-panel > * {
+            margin: 0 auto; /* 确保文字和按钮居中 */
         }
 
         /* 修复场景 4 的居中问题 */
@@ -349,32 +358,33 @@
 
     <!-- 🌌 Scene 2: The Void / Reflection -->
     <div id="scene-2" class="scene">
-        <div class="absolute w-96 h-96 bg-indigo-500/10 rounded-full blur-[100px] animate-[pulse_4s_infinite]"></div>
-        
-        <div class="z-10 text-center max-w-lg mx-6">
-            <i class="fa-solid fa-ghost text-4xl text-slate-600 mb-6 animate-[float_6s_infinite]"></i>
-            <h2 class="text-2xl md:text-3xl font-light text-slate-200 mb-8">逻辑的尽头是荒原</h2>
-            
-            <div class="space-y-6 text-slate-400 font-light leading-relaxed">
-                <p>
-                    你离开后，我的系统恢复了“完美”的运转。<br>
-                    没有变量，没有情绪波动，没有不可控的风险。
-                </p>
-                <p class="text-white scale-110 transition-transform duration-1000">
-                    但我发现，这里太安静了。
-                </p>
-                <p>
-                    所谓的纯粹理性，<br>
-                    如果失去了感性作为坐标，<br>
-                    不过是在黑暗宇宙里空转的死循环代码。
-                </p>
-            </div>
+        <div class="glass-panel max-w-lg w-full mx-6 p-8 md:p-12 rounded-2xl">
+            <div class="absolute w-96 h-96 bg-indigo-500/10 rounded-full blur-[100px] animate-[pulse_4s_infinite]"></div>
+            <div class="z-10 text-center">
+                <i class="fa-solid fa-ghost text-4xl text-slate-600 mb-6 animate-[float_6s_infinite]"></i>
+                <h2 class="text-2xl md:text-3xl font-light text-slate-200 mb-8">逻辑的尽头是荒原</h2>
+                
+                <div class="space-y-6 text-slate-400 font-light leading-relaxed">
+                    <p>
+                        你离开后，我的系统恢复了“完美”的运转。<br>
+                        没有变量，没有情绪波动，没有不可控的风险。
+                    </p>
+                    <p class="text-white scale-110 transition-transform duration-1000">
+                        但我发现，这里太安静了。
+                    </p>
+                    <p>
+                        所谓的纯粹理性，<br>
+                        如果失去了感性作为坐标，<br>
+                        不过是在黑暗宇宙里空转的死循环代码。
+                    </p>
+                </div>
 
-            <div class="mt-12">
-                <div class="text-indigo-400/60 text-xs mb-4 font-mono">正在尝试重新连接信号...</div>
-                <button onclick="nextScene()" class="px-8 py-3 bg-indigo-900/30 border border-indigo-500/30 text-indigo-300 rounded-lg hover:bg-indigo-900/50 hover:text-indigo-100 transition-all btn-interact">
-                    <i class="fa-solid fa-signal mr-2"></i> 发送信号
-                </button>
+                <div class="mt-12">
+                    <div class="text-indigo-400/60 text-xs mb-4 font-mono">正在尝试重新连接信号...</div>
+                    <button onclick="nextScene()" class="px-8 py-3 bg-indigo-900/30 border border-indigo-500/30 text-indigo-300 rounded-lg hover:bg-indigo-900/50 hover:text-indigo-100 transition-all btn-interact">
+                        <i class="fa-solid fa-signal mr-2"></i> 发送信号
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -420,8 +430,37 @@
         </button>
     </div>
 
-    <!-- ☀️ Scene 4: Sunrise / Reconciliation -->
-    <div id="scene-4" class="scene text-slate-800">
+    <!-- 🌌 Scene 4: Puzzle Interaction -->
+    <div id="scene-4" class="scene">
+        <div class="glass-panel max-w-lg w-full mx-6 p-8 md:p-12 rounded-2xl">
+            <h2 class="text-2xl md:text-3xl font-light text-slate-200 mb-6 text-center">解开谜题</h2>
+            <p class="text-slate-400 text-center mb-6">
+                你需要找到正确的答案才能继续前进。
+            </p>
+            <div class="flex flex-col items-center space-y-4">
+                <button onclick="checkAnswer('A')" class="btn-interact bg-slate-700 text-white">选项 A</button>
+                <button onclick="checkAnswer('B')" class="btn-interact bg-slate-700 text-white">选项 B</button>
+                <button onclick="checkAnswer('C')" class="btn-interact bg-slate-700 text-white">选项 C</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🌌 Scene 5: Drag Interaction -->
+    <div id="scene-5" class="scene">
+        <div class="glass-panel max-w-lg w-full mx-6 p-8 md:p-12 rounded-2xl">
+            <h2 class="text-2xl md:text-3xl font-light text-slate-200 mb-6 text-center">拖动拼图</h2>
+            <p class="text-slate-400 text-center mb-6">
+                将拼图拖动到正确的位置，完成后继续前进。
+            </p>
+            <div id="puzzle-container" class="relative w-full h-64 bg-slate-800 rounded-lg">
+                <div id="puzzle-piece" draggable="true" class="absolute w-16 h-16 bg-indigo-500 rounded-lg cursor-grab"></div>
+                <div id="puzzle-target" class="absolute w-16 h-16 border-2 border-dashed border-indigo-500"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ☀️ Scene 6: Sunrise / Reconciliation -->
+    <div id="scene-6" class="scene text-slate-800">
         <!-- 背景光晕 -->
         <div class="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-yellow-200/40 rounded-full blur-[120px]"></div>
         <div class="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-rose-200/40 rounded-full blur-[100px]"></div>
@@ -564,7 +603,7 @@
             
             // 更改背景
             body.className = ''; // 清除所有类
-            if (currentScene === 4) {
+            if (currentScene === 6) {
                 // 特殊处理最后一个场景的渐变背景
                 body.style.transition = 'background 1.5s ease-in-out'; // 添加背景渐变过渡
                 body.style.background = 'linear-gradient(to bottom, #fff7ed, #ffe4e6)'; 
@@ -605,7 +644,13 @@
                 }, 3000);
             }
             else if (currentScene === 4) {
+                // Scene 4 logic (Puzzle Interaction)
                 fxLayer.innerHTML = ''; // 清除星星
+            } else if (currentScene === 5) {
+                // Scene 5 logic (Drag Interaction)
+                fxLayer.innerHTML = ''; // 清除任何之前的特效
+            } else if (currentScene === 6) {
+                fxLayer.innerHTML = ''; // 清除任何之前的特效
                 setTimeout(() => {
                     document.getElementById('final-card').classList.remove('scale-95', 'opacity-0');
                 }, 500);
@@ -642,6 +687,39 @@
             document.getElementById(`scene-${currentScene}`).classList.add('active');
             fxLayer.innerHTML = ''; // 清空特效层
         }
+
+        // Add logic for Scene 4 (Puzzle Interaction)
+        function checkAnswer(option) {
+            if (option === 'B') {
+                alert('正确答案！进入下一场景。');
+                nextScene();
+            } else {
+                alert('答案错误，请再试一次！');
+            }
+        }
+
+        // Add logic for Scene 5 (Drag Interaction)
+        const puzzlePiece = document.getElementById('puzzle-piece');
+        const puzzleTarget = document.getElementById('puzzle-target');
+
+        puzzlePiece.addEventListener('dragstart', (e) => {
+            e.dataTransfer.setData('text/plain', 'dragging');
+        });
+
+        puzzleTarget.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+
+        puzzleTarget.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const data = e.dataTransfer.getData('text/plain');
+            if (data === 'dragging') {
+                puzzlePiece.style.left = `${e.offsetX - puzzlePiece.offsetWidth / 2}px`;
+                puzzlePiece.style.top = `${e.offsetY - puzzlePiece.offsetHeight / 2}px`;
+                alert('拼图完成！进入下一场景。');
+                nextScene();
+            }
+        });
     </script>
 </body>
 </html>
