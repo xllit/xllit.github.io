@@ -306,6 +306,27 @@
         #scene-4 .glass-panel-light {
             margin: auto; /* 确保玻璃面板居中 */
         }
+
+        /* 场景 4 和场景 5 的背景样式与场景 3 一致 */
+        #scene-4, #scene-5 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        #scene-4 .glass-panel, #scene-5 .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        #scene-4 .glass-panel > *, #scene-5 .glass-panel > * {
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body id="body-bg" class="bg-slate-950 text-slate-200" scroll="no">
@@ -694,20 +715,20 @@
         // Add logic for Scene 4 (Puzzle Interaction)
         function checkAnswer(option) {
             if (option === 'B') {
-                alert('正确答案！进入下一场景。');
+                alert('正确答案！进入下一关!你真聪明~');
                 nextScene();
             } else {
-                alert('答案错误，请再试一次！');
+                alert('答案错误，请再试一次吧,你真的做不对嘛?');
             }
         }
 
         // 添加场景 5 的回答问题逻辑
         function checkAnswerScene5(option) {
             if (option === 'C') {
-                alert('正确答案！进入下一场景。');
+                alert('正确答案！谢谢你的理解~');
                 nextScene();
             } else {
-                alert('答案错误，请再试一次！');
+                alert('答案错误，请再试一次,你故意的吧!哼~');
             }
         }
     </script>
