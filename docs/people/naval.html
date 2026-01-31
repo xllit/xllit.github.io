@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>纳瓦尔的智慧年鉴：幸福与财富的自洽之道</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!-- Chosen Palette: Zen Minimalist -->
+    <!-- Colors: 
+        Background: #fdfbf7 (Warm Off-white/Paper)
+        Text: #374151 (Soft Charcoal)
+        Accent Primary: #D4AF37 (Muted Gold - Wisdom)
+        Accent Secondary: #8da399 (Sage Green - Peace/Growth)
+        Cards: #ffffff (White)
+    -->
+
+    <!-- Application Structure Plan: 
+        The SPA is designed as a "Digital Almanac" or a guided meditation on life philosophy.
+        1. Hero Section: Sets a calm, introspective tone immediately.
+        2. Dashboard "The Equations of Life": Interactive visualizations of abstract concepts (Happiness vs. Desire, Leverage). This helps users visualize mental models.
+        3. The Anxiety Antidote: An interactive module to reframe specific anxieties using Naval's logic.
+        4. Compound Growth: Demonstrating the power of consistency in habits and reputation.
+        5. Wisdom Library: Filterable aphorisms for quick inspiration.
+        Structure rationale: Moves from abstract principles -> visual understanding -> personal application -> daily reinforcement.
+    -->
+
+    <!-- Visualization & Content Choices:
+        1. Happiness Equation (Line Chart): Visualizing 'Happiness = Reality - Expectations'. Goal: Show how lowering expectations increases peace.
+        2. Leverage Radar (Radar Chart): Comparing types of leverage (Labor, Capital, Code/Media). Goal: Show why modern wealth comes from permissionless leverage.
+        3. Compound Consistency (Bar Chart): Visualizing 1% better every day. Goal: Encourage patience and long-term thinking.
+        4. Interactive Elements: Tabbed navigation, Sliders for 'Desire Level', Dropdowns for anxiety topics.
+        5. Justification: Chart.js is used for dynamic feedback; Unicode icons for lightweight visuals. NO SVG/Mermaid used.
+    -->
+
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        body {
+            background-color: #fdfbf7;
+            color: #374151;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        h1, h2, h3, .serif {
+            font-family: 'Noto Serif SC', serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        .card {
+            background-color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+        }
+        .btn-primary {
+            background-color: #374151;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #1f2937;
+        }
+        .nav-item.active {
+            border-bottom: 2px solid #D4AF37;
+            color: #1f2937;
+            font-weight: 600;
+        }
+        .highlight-text {
+            color: #D4AF37;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-[#fdfbf7]/90 backdrop-blur-sm border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl mr-2">☯</span>
+                    <span class="serif text-xl font-bold tracking-wide">纳瓦尔智慧年鉴</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <button onclick="navTo('intro')" class="nav-item active text-gray-600 hover:text-gray-900 transition-colors py-2" data-target="intro">核心理念</button>
+                    <button onclick="navTo('happiness')" class="nav-item text-gray-600 hover:text-gray-900 transition-colors py-2" data-target="happiness">幸福方程</button>
+                    <button onclick="navTo('wealth')" class="nav-item text-gray-600 hover:text-gray-900 transition-colors py-2" data-target="wealth">财富杠杆</button>
+                    <button onclick="navTo('anxiety')" class="nav-item text-gray-600 hover:text-gray-900 transition-colors py-2" data-target="anxiety">治愈焦虑</button>
+                </div>
+                <!-- Mobile Menu Button (simplified interaction) -->
+                <button class="md:hidden text-gray-600" onclick="alert('请在桌面端或宽屏浏览以获得最佳体验')">☰</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        
+        <!-- Hero Section -->
+        <section id="intro" class="py-20 px-4 text-center max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-800 leading-tight">
+                幸福是一种技能，<br>而非运气的恩赐。
+            </h1>
+            <p class="text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+                在这个嘈杂的世界里，纳瓦尔（Naval Ravikant）的哲学是一剂清醒剂。他告诉我们：财富来自于杠杆，幸福来自于通过平和消解欲望。本应用旨在通过交互式图表，带你拆解痛苦、焦虑，通过自洽走向幸福。
+            </p>
+            <div class="flex justify-center gap-4">
+                <button onclick="navTo('happiness')" class="btn-primary shadow-lg transform hover:-translate-y-1 transition-transform">
+                    开始探索幸福
+                </button>
+                <button onclick="navTo('anxiety')" class="bg-white text-gray-700 border border-gray-300 px-6 py-2 rounded-full hover:bg-gray-50 transition-colors">
+                    寻找内心的平静
+                </button>
+            </div>
+        </section>
+
+        <!-- Happiness Section -->
+        <section id="happiness" class="py-16 bg-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-4 flex items-center gap-2">
+                            <span class="text-yellow-600">❂</span> 幸福的动态平衡
+                        </h2>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            纳瓦尔认为：<span class="highlight-text">幸福 = 现实 - 期望</span>。
+                            当我们无法改变现实时，痛苦往往源于过高的期望（欲望）。欲望是你与自己签订的契约：在得到你想要的东西之前，保持不快乐。
+                        </p>
+                        <div class="bg-gray-50 p-6 rounded-lg border-l-4 border-yellow-500 mb-6">
+                            <h3 class="font-bold mb-2">交互实验：</h3>
+                            <p class="text-sm mb-4">拖动滑块调整“期望值/欲望”，观察它如何影响你的“内心平静指数”。注意：现实通常是恒定的或缓慢变化的。</p>
+                            
+                            <div class="mb-4">
+                                <label class="flex justify-between text-sm font-medium mb-1">
+                                    <span>欲望/期望强度 (Expectations)</span>
+                                    <span id="desireValueDisplay">50%</span>
+                                </label>
+                                <input type="range" id="desireSlider" min="0" max="100" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-yellow-600">
+                            </div>
+
+                            <div class="flex justify-between items-center mt-4 p-3 bg-white rounded shadow-sm">
+                                <span class="text-gray-500">当前状态：</span>
+                                <span id="peaceStatus" class="text-lg font-bold text-green-600">平和</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chart Container -->
+                    <div class="bg-gray-50 rounded-xl p-4 shadow-inner">
+                        <div class="chart-container">
+                            <canvas id="happinessChart"></canvas>
+                        </div>
+                        <p class="text-center text-xs text-gray-400 mt-2">图表模拟：随时间推移，降低欲望波动带来的平静水平变化</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wealth Section -->
+        <section id="wealth" class="py-16 bg-[#fdfbf7]">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold mb-4">财富的杠杆原理</h2>
+                    <p class="max-w-2xl mx-auto text-gray-600">
+                        努力工作只是基础。真正的财富（Wealth）是你在睡觉时也能赚钱的资产。这需要利用“特定知识”加上“杠杆”。
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Concept Cards -->
+                    <div class="card p-6 border-t-4 border-blue-500">
+                        <div class="text-4xl mb-4">🧠</div>
+                        <h3 class="text-xl font-bold mb-2">特定知识</h3>
+                        <p class="text-sm text-gray-600">无法通过培训获得的知识。它往往来自于你独特的好奇心和热情。如果是可以被教导的，那么它就可以被自动化或外包。</p>
+                    </div>
+                    <div class="card p-6 border-t-4 border-green-500">
+                        <div class="text-4xl mb-4">📈</div>
+                        <h3 class="text-xl font-bold mb-2">杠杆效应</h3>
+                        <p class="text-sm text-gray-600">放大你努力的工具。旧杠杆：劳动力和资本（需要许可）。新杠杆：代码和媒体（无需许可，边际成本为零）。</p>
+                    </div>
+                    <div class="card p-6 border-t-4 border-purple-500">
+                        <div class="text-4xl mb-4">🤝</div>
+                        <h3 class="text-xl font-bold mb-2">责任与信用</h3>
+                        <p class="text-sm text-gray-600">以自己的名义承担风险。社会会因为你承担了风险和责任，而将所有权和信誉回报给你。</p>
+                    </div>
+                </div>
+
+                <!-- Visualization of Leverage -->
+                <div class="mt-16 grid md:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 md:order-1 bg-white p-6 rounded-xl shadow-sm">
+                        <div class="chart-container">
+                            <canvas id="leverageChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="order-1 md:order-2">
+                        <h3 class="text-2xl font-bold mb-4 serif">新时代的杠杆</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="text-green-500 mr-2 font-bold">✓</span>
+                                <div>
+                                    <strong>代码 (Code):</strong> 
+                                    <p class="text-sm text-gray-600">它是永不休息的劳动力。你写一次，它运行千万次。</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-500 mr-2 font-bold">✓</span>
+                                <div>
+                                    <strong>媒体 (Media):</strong> 
+                                    <p class="text-sm text-gray-600">内容是这一代人的杠杆。播客、博客、视频，它们在你睡觉时为你传播影响力。</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start opacity-60">
+                                <span class="text-gray-400 mr-2">✗</span>
+                                <div>
+                                    <strong>劳动力 (Labor):</strong> 
+                                    <p class="text-sm text-gray-600">最糟糕的杠杆。管理他人不仅复杂，而且难以规模化。</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Anxiety/Mindset Section -->
+        <section id="anxiety" class="py-16 bg-gray-900 text-gray-100">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold mb-2 text-white">焦虑治愈室</h2>
+                    <p class="text-gray-400">“所有的焦虑都源于此时此地不想待在此时此地。”</p>
+                </div>
+
+                <div class="bg-gray-800 rounded-2xl p-8 shadow-2xl border border-gray-700">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <!-- Controls -->
+                        <div class="md:w-1/3 space-y-6">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-300 mb-2">如果你感到焦虑，是因为...</label>
+                                <select id="anxietySelector" class="w-full bg-gray-700 border-gray-600 text-white rounded-lg p-3 focus:ring-2 focus:ring-yellow-500 outline-none">
+                                    <option value="comparison">我在和别人比较</option>
+                                    <option value="future">我担心未来的不确定性</option>
+                                    <option value="money">我觉得钱不够多</option>
+                                    <option value="imposter">我觉得自己不够好（自洽）</option>
+                                    <option value="busy">我太忙了，没有时间</option>
+                                </select>
+                            </div>
+                            <button id="cureBtn" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 rounded-lg transition-colors">
+                                获取纳瓦尔的解药
+                            </button>
+                        </div>
+
+                        <!-- Dynamic Content -->
+                        <div class="md:w-2/3 bg-gray-900 rounded-xl p-6 border border-gray-700 relative overflow-hidden min-h-[200px] flex items-center">
+                            <div id="wisdomQuote" class="relative z-10">
+                                <h3 class="text-xl font-bold text-yellow-500 mb-3" id="quoteTitle">关于比较</h3>
+                                <p class="text-lg leading-relaxed text-gray-200 italic" id="quoteText">
+                                    "如果你想和那个人互换人生，你必须接受他的全部。你不能只选他的财富，而不选他的焦虑、年龄和痛苦。如果你不愿意全盘交换，那就不要嫉妒。"
+                                </p>
+                                <div class="mt-4 pt-4 border-t border-gray-800 text-sm text-gray-400">
+                                    <span class="font-bold">行动建议：</span> <span id="quoteAction">当嫉妒升起时，问自己：我愿意成为他吗？如果不是全部，那就完全不要。</span>
+                                </div>
+                            </div>
+                            <div class="absolute top-0 right-0 text-9xl text-gray-800 opacity-20 pointer-events-none">❝</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Self-Consistency / Integrity -->
+                <div class="mt-12 text-center">
+                    <h3 class="text-2xl font-bold mb-4 serif">关于自洽 (Self-Consistency)</h3>
+                    <div class="grid md:grid-cols-2 gap-6 text-left">
+                        <div class="bg-gray-800 p-5 rounded-lg border border-gray-700">
+                            <h4 class="font-bold text-green-400 mb-2">什么是自洽？</h4>
+                            <p class="text-gray-300 text-sm">自洽不仅仅是诚实。它是你的思想、言语和行动的一致性。当你不需要撒谎，不需要记忆你说过什么谎言时，你的大脑就有了空闲去思考未来。</p>
+                        </div>
+                        <div class="bg-gray-800 p-5 rounded-lg border border-gray-700">
+                            <h4 class="font-bold text-red-400 mb-2">不自洽的代价</h4>
+                            <p class="text-gray-300 text-sm">任何时候你为了取悦他人而伪装自己，你都在积累精神债务。这种债务最终会以焦虑、愤怒或抑郁的形式爆发。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Compound Growth Section -->
+        <section class="py-16 bg-white border-t border-gray-200">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-4 serif">复利的魔力</h2>
+                        <p class="text-gray-600 mb-6">
+                            无论是财富、健康还是人际关系，所有的巨大回报都来自于复利。
+                            <br><br>
+                            “在人生的早期，你需要尝试各种事情。一旦你找到了那些对你有效的事情——那些你既擅长又享受，且社会需要的事情——就全力以赴。然后，保持耐心。”
+                        </p>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <span class="w-8 h-8 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center mr-3">1</span>
+                                <span class="text-gray-700">积累声誉（让他人通过你获利）</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="w-8 h-8 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center mr-3">2</span>
+                                <span class="text-gray-700">积累判断力（经验的复利）</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="w-8 h-8 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center mr-3">3</span>
+                                <span class="text-gray-700">积累资本（金钱的复利）</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white border border-gray-100 p-4 rounded-xl shadow-lg">
+                        <div class="chart-container">
+                            <canvas id="compoundChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-gray-400 py-10 text-center">
+        <p class="mb-2 text-white font-bold serif">纳瓦尔的智慧年鉴</p>
+        <p class="text-sm">灵感来源：《纳瓦尔宝典》(The Almanack of Naval Ravikant)</p>
+        <p class="text-xs mt-4 opacity-50">本页面为哲学理念的可视化展示，仅供学习交流。</p>
+    </footer>
+
+    <script>
+        // State Management
+        const state = {
+            desire: 50, // 0-100
+            currentAnxiety: 'comparison'
+        };
+
+        // Data for Charts
+        const anxietyData = {
+            labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
+            peaceHighDesire: [20, 30, 15, 25, 20, 10, 20], // Low peace
+            peaceLowDesire: [80, 85, 90, 88, 92, 95, 90]   // High peace
+        };
+
+        // DOM Elements
+        const desireSlider = document.getElementById('desireSlider');
+        const desireDisplay = document.getElementById('desireValueDisplay');
+        const peaceStatus = document.getElementById('peaceStatus');
+        const anxietySelector = document.getElementById('anxietySelector');
+        const cureBtn = document.getElementById('cureBtn');
+        const quoteTitle = document.getElementById('quoteTitle');
+        const quoteText = document.getElementById('quoteText');
+        const quoteAction = document.getElementById('quoteAction');
+
+        // Quote Database
+        const wisdomDB = {
+            comparison: {
+                title: "关于嫉妒与比较",
+                text: "“嫉妒是一种毒药，你喝下去却指望别人死掉。如果你不能接受与某人彻底交换人生（包括他的痛苦和缺点），那就不要嫉妒他的某一点成就。”",
+                action: "观察那个你嫉妒的人，想象他生活中最糟糕的部分。你还想要吗？"
+            },
+            future: {
+                title: "关于未来与当下",
+                text: "“所有的焦虑都源于对未来的想象。当你完全活在当下时，是没有焦虑的。焦虑是想象中的痛苦。”",
+                action: "深呼吸。专注于此时此刻你的感官感受。这一秒钟，你有问题吗？"
+            },
+            money: {
+                title: "关于金钱",
+                text: "“金钱可以买到自由，但买不到幸福。如果你因为缺钱而不快乐，赚到钱后你会因为其他原因不快乐。首先解决金钱问题，是为了让你不再因为钱而分心。”",
+                action: "将金钱视为一种工具，而不是目标。你的目标是自由。"
+            },
+            imposter: {
+                title: "关于自洽与伪装",
+                text: "“没有人比你更擅长做你自己。各种形式的‘冒充者综合症’都源于你在试图成为别人。当你完全诚实时，就没有竞争。”",
+                action: "今天尝试完全不说谎。不仅仅是不骗人，而是不伪装某种情绪。"
+            },
+            busy: {
+                title: "关于忙碌",
+                text: "“忙碌是思维懒惰的表现。如果你太忙而无法思考，那你只是在用行动掩盖焦虑。空闲时间是现代社会最昂贵的奢侈品。”",
+                action: "每天留出1小时什么都不做。不看手机，不读书，只是思考。"
+            }
+        };
+
+        // Chart Initialization Functions
+        function initHappinessChart() {
+            const ctx = document.getElementById('happinessChart').getContext('2d');
+            
+            // Calculate dynamic data based on initial slider
+            const generateData = (desireLevel) => {
+                // Formula: Peace = Reality (Constant 100) - Desire (Variable)
+                // Add some random noise for "Life Events"
+                let data = [];
+                for(let i=0; i<12; i++) {
+                    let noise = Math.random() * 20 - 10;
+                    let val = 100 - desireLevel + noise; 
+                    if(val > 100) val = 100;
+                    if(val < 0) val = 0;
+                    data.push(val);
+                }
+                return data;
+            };
+
+            window.happinessChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: '内心平静指数 (Peace Index)',
+                        data: generateData(50),
+                        borderColor: '#059669', // Green-600
+                        backgroundColor: 'rgba(5, 150, 105, 0.1)',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#ffffff',
+                        pointBorderColor: '#059669'
+                    },
+                    {
+                        label: '期望阈值 (Expectations)',
+                        data: Array(12).fill(50),
+                        borderColor: '#D97706', // Yellow-600
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        tension: 0,
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 120,
+                            title: { display: true, text: '心理状态' }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    },
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + Math.round(context.raw);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function initLeverageChart() {
+            const ctx = document.getElementById('leverageChart').getContext('2d');
+            window.leverageChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['边际成本 (Cost)', '可扩展性 (Scale)', '准入门槛 (Permission)', '持久性 (Durability)', '潜在回报 (Upside)'],
+                    datasets: [{
+                        label: '新杠杆 (代码/媒体)',
+                        data: [10, 95, 10, 90, 95], // Low cost, high scale, low permission
+                        fill: true,
+                        backgroundColor: 'rgba(5, 150, 105, 0.2)',
+                        borderColor: '#059669',
+                        pointBackgroundColor: '#059669',
+                    }, {
+                        label: '旧杠杆 (劳动力)',
+                        data: [90, 30, 90, 40, 50], // High cost, low scale, high permission
+                        fill: true,
+                        backgroundColor: 'rgba(156, 163, 175, 0.2)',
+                        borderColor: '#9CA3AF',
+                        pointBackgroundColor: '#9CA3AF',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: '#e5e7eb' },
+                            grid: { color: '#e5e7eb' },
+                            pointLabels: {
+                                font: { size: 12, family: "'Noto Sans SC', sans-serif" }
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    },
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+        }
+
+        function initCompoundChart() {
+            const ctx = document.getElementById('compoundChart').getContext('2d');
+            
+            // Generate exponential data
+            const labels = Array.from({length: 20}, (_, i) => `Year ${i+1}`);
+            const linearData = labels.map((_, i) => (i + 1) * 10);
+            const compoundData = labels.map((_, i) => Math.pow(1.2, i) * 10); // 20% growth compounding
+
+            window.compoundChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '复利增长 (知识/财富)',
+                        data: compoundData,
+                        backgroundColor: '#D4AF37',
+                        borderRadius: 4,
+                        order: 1
+                    }, {
+                        label: '线性增长 (出卖时间)',
+                        data: linearData,
+                        backgroundColor: '#E5E7EB',
+                        borderRadius: 4,
+                        order: 2,
+                        type: 'line',
+                        borderColor: '#9CA3AF',
+                        borderWidth: 2,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { display: false },
+                        x: { 
+                            grid: { display: false },
+                            ticks: { maxTicksLimit: 5 }
+                        }
+                    },
+                    plugins: {
+                        tooltip: { mode: 'index', intersect: false }
+                    }
+                }
+            });
+        }
+
+        // Interaction Logic
+        function updateHappiness(val) {
+            state.desire = val;
+            desireDisplay.textContent = val + "%";
+            
+            // Text feedback
+            if(val > 80) {
+                peaceStatus.textContent = "极度焦虑 (Agitated)";
+                peaceStatus.className = "text-lg font-bold text-red-600";
+            } else if (val > 40) {
+                peaceStatus.textContent = "普通波动 (Normal)";
+                peaceStatus.className = "text-lg font-bold text-yellow-600";
+            } else {
+                peaceStatus.textContent = "深度平和 (Serene)";
+                peaceStatus.className = "text-lg font-bold text-green-600";
+            }
+
+            // Update chart data
+            const newData = [];
+            for(let i=0; i<12; i++) {
+                let noise = Math.random() * 20 - 10;
+                let peaceVal = 100 - val + noise;
+                if(peaceVal < 0) peaceVal = 0;
+                if(peaceVal > 100) peaceVal = 100;
+                newData.push(peaceVal);
+            }
+
+            window.happinessChart.data.datasets[0].data = newData;
+            window.happinessChart.data.datasets[1].data = Array(12).fill(val); // Update expectation line
+            window.happinessChart.update();
+        }
+
+        function updateWisdom() {
+            const topic = anxietySelector.value;
+            const data = wisdomDB[topic];
+            
+            // Simple fade effect
+            const container = document.getElementById('wisdomQuote');
+            container.style.opacity = '0';
+            
+            setTimeout(() => {
+                quoteTitle.textContent = data.title;
+                quoteText.textContent = data.text;
+                quoteAction.textContent = data.action;
+                container.style.opacity = '1';
+            }, 300);
+        }
+
+        // Navigation Smooth Scroll
+        window.navTo = function(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+            
+            // Update active state
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                if(btn.dataset.target === id) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+        };
+
+        // Event Listeners
+        desireSlider.addEventListener('input', (e) => updateHappiness(e.target.value));
+        cureBtn.addEventListener('click', updateWisdom);
+
+        // Highlight nav on scroll
+        window.addEventListener('scroll', () => {
+            const sections = ['intro', 'happiness', 'wealth', 'anxiety'];
+            let current = '';
+            
+            sections.forEach(section => {
+                const element = document.getElementById(section);
+                if (window.scrollY >= (element.offsetTop - 100)) {
+                    current = section;
+                }
+            });
+
+            if (current) {
+                document.querySelectorAll('.nav-item').forEach(btn => {
+                    btn.classList.remove('active');
+                    if(btn.dataset.target === current) btn.classList.add('active');
+                });
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initHappinessChart();
+            initLeverageChart();
+            initCompoundChart();
+            updateHappiness(50); // Initial state
+        });
+
+    </script>
+</body>
+</html>
