@@ -7,9 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;700&family=JetBrains+Mono:wght@300&display=swap" rel="stylesheet">
-    <audio autoplay loop>
-        <source src="./magic.mp3" type="audio/mpeg">
-    </audio>
     <style>
         /* 全局样式设定 */
         body, html {
@@ -136,7 +133,7 @@
             ERROR_CODE: LOGIC_OVERFLOW<br>
             EMOTION_MODULE: NOT_FOUND
         </div>
-        <button onclick="nextScene()" class="group text-slate-500 hover:text-white transition-colors text-sm tracking-widest border-b border-transparent hover:border-slate-500 pb-1">
+        <button onclick="playMusic()" class="group text-slate-500 hover:text-white transition-colors text-sm tracking-widest border-b border-transparent hover:border-slate-500 pb-1">
             [ 重启系统，读取记忆碎片 ]
         </button>
     </div>
@@ -288,6 +285,14 @@
     </div>
 
     <script>
+        // 播放音乐
+        function playMusic() {
+            const audio = document.querySelector('audio');
+            if (audio) {
+                audio.play();
+            }
+        }
+
         // 状态管理
         let currentScene = 0;
         const body = document.getElementById('body-bg');
