@@ -303,6 +303,7 @@
                 audio.src = url;
             }
             audio.play().catch(err => console.warn('播放失败：', err));
+            if (typeof nextScene === 'function') nextScene();
         }
 
         // 状态管理
