@@ -284,6 +284,20 @@
             margin: auto; /* 居中对齐 */
         }
 
+        /* 修复场景2文字飘走问题，确保文字限定在框内 */
+        #scene-2 .glass-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* 垂直居中对齐 */
+            align-items: center; /* 水平居中对齐 */
+            overflow: hidden; /* 限制文字在框内 */
+        }
+
+        #scene-2 .glass-panel > * {
+            max-width: 100%; /* 确保文字不会超出框的宽度 */
+            word-wrap: break-word; /* 自动换行 */
+        }
+
         #scene-2 .glass-panel {
             margin: auto; /* 确保玻璃面板居中 */
             width: 100%; /* 确保宽度自适应 */
@@ -334,12 +348,15 @@
             color: #ffffff; /* 按钮悬停时的文字颜色 */
         }
 
-        /* 场景3卡片样式调整 */
+        /* 确保场景3两个卡片的样式和大小一致，并设置深邃背景 */
         #scene-3 .glass-panel {
             aspect-ratio: 4 / 3; /* 设置卡片的长宽比例为4:3 */
             width: 100%; /* 确保卡片宽度自适应 */
             max-width: 400px; /* 限制卡片的最大宽度 */
             margin: auto; /* 居中对齐 */
+            background: rgba(30, 30, 30, 0.9); /* 深邃背景颜色 */
+            color: #e5e7eb; /* 浅色文字 */
+            border: 1px solid rgba(255, 255, 255, 0.2); /* 边框颜色 */
         }
 
         @media (max-width: 768px) {
