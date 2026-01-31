@@ -438,13 +438,14 @@
             alert('咕咕使用了技能「傲娇」！雨猫感到一阵心痛，但依然决定继续守护你。💕');
         }
 
-        // 新增的重开函数
+        // 修复后的重开函数
         function restartScene() {
             // 隐藏当前场景
             document.getElementById(`scene-${currentScene}`).classList.remove('active');
             // 重置状态
             currentScene = 0;
             body.className = ''; // 清除所有类
+            body.style.background = ''; // 重置背景颜色
             body.classList.add(bgColors[currentScene]);
             body.classList.add('text-slate-200');
             // 显示第一个场景
