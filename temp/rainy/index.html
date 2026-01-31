@@ -435,26 +435,29 @@
         <div class="glass-panel max-w-lg w-full mx-6 p-8 md:p-12 rounded-2xl">
             <h2 class="text-2xl md:text-3xl font-light text-slate-200 mb-6 text-center">解开谜题</h2>
             <p class="text-slate-400 text-center mb-6">
-                你需要找到正确的答案才能继续前进。
+                你需要找到正确的答案才能继续前进。<br>
+                雨猫你觉得雨猫可以喜欢你的什么？
             </p>
             <div class="flex flex-col items-center space-y-4">
-                <button onclick="checkAnswer('A')" class="btn-interact bg-slate-700 text-white">选项 A</button>
-                <button onclick="checkAnswer('B')" class="btn-interact bg-slate-700 text-white">选项 B</button>
-                <button onclick="checkAnswer('C')" class="btn-interact bg-slate-700 text-white">选项 C</button>
+                <button onclick="checkAnswer('A')" class="btn-interact bg-slate-700 text-white">可爱</button>
+                <button onclick="checkAnswer('B')" class="btn-interact bg-slate-700 text-white">真心</button>
+                <button onclick="checkAnswer('C')" class="btn-interact bg-slate-700 text-white">能力</button>
             </div>
         </div>
     </div>
 
-    <!-- 🌌 Scene 5: Drag Interaction -->
+    <!-- 🌌 Scene 5: Question Interaction -->
     <div id="scene-5" class="scene">
         <div class="glass-panel max-w-lg w-full mx-6 p-8 md:p-12 rounded-2xl">
-            <h2 class="text-2xl md:text-3xl font-light text-slate-200 mb-6 text-center">拖动拼图</h2>
+            <h2 class="text-2xl md:text-3xl font-light text-slate-200 mb-6 text-center">回答问题</h2>
             <p class="text-slate-400 text-center mb-6">
-                将拼图拖动到正确的位置，完成后继续前进。
+                选择正确的答案，继续前进。<br>
+                雨猫你觉得雨猫为什么管你?
             </p>
-            <div id="puzzle-container" class="relative w-full h-64 bg-slate-800 rounded-lg">
-                <div id="puzzle-piece" draggable="true" class="absolute w-16 h-16 bg-indigo-500 rounded-lg cursor-grab"></div>
-                <div id="puzzle-target" class="absolute w-16 h-16 border-2 border-dashed border-indigo-500"></div>
+            <div class="flex flex-col items-center space-y-4">
+                <button onclick="checkAnswerScene5('A')" class="btn-interact bg-slate-700 text-white">PUA</button>
+                <button onclick="checkAnswerScene5('B')" class="btn-interact bg-slate-700 text-white">吃醋</button>
+                <button onclick="checkAnswerScene5('C')" class="btn-interact bg-slate-700 text-white">担心</button>
             </div>
         </div>
     </div>
@@ -610,7 +613,7 @@
                 body.classList.add('text-slate-800');
             } else {
                 body.style.transition = ''; // 清除背景渐变过渡
-                body.style.background = ''; // 重置背景颜色
+                body.background = ''; // 重置背景颜色
                 body.classList.add(bgColors[currentScene]);
                 body.classList.add('text-slate-200');
             }
@@ -698,28 +701,15 @@
             }
         }
 
-        // Add logic for Scene 5 (Drag Interaction)
-        const puzzlePiece = document.getElementById('puzzle-piece');
-        const puzzleTarget = document.getElementById('puzzle-target');
-
-        puzzlePiece.addEventListener('dragstart', (e) => {
-            e.dataTransfer.setData('text/plain', 'dragging');
-        });
-
-        puzzleTarget.addEventListener('dragover', (e) => {
-            e.preventDefault();
-        });
-
-        puzzleTarget.addEventListener('drop', (e) => {
-            e.preventDefault();
-            const data = e.dataTransfer.getData('text/plain');
-            if (data === 'dragging') {
-                puzzlePiece.style.left = `${e.offsetX - puzzlePiece.offsetWidth / 2}px`;
-                puzzlePiece.style.top = `${e.offsetY - puzzlePiece.offsetHeight / 2}px`;
-                alert('拼图完成！进入下一场景。');
+        // 添加场景 5 的回答问题逻辑
+        function checkAnswerScene5(option) {
+            if (option === 'C') {
+                alert('正确答案！进入下一场景。');
                 nextScene();
+            } else {
+                alert('答案错误，请再试一次！');
             }
-        });
+        }
     </script>
 </body>
 </html>
