@@ -333,8 +333,16 @@
             margin: auto; /* 居中对齐 */
         }
 
+        /* 场景3第二个卡片样式调整 */
+        #scene-3 #card-3-2 {
+            aspect-ratio: 4 / 3; /* 设置卡片的长宽比例为4:3 */
+            width: 100%; /* 确保卡片宽度自适应 */
+            max-width: 400px; /* 限制卡片的最大宽度 */
+            margin: auto; /* 居中对齐 */
+        }
+
         @media (max-width: 768px) {
-            #scene-3 .glass-panel {
+            #scene-3 #card-3-2 {
                 aspect-ratio: 3 / 4; /* 小屏幕下调整为3:4比例 */
                 max-width: 90%; /* 限制卡片宽度为屏幕的90% */
             }
