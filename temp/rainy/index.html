@@ -315,6 +315,18 @@
             justify-content: center;
             text-align: center;
             padding: 1rem;
+            position: relative;
+        }
+
+        #scene-4::before, #scene-5::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(63, 94, 251, 0.2), rgba(63, 94, 251, 0.1), rgba(0, 0, 0, 1));
+            z-index: -1;
         }
 
         #scene-4 .glass-panel, #scene-5 .glass-panel {
