@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NPD 觉察与防御手册</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen text-slate-800">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-2 font-bold text-indigo-600 text-lg">
+                <i data-lucide="shield-check"></i>
+                <span>NPD 防御手册</span>
+            </div>
+            <div class="flex gap-4 text-sm font-medium text-slate-600">
+                <button onclick="showSection('test')" class="hover:text-indigo-600 transition">认知自测</button>
+                <button onclick="showSection('knowledge')" class="hover:text-indigo-600 transition">硬核知识</button>
+                <button onclick="showSection('defense')" class="hover:text-indigo-600 transition">防御指南</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        
+        <!-- Welcome Section -->
+        <section id="welcome" class="mb-12 text-center fade-in">
+            <h1 class="text-3xl md:text-4xl font-bold mb-4 text-slate-900">保护你的情感边界</h1>
+            <p class="text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                无论是想了解自己，还是怀疑身边有人正在进行心理操纵，理性分析永远是最好的武器。
+            </p>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="test-section" class="section-content fade-in">
+            <div class="glass-card rounded-2xl p-6 md:p-8 shadow-xl border border-indigo-50">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="p-2 bg-indigo-100 text-indigo-600 rounded-lg">
+                        <i data-lucide="clipboard-list"></i>
+                    </div>
+                    <h2 class="text-xl font-bold">I. NPD 筛查自测（12 题简版）</h2>
+                </div>
+                <div class="prose text-slate-600 leading-relaxed space-y-4 mb-6">
+                    <p>这套题主要参考了经典的 NPI（自恋人格量表）及临床观察。请注意，这仅作为初步筛查，不能替代专业诊断。</p>
+                    <p><strong>计分规则：</strong> 这种行为出现的频率： 1-从未 | 2-很少 | 3-有时 | 4-经常 | 5-总是</p>
+                </div>
+                
+                <div id="quiz-container">
+                    <!-- Quiz questions will be injected here -->
+                </div>
+
+                <div id="quiz-result" class="hidden mt-8 p-6 bg-indigo-50 rounded-xl border border-indigo-100">
+                    <h3 class="text-lg font-bold mb-2 text-indigo-900" id="result-title"></h3>
+                    <p class="text-indigo-800 text-sm leading-relaxed" id="result-desc"></p>
+                    <div id="result-buttons" class="mt-6 flex gap-4"></div>
+                    <button onclick="resetQuiz()" class="mt-4 text-sm text-indigo-600 font-bold hover:underline">重新测试</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Knowledge Section (Triangulation) -->
+        <section id="knowledge-section" class="section-content hidden fade-in space-y-6">
+            <div class="glass-card rounded-2xl p-6 md:p-8 shadow-lg">
+                <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="triangle" class="text-amber-500"></i> 什么是“三角操纵”？
+                </h2>
+                <div class="prose text-slate-600 leading-relaxed space-y-4">
+                    <p>
+                        在心理学中，<strong>三角操纵 (Triangulation)</strong> 是一种操纵手段。NPD 患者会故意将第三个人引入两个人的关系中，以制造竞争、焦虑和不安全感。
+                    </p>
+                    <div class="grid md:grid-cols-2 gap-4 mt-4">
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                            <h4 class="font-bold text-slate-800 mb-2">典型表现：</h4>
+                            <ul class="list-disc list-inside text-sm space-y-1">
+                                <li>在你面前夸奖另一个竞争者</li>
+                                <li>传达第三者对你的“不满”（哪怕是编造的）</li>
+                                <li>制造你和朋友/家人的误会</li>
+                            </ul>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                            <h4 class="font-bold text-slate-800 mb-2">操纵目的：</h4>
+                            <ul class="list-disc list-inside text-sm space-y-1">
+                                <li>让你为了获得他们的认可而竞争</li>
+                                <li>孤立你，削弱你的社交支持系统</li>
+                                <li>转移矛盾，让你攻击第三者而非操纵者</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-card rounded-2xl p-6 md:p-8 shadow-lg">
+                <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="info" class="text-sky-500"></i> II. 相关知识核心要点
+                </h2>
+                <div class="prose text-slate-600 leading-relaxed space-y-4">
+                    <h3 class="font-bold text-slate-800 mb-2">1. 核心三角逻辑</h3>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>内在空洞：</strong> 外表的自大是为了掩盖内在极度的自卑和脆弱。</li>
+                        <li><strong>全能感：</strong> 必须掌控环境和他人来维持“我很强大”的假象。</li>
+                        <li><strong>血包理论：</strong> 他们把他人看作“供应品”（Supply），用来提供赞美、金钱或情绪价值。</li>
+                    </ul>
+                    <h3 class="font-bold text-slate-800 mb-2 mt-4">2. 常见的操作手段</h3>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>捧杀 (Love Bombing)：</strong> 早期过度赞美，让你卸下防备。</li>
+                        <li><strong>贬低 (Devaluing)：</strong> 突然开始挑刺，让你产生自我怀疑。</li>
+                        <li><strong>煤气灯下 (Gaslighting)：</strong> 扭曲事实，让你觉得是自己记错了或疯了。</li>
+                        <li><strong>断崖式抛弃 (Discarding)：</strong> 当你没有利用价值时，冷酷地离开。</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="glass-card rounded-2xl p-6 md:p-8 shadow-lg">
+                <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="cpu" class="text-rose-500"></i> 硬核知识：NPD 的“算法”逻辑
+                </h2>
+                <div class="prose text-slate-600 leading-relaxed space-y-4">
+                    <p>NPD 的行为不是随机的，而是一套严密的防御性心理算法。</p>
+                    <h3 class="font-bold text-slate-800 mb-2">1. 虚假自我 (False Self) 的能量守恒</h3>
+                    <p>NPD 的内心深处是一个坍缩的黑洞，他们没有“自给自足”的自尊。</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>外部补给 (Narcissistic Supply)：</strong> 他们必须通过控制他人、获取崇拜或激发他人的愤怒，来证明自己的存在感。</li>
+                        <li><strong>投射机制 (Projection)：</strong> 当他们感到羞耻时，会立刻把这种负面情绪“投射”到你身上。比如，明明是他们撒谎，却会歇斯底里地指责你“不诚实”。</li>
+                    </ul>
+                    <h3 class="font-bold text-slate-800 mb-2 mt-4">2. 认知失调的陷阱</h3>
+                    <p>你会感到内耗，是因为你试图用逻辑去理解一个病理性的行为。</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>INTP 陷阱：</strong> 你想通过分析“为什么他会这样”来解决问题。</li>
+                        <li><strong>真相：</strong> NPD 的逻辑是“顺我者昌，逆我者亡”。在他们的认知系统里，你是他的“附属品”而非独立个体。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Defense Section -->
+        <section id="defense-section" class="section-content hidden fade-in space-y-6">
+            <div class="glass-card rounded-2xl p-6 md:p-8 shadow-lg">
+                <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="shield" class="text-green-500"></i> III. 防御手册（自救指南）
+                </h2>
+                <div class="prose text-slate-600 leading-relaxed space-y-4">
+                    <p>面对 NPD，最好的策略通常不是“战胜”他们，而是“撤离”。</p>
+                    <h3 class="font-bold text-slate-800 mb-2">1. 物理与精神隔离</h3>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>不解释、不争辩、不教育：</strong> NPD 不需要事实，只需要你的情绪反应。</li>
+                        <li><strong>灰色岩石法 (Grey Rocking)：</strong> 让自己变得像一块灰色的石头一样无趣。无论他们怎么挑衅，只给简短、无感情的回应（如“嗯”、“知道了”）。</li>
+                    </ul>
+                    <h3 class="font-bold text-slate-800 mb-2 mt-4">2. 建立边界墙</h3>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>识别“钩子”：</strong> 当他们用内疚感、恐惧感控制你时，意识到那是他们的投射，不是你的错。</li>
+                        <li><strong>停止救世主心态：</strong> NPD 很难通过爱或耐心被改变，别试图成为那个“例外”。</li>
+                    </ul>
+                    <h3 class="font-bold text-slate-800 mb-2 mt-4">3. 内核稳定练习</h3>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>记录事实：</strong> 记日记以对抗“煤气灯”效应，保护自己的现实感。</li>
+                        <li><strong>寻找外部支撑：</strong> INTP 容易在逻辑里绕圈，请多和能给你提供真实反馈的朋友交流。</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="glass-card rounded-2xl p-6 md:p-8 shadow-lg">
+                <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="gem" class="text-purple-500"></i> 深度防御手册：高阶博弈策略
+                </h2>
+                <div class="prose text-slate-600 leading-relaxed space-y-4">
+                    <p>面对这种掠夺型的心理结构，你需要建立一套防御系统。</p>
+                    <h3 class="font-bold text-slate-800 mb-2">1. 识别“文字游戏”：拆解沙拉语 (Word Salad)</h3>
+                    <p>当 NPD 无法反驳你的逻辑时，他们会使用“语言沙拉”：绕圈子、翻旧账、偷换概念。</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>硬核防御：</strong> 不接球。</li>
+                        <li><strong>话术：</strong> “你现在的谈话已经偏离了主题，等你能聚焦在当前问题时，我们再谈。”（然后立刻物理撤离，不听后续）。</li>
+                    </ul>
+                    <h3 class="font-bold text-slate-800 mb-2 mt-4">2. 建立“现实清单” (Reality Testing)</h3>
+                     <p>NPD 擅长扭曲记忆。作为 INTP，你的逻辑是强大的，但容易被情绪干扰。</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>操作：</strong> 建立一个秘密文档，记录下冲突发生的时间、地点、对方的原话、你的反应。</li>
+                        <li><strong>目的：</strong> 当你怀疑自己是不是“想多了”或“太敏感”时，翻看这份冷冰冰的事实清单。</li>
+                    </ul>
+                    <h3 class="font-bold text-slate-800 mb-2 mt-4">3. JADE 准则 (防御核心)</h3>
+                    <p>在与 NPD 沟通时，绝对不要做以下四件事（JADE）：</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>Justify (辩解)：</strong> 不要解释你的动机。</li>
+                        <li><strong>Argue (争论)：</strong> 逻辑争论对他们无效，只会给他们提供情绪补给。</li>
+                        <li><strong>Defend (防御)：</strong> 别试图证明你不是他们口中那个糟糕的人。</li>
+                        <li><strong>Explain (解释)：</strong> 解释在他们眼里等于软弱。</li>
+                    </ul>
+                     <p class="mt-2"><strong>核心口诀：</strong> “你说得对，那是你的看法。”（语气要平静得像在说今天的气温）。</p>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="glass-card p-6 rounded-2xl shadow-md border-t-4 border-emerald-500">
+                    <i data-lucide="rock" class="text-emerald-500 mb-4"></i>
+                    <h3 class="font-bold mb-2">灰色摇滚法 (Grey Rock)</h3>
+                    <p class="text-sm text-slate-600">变得像一块灰色的石头一样无趣。不提供情绪反馈，不争论，不分享私人生活。让他们在你身上找不到“情绪供应”。</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl shadow-md border-t-4 border-blue-500">
+                    <i data-lucide="wall" class="text-blue-500 mb-4"></i>
+                    <h3 class="font-bold mb-2">建立物理/心理边界</h3>
+                    <p class="text-sm text-slate-600">明确自己的底线。当对方试图越界或进行人身攻击时，立即停止对话并离开现场。不解释，只执行。</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl shadow-md border-t-4 border-purple-500">
+                    <i data-lucide="brain" class="text-purple-500 mb-4"></i>
+                    <h3 class="font-bold mb-2">断绝精神供应</h3>
+                    <p class="text-sm text-slate-600">停止寻找对方的逻辑，停止试图让他们理解你。接受他们可能永远不会改变的事实，转而关注自己的内心成长。</p>
+                </div>
+            </div>
+            
+            <div class="glass-card p-6 rounded-2xl mt-8 bg-indigo-900 text-white">
+                <h3 class="font-bold text-xl mb-2">雨猫的小建议 🐱</h3>
+                <p class="text-indigo-100 italic">“真正的强大不是看穿了多少诡计，而是无论别人如何操纵，你都拥有随时抽身离去、爱护自己的底气。”</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="mt-20 border-t border-slate-200 py-8 text-center text-slate-500 text-xs">
+        <p>© 2026 NPD 觉察工具 - 仅供参考，不作为医学诊断建议</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
