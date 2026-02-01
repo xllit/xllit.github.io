@@ -281,59 +281,21 @@
             justify-content: center;
             text-align: center; /* 确保内容居中对齐 */
             padding: 1rem; /* 增加内边距，避免内容贴边 */
-            max-width: 90%; /* 限制场景宽度 */
-            max-height: 90%; /* 限制场景高度 */
-            margin: auto; /* 居中对齐 */
+            max-width: none; /* 移除宽度限制 */
+            max-height: none; /* 移除高度限制 */
         }
 
-        /* 修复场景2文字飘走问题，确保文字限定在框内 */
+        /* 移除场景2内容的框限制 */
         #scene-2 .glass-panel {
-            display: inline-block; /* 使卡片大小随内容变化 */
-            padding: 1rem; /* 增加内边距 */
-            margin: auto; /* 确保卡片居中 */
-            max-width: 90%; /* 限制卡片最大宽度 */
-            box-sizing: border-box; /* 包括内边距在内计算宽度 */
+            display: block; /* 取消卡片样式 */
+            padding: 0; /* 移除内边距 */
+            margin: 0; /* 移除居中对齐 */
+            max-width: none; /* 移除宽度限制 */
+            box-sizing: content-box; /* 仅计算内容大小 */
         }
 
         #scene-2 .glass-panel > * {
-            max-width: 100%; /* 确保内容不会超出卡片宽度 */
-            word-wrap: break-word; /* 自动换行 */
-        }
-
-        #scene-2 .glass-panel {
-            margin: auto; /* 确保玻璃面板居中 */
-            width: 90%; /* 增大卡片宽度占比 */
-            max-width: 800px; /* 增大卡片的最大宽度 */
-            aspect-ratio: 16 / 9; /* 调整长宽比例为16:9 */
-        }
-
-        @media (max-width: 768px) {
-            #scene-2 .glass-panel {
-                max-width: 95%; /* 小屏幕下卡片宽度占比更大 */
-            }
-        }
-
-        /* 场景2卡片内容整体缩放自适应 */
-        #scene-2 .glass-panel {
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* 垂直居中对齐 */
-            align-items: center; /* 水平居中对齐 */
-            overflow: hidden; /* 限制内容在卡片内 */
-            padding: 1rem; /* 增加内边距 */
-        }
-
-        #scene-2 .glass-panel > * {
-            max-width: 100%; /* 确保内容宽度自适应 */
-            word-wrap: break-word; /* 自动换行 */
-            transform: scale(1); /* 默认缩放比例 */
-            transition: transform 0.3s ease-in-out; /* 平滑缩放动画 */
-        }
-
-        @media (max-width: 768px) {
-            #scene-2 .glass-panel > * {
-                transform: scale(0.9); /* 小屏幕下整体缩放 */
-            }
+            max-width: none; /* 移除内容宽度限制 */
         }
 
         /* 修复场景 4 的居中问题 */
