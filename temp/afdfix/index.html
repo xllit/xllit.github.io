@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>晨曦</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500&display=swap" rel="stylesheet">
+    <audio src="./1.mp3" autoplay loop></audio>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --primary-glow: rgba(186, 230, 253, 0.5);
+            --secondary-glow: rgba(204, 251, 241, 0.4);
+        }
+
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            overflow-x: hidden;
+            color: #334155;
+        }
+
+        /* 动态氛围背景 */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 10% 20%, var(--primary-glow) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, var(--secondary-glow) 0%, transparent 40%);
+            filter: blur(80px);
+            animation: pulseBg 15s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulseBg {
+            0% { opacity: 0.6; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.1); }
+        }
+
+        /* 极致呼吸球 */
+        .breath-container {
+            position: relative;
+            width: 240px;
+            height: 240px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .breath-ball {
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 60px rgba(255, 255, 255, 0.8), inset 0 0 30px rgba(186, 230, 253, 0.3);
+            animation: breathingCycle 19s infinite cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .ball-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.5);
+            animation: glowCycle 19s infinite cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes breathingCycle {
+            0%, 100% { transform: scale(1); filter: blur(0px); }
+            21% { transform: scale(1.8); filter: blur(2px); } /* 吸气 4s */
+            58% { transform: scale(1.8); filter: blur(4px); } /* 憋气 7s */
+            100% { transform: scale(1); filter: blur(0px); } /* 呼气 8s */
+        }
+
+        @keyframes glowCycle {
+            0%, 100% { transform: scale(1); opacity: 0; }
+            21%, 58% { transform: scale(1.3); opacity: 0.5; }
+        }
+
+        /* 列表微交互 */
+        .task-item {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-left: 3px solid transparent;
+        }
+        .task-item:hover {
+            background-color: white;
+            transform: translateX(8px);
+            border-left-color: #94a3b8;
+        }
+        .task-done {
+            opacity: 0.3;
+            filter: grayscale(100%);
+            transform: scale(0.98);
+        }
+
+        .fade-in {
+            animation: fadeIn 1.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-start min-h-screen">
+    <div class="ambient-bg"></div>
+
+    <div class="max-w-xl w-full px-6 pt-16 space-y-20 pb-20">
+        <!-- 头部引导 -->
+        <header class="text-center space-y-4 fade-in">
+            <h1 class="text-2xl font-light text-slate-600 tracking-[0.2em]">此刻 · 呼吸</h1>
+            <p class="text-slate-400 text-sm font-light">不需要努力，只需要在这里停留一会。</p>
+        </header>
+
+        <!-- 第一模块：呼吸引导 -->
+        <section class="flex flex-col items-center space-y-12">
+            <div class="breath-container">
+                <div class="ball-glow"></div>
+                <div class="breath-ball"></div>
+                <div id="statusText" class="absolute text-slate-500 text-sm tracking-widest font-light">准备</div>
+            </div>
+            
+            <div class="flex gap-12 text-[10px] text-slate-400 tracking-widest uppercase">
+                <div class="flex flex-col items-center gap-2"><span>In</span><span class="h-8 w-[1px] bg-slate-200"></span><span>4s</span></div>
+                <div class="flex flex-col items-center gap-2"><span>Hold</span><span class="h-8 w-[1px] bg-slate-200"></span><span>7s</span></div>
+                <div class="flex flex-col items-center gap-2"><span>Out</span><span class="h-8 w-[1px] bg-slate-200"></span><span>8s</span></div>
+            </div>
+        </section>
+
+        <!-- 第二模块：感官复位 -->
+        <section class="space-y-8">
+            <div class="text-center space-y-2">
+                <h2 class="text-lg font-light text-slate-600 tracking-widest">5-4-3-2-1 感官锚点</h2>
+                <p class="text-xs text-slate-400">点击你已经完成的小动作</p>
+            </div>
+
+            <div class="space-y-4" id="taskBoard">
+                <div class="task-item p-5 bg-white/40 backdrop-blur-sm rounded-2xl flex items-center cursor-pointer shadow-sm" onclick="toggleItem(this)">
+                    <span class="text-xl mr-6 opacity-40 italic font-serif">5</span>
+                    <span class="text-sm text-slate-600 tracking-wide">在房间里找 5 个蓝色或绿色的东西</span>
+                </div>
+                <div class="task-item p-5 bg-white/40 backdrop-blur-sm rounded-2xl flex items-center cursor-pointer shadow-sm" onclick="toggleItem(this)">
+                    <span class="text-xl mr-6 opacity-40 italic font-serif">4</span>
+                    <span class="text-sm text-slate-600 tracking-wide">感受 4 种触感：布料、桌面、甚至你自己的呼吸</span>
+                </div>
+                <div class="task-item p-5 bg-white/40 backdrop-blur-sm rounded-2xl flex items-center cursor-pointer shadow-sm" onclick="toggleItem(this)">
+                    <span class="text-xl mr-6 opacity-40 italic font-serif">3</span>
+                    <span class="text-sm text-slate-600 tracking-wide">闭上眼，仔细捕捉 3 种很远或很近的声音</span>
+                </div>
+                <div class="task-item p-5 bg-white/40 backdrop-blur-sm rounded-2xl flex items-center cursor-pointer shadow-sm" onclick="toggleItem(this)">
+                    <span class="text-xl mr-6 opacity-40 italic font-serif">2</span>
+                    <span class="text-sm text-slate-600 tracking-wide">深吸气，寻找 2 种空气中细微的气味</span>
+                </div>
+                <div class="task-item p-5 bg-white/40 backdrop-blur-sm rounded-2xl flex items-center cursor-pointer shadow-sm" onclick="toggleItem(this)">
+                    <span class="text-xl mr-6 opacity-40 italic font-serif">1</span>
+                    <span class="text-sm text-slate-600 tracking-wide">喝一口水，感受它滑过喉咙的那个瞬间</span>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center pt-10">
+            <p class="text-[10px] text-slate-300 tracking-[0.4em] uppercase">Safety · Stillness · Peace</p>
+        </footer>
+    </div>
+
+    <script>
+        // 动态文字引导
+        const statusText = document.getElementById('statusText');
+        const phases = [
+            { text: '吸气', duration: 4000 },
+            { text: '屏息', duration: 7000 },
+            { text: '呼气', duration: 8000 }
+        ];
+
+        let currentPhase = 0;
+        function updateText() {
+            statusText.innerText = phases[currentPhase].text;
+            setTimeout(() => {
+                currentPhase = (currentPhase + 1) % phases.length;
+                updateText();
+            }, phases[currentPhase].duration);
+        }
+
+        function toggleItem(el) {
+            el.classList.toggle('task-done');
+            // 简单的完成音效（视觉模拟）
+            if(el.classList.contains('task-done')) {
+                el.style.backgroundColor = 'rgba(255,255,255,0.2)';
+            } else {
+                el.style.backgroundColor = 'rgba(255,255,255,0.4)';
+            }
+        }
+
+        window.onload = updateText;
+    </script>
+</body>
+</html>
