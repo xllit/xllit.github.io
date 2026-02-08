@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>荒诞主义哲学工坊：西西弗斯的救赎</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Google Fonts (Noto Serif SC for philosophical feel) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Config for Theme -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'stone-50': '#fafaf9',
+                        'stone-100': '#f5f5f4',
+                        'stone-200': '#e7e5e4',
+                        'stone-600': '#57534e',
+                        'stone-800': '#292524',
+                        'accent-clay': '#b45309', // Subtle accent
+                        'accent-sage': '#84a98c',
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif SC"', 'serif'],
+                        sans: ['"Noto Sans SC"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body class="font-sans antialiased selection:bg-stone-200">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-stone-50/90 backdrop-blur-sm border-b border-stone-200 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="font-serif text-xl font-bold tracking-tight text-stone-800">荒诞主义工坊</div>
+                <div class="hidden md:flex space-x-8">
+                    <button onclick="scrollToSection('section-pendulum')" class="text-stone-600 hover:text-accent-clay transition-colors text-sm font-medium">痛苦钟摆</button>
+                    <button onclick="scrollToSection('section-suicide')" class="text-stone-600 hover:text-accent-clay transition-colors text-sm font-medium">严肃命题</button>
+                    <button onclick="scrollToSection('section-sisyphus')" class="text-stone-600 hover:text-accent-clay transition-colors text-sm font-medium">推石体验</button>
+                    <button onclick="scrollToSection('section-rebellion')" class="text-stone-600 hover:text-accent-clay transition-colors text-sm font-medium">反抗与希望</button>
+                    <button onclick="scrollToSection('section-appendix')" class="text-stone-600 hover:text-accent-clay transition-colors text-sm font-medium">生存支柱</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-stone-100 py-16 md:py-24">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-serif font-bold text-stone-800 mb-6">荒诞主义的人生如何应对？</h1>
+            <p class="text-lg md:text-xl text-stone-600 leading-relaxed max-w-2xl mx-auto">
+                如果你因为过于清醒而感到痛苦，这也许是你需要的解药。跟随加缪的视角，从叔本华的悲观钟摆中走出，直面西西弗斯的巨石。
+            </p>
+            <div class="mt-8">
+                <button onclick="scrollToSection('section-pendulum')" class="px-6 py-3 bg-stone-800 text-stone-50 rounded-md hover:bg-stone-700 transition shadow-lg font-medium">
+                    开始探索 &#8595;
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-24">
+
+        <!-- Section 1: Schopenhauer's Pendulum -->
+        <section id="section-pendulum" class="scroll-mt-24">
+            <div class="mb-8">
+                <h2 class="text-3xl font-serif font-bold text-stone-800 mb-4">第一章：欲望的钟摆</h2>
+                <div class="prose prose-stone max-w-none text-stone-600 bg-white p-6 rounded-lg shadow-sm border border-stone-100">
+                    <p class="mb-4">
+                        <strong class="text-accent-clay">交互指引：</strong> 拖动下方的滑块来调整“欲望”的强度。观察人生状态如何在“痛苦”与“无聊”之间摆动。
+                    </p>
+                    <p>
+                        叔本华曾说：“人生就是一团欲望。欲望得不到满足就感到痛苦，欲望得到满足你会感到无聊。”人生就像一个钟摆，在痛苦和无聊之间永恒徘徊。如果人生十之八九不如意，它还值得一活吗？
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-md border border-stone-200">
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <!-- Controls -->
+                    <div class="w-full md:w-1/3 space-y-6">
+                        <div>
+                            <label for="desireRange" class="block text-sm font-medium text-stone-700 mb-2">当前欲望强度</label>
+                            <input type="range" id="desireRange" min="0" max="100" value="50" class="w-full h-2 bg-stone-200 rounded-lg appearance-none cursor-pointer accent-stone-800">
+                            <div class="flex justify-between text-xs text-stone-500 mt-1">
+                                <span>无欲 (无聊)</span>
+                                <span>强求 (痛苦)</span>
+                            </div>
+                        </div>
+                        <div id="stateText" class="p-4 bg-stone-50 rounded border border-stone-200 text-center font-serif text-lg text-stone-800 transition-all duration-300">
+                            人生状态：平衡
+                        </div>
+                    </div>
+
+                    <!-- Chart Container -->
+                    <div class="w-full md:w-2/3">
+                        <div class="chart-container">
+                            <canvas id="pendulumChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: The Logic of Suicide -->
+        <section id="section-suicide" class="scroll-mt-24">
+            <div class="mb-8">
+                <h2 class="text-3xl font-serif font-bold text-stone-800 mb-4">第二章：唯一的严肃命题</h2>
+                <div class="prose prose-stone max-w-none text-stone-600 bg-white p-6 rounded-lg shadow-sm border border-stone-100">
+                    <p class="mb-4">
+                        <strong class="text-accent-clay">思考时刻：</strong> 点击下方的按钮回答问题。加缪挑战那些声称“人生无意义”的虚无主义者：如果你真的相信人生不值得一活，为何不身体力行？
+                    </p>
+                    <p>
+                        加缪认为：“真正值得尊敬的哲学家应该做到知行合一。”如果只是口头宣扬虚无，却依然贪恋生活的乐趣，这是一种伪善。但他真的是在鼓励自杀吗？
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Question Card -->
+                <div class="bg-stone-800 text-stone-50 p-8 rounded-xl shadow-lg flex flex-col justify-center items-center text-center">
+                    <h3 class="text-xl font-bold mb-6">如果你认为人生毫无意义...</h3>
+                    <div class="space-x-4">
+                        <button id="btn-suicide-yes" class="px-6 py-2 border border-stone-400 rounded hover:bg-stone-700 transition">我应该结束它</button>
+                        <button id="btn-suicide-no" class="px-6 py-2 bg-accent-clay text-white rounded hover:bg-amber-700 transition font-bold">我依然想活</button>
+                    </div>
+                </div>
+
+                <!-- Response Card -->
+                <div id="response-card" class="bg-white p-8 rounded-xl shadow-md border border-stone-200 flex flex-col justify-center items-center text-center opacity-50 pointer-events-none transition-opacity duration-500">
+                    <div id="response-icon" class="text-4xl mb-4">🤔</div>
+                    <h3 id="response-title" class="text-lg font-bold text-stone-800 mb-2">等待你的选择...</h3>
+                    <p id="response-text" class="text-stone-600 text-sm">做出选择以查看加缪的分析。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: The Myth of Sisyphus (Interactive) -->
+        <section id="section-sisyphus" class="scroll-mt-24">
+            <div class="mb-8">
+                <h2 class="text-3xl font-serif font-bold text-stone-800 mb-4">第三章：推石头的西西弗斯</h2>
+                <div class="prose prose-stone max-w-none text-stone-600 bg-white p-6 rounded-lg shadow-sm border border-stone-100">
+                    <p class="mb-4">
+                        <strong class="text-accent-clay">体验荒诞：</strong> 下方是西西弗斯的命运模拟器。点击按钮（或按空格键）将巨石推向山顶。一旦停止，石头就会滚落。
+                    </p>
+                    <p>
+                        诸神惩罚西西弗斯将巨石推向山顶，但石头总会滚落，循环往复。这是对命运的戏弄，一种徒劳无功的劳动。但这正是我们每个人的生活写照——永远在推一块“巨石”，离成功差一点时又掉下来。
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-stone-100 p-4 rounded-xl shadow-inner border border-stone-300">
+                <div class="flex justify-between items-center mb-2 px-2">
+                    <div class="text-sm font-bold text-stone-700">当前高度: <span id="height-val">0</span>m</div>
+                    <div class="text-sm font-bold text-accent-clay">推石次数: <span id="push-count">0</span></div>
+                </div>
+                
+                <!-- Canvas Container -->
+                <div class="relative w-full h-64 bg-stone-200 rounded overflow-hidden border border-stone-400">
+                    <canvas id="sisyphusCanvas" class="w-full h-full block"></canvas>
+                    
+                    <!-- Overlay Message -->
+                    <div id="canvas-overlay" class="absolute inset-0 flex items-center justify-center bg-black/30 pointer-events-none opacity-0 transition-opacity duration-300">
+                        <span class="text-white font-bold text-xl drop-shadow-md">石头滚落了...</span>
+                    </div>
+                </div>
+
+                <div class="mt-4 flex flex-col items-center">
+                    <button id="push-btn" class="w-full max-w-sm px-8 py-4 bg-stone-800 text-white font-bold rounded shadow-lg active:scale-95 transition-transform select-none">
+                        用力推 (点击)
+                    </button>
+                    <p class="text-xs text-stone-500 mt-2">提示：不要停下，否则重力会带走一切。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Rebellion and Hope -->
+        <section id="section-rebellion" class="scroll-mt-24 pb-12">
+            <div class="mb-8">
+                <h2 class="text-3xl font-serif font-bold text-stone-800 mb-4">第四章：反抗与希望</h2>
+                <div class="prose prose-stone max-w-none text-stone-600 bg-white p-6 rounded-lg shadow-sm border border-stone-100">
+                    <p>
+                        <strong class="text-accent-clay">最终分析：</strong> 西西弗斯为什么不自杀？为什么还要坚持推？
+                    </p>
+                    <p>
+                        加缪认为，西西弗斯的坚持源于一点点希望，而这希望出自荒诞之中。他唯一能掌控的，就是<strong>“我不自杀”</strong>这个决定。这就是他对诸神最倔强的反抗。
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                
+                <!-- Analysis Chart -->
+                <div class="bg-white p-4 rounded-xl shadow-md border border-stone-200">
+                    <h3 class="text-center font-bold text-stone-700 mb-4">荒诞主义的双面性</h3>
+                    <div class="chart-container">
+                        <canvas id="rebellionChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Key Takeaways List -->
+                <div class="space-y-4">
+                    <div class="p-4 bg-stone-50 border-l-4 border-accent-clay rounded shadow-sm hover:bg-white transition">
+                        <h4 class="font-bold text-stone-800">荒诞与希望</h4>
+                        <p class="text-sm text-stone-600 mt-1">它们像硬币的两面。痛苦来源于意识到荒诞，但坚持推石头的动力来源于希望石头能被推过去的微小可能。</p>
+                    </div>
+                    <div class="p-4 bg-stone-50 border-l-4 border-stone-800 rounded shadow-sm hover:bg-white transition">
+                        <h4 class="font-bold text-stone-800">最倔强的反抗</h4>
+                        <p class="text-sm text-stone-600 mt-1">活着本身就是反抗。在看清生活毫无意义的真相后，依然选择热烈地活下去，这是人类最高的尊严。</p>
+                    </div>
+                    <div class="p-4 bg-stone-50 border-l-4 border-accent-sage rounded shadow-sm hover:bg-white transition">
+                        <h4 class="font-bold text-stone-800">幸福的西西弗斯</h4>
+                        <p class="text-sm text-stone-600 mt-1">“推石上山这场搏斗本身，就足以充实一颗人心。”我们应当想象，西西弗斯是幸福的。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Appendix: Content from next.html, restyled -->
+        <section id="section-appendix" class="scroll-mt-24 pt-12 border-t border-stone-200">
+            <div class="text-center mb-12">
+                 <h2 class="text-3xl font-serif font-bold text-stone-800">附录：荒诞的生存策略</h2>
+                 <p class="text-lg text-stone-600 mt-2">不依靠希望，在清醒中确立生存伦理。</p>
+            </div>
+
+            <!-- Origin -->
+            <div class="fade-in-section mb-16">
+                <h3 class="text-2xl font-serif font-bold text-stone-800 mb-4">本体论起源：理智与世界的“离婚”</h3>
+                <div class="prose prose-stone max-w-none text-stone-600 bg-white p-6 rounded-lg shadow-sm border border-stone-100 mb-6">
+                    <p>“荒诞产生于<span class="font-bold text-stone-800">人类理智的呼唤</span>与<span class="font-bold text-stone-800">世界非理性沉默</span>之间的对峙。”</p>
+                    <p>世界本身并无荒诞，人类理智也无荒诞。荒诞只存在于两者的碰撞中。当你在重复的机械生活中突然停下问“为什么”时，荒诞便揭开了遮蔽现实的帷幕。</p>
+                </div>
+            </div>
+            
+            <!-- Negation -->
+            <div class="fade-in-section mb-16">
+                <h3 class="text-2xl font-serif font-bold text-stone-800 mb-4">必须拒绝的两种“自杀”</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-red-500">
+                        <h4 class="text-lg font-bold text-stone-800 mb-2">肉体自杀</h4>
+                        <p class="text-stone-600 text-sm">通过消灭“观察者”来强行终结方程式。这是一种彻底的投降，它不仅没有解决荒诞，反而因为消灭了对峙的一方而让荒诞彻底消失——这是对人类尊严的否定。</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-purple-500">
+                         <h4 class="text-lg font-bold text-stone-800 mb-2">哲学自杀 (Leap of Faith)</h4>
+                        <p class="text-stone-600 text-sm">牺牲理性来投奔超越性的幻觉（如宗教或绝对真理）。加缪认为这是一种“精神的背叛”，它是通过“欺骗”来获得廉价的慰藉，抹杀了现实的真相。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Revolt -->
+            <div class="fade-in-section mb-16">
+                <h3 class="text-2xl font-serif font-bold text-stone-800 mb-4">生存的三大支柱</h3>
+                <div class="grid md:grid-cols-3 gap-6 text-center">
+                    <div class="p-4 bg-stone-50 rounded-lg shadow-sm hover:bg-white transition">
+                         <h4 class="font-bold text-stone-800">反抗 (Revolt)</h4>
+                         <p class="text-sm text-stone-600 mt-1">不是暴乱，而是永恒的“清醒对峙”。意识到命运的徒劳，但绝不妥协。这种对峙赋予了生命以伟大感。</p>
+                    </div>
+                    <div class="p-4 bg-stone-50 rounded-lg shadow-sm hover:bg-white transition">
+                         <h4 class="font-bold text-stone-800">自由 (Freedom)</h4>
+                         <p class="text-sm text-stone-600 mt-1">摆脱对“明天”或“目的”的奴役。既然没有终极的裁判，个体便获得了在当下行动的绝对主权。</p>
+                    </div>
+                    <div class="p-4 bg-stone-50 rounded-lg shadow-sm hover:bg-white transition">
+                         <h4 class="font-bold text-stone-800">激情 (Passion)</h4>
+                         <p class="text-sm text-stone-600 mt-1">追求经验的“数量”而非“质量”。不求活得最好，而求活得最多。在清醒的感知中穷尽生命的所有瞬间。</p>
+                    </div>
+                </div>
+            </div>
+            
+             <!-- Practice -->
+            <div class="fade-in-section">
+                <h3 class="text-2xl font-serif font-bold text-stone-800 mb-4">现代生存指南</h3>
+                 <div class="space-y-4">
+                    <div class="p-4 bg-white border-l-4 border-accent-sage rounded shadow-sm">
+                        <p class="text-stone-600 italic">“占有你的苦涩：像品尝原汁原味的咖啡一样品尝不顺的命运。”</p>
+                    </div>
+                     <div class="p-4 bg-white border-l-4 border-accent-sage rounded shadow-sm">
+                        <p class="text-stone-600 italic">“拒绝宏大叙事的绑架：在每一次真实的呼吸和对话中确立存在。”</p>
+                    </div>
+                     <div class="p-4 bg-white border-l-4 border-accent-sage rounded shadow-sm">
+                        <p class="text-stone-600 italic">“平庸的英雄主义：在无意义的宇宙中，坚持做一个善良、诚实、清醒的人。”</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="bg-stone-800 text-stone-400 py-8 text-center text-sm">
+        <p>基于提供的文稿《荒诞主义的人生如何应对》制作</p>
+        <p class="mt-2">Canvas & Tailwind & Chart.js Implementation</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
