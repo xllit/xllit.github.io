@@ -115,3 +115,26 @@ body {
     margin-top: 80px;
     color: var(--subtitle-color);
 }
+
+/* 悬挂备案徽章样式 */
+.icp-badge {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 9999;
+    display: inline-block;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    transition: transform 180ms ease, opacity 180ms ease;
+}
+.icp-badge img {
+    display: block;
+    height: 40px;
+    width: auto;
+    vertical-align: middle;
+}
+.icp-badge:hover {
+    transform: translateY(-6px);
+    opacity: 0.95;
+}
