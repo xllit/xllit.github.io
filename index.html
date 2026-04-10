@@ -1,6 +1,138 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>重构页面 - Element Plus</title>
+        <!-- Element Plus 与 Vue 3 CDN -->
+        <link rel="stylesheet" href="https://unpkg.com/element-plus@2.3.11/dist/index.css">
+        <style>
+            html,body,#app { height: 100%; margin: 0; }
+            .hero { padding: 32px; background: linear-gradient(135deg,#f5f7ff,#eef6ff); }
+            .container { max-width: 1100px; margin: 0 auto; }
+            .card-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 16px; margin-top: 16px; }
+        </style>
+</head>
+<body>
+        <div id="app">
+            <el-container style="height:100%">
+                <el-header>
+                    <div class="container" style="display:flex;align-items:center;justify-content:space-between">
+                        <div style="display:flex;align-items:center;gap:12px">
+                            <el-avatar size="40" icon="el-icon-s-home"></el-avatar>
+                            <div>
+                                <div style="font-weight:700">My Site</div>
+                                <div style="font-size:12px;color:var(--el-text-color-secondary)">基于 Element Plus 的重构界面</div>
+                            </div>
+                        </div>
+                        <el-menu mode="horizontal" :default-active="activeMenu" background-color="transparent" text-color="#333" active-text-color="#409EFF">
+                            <el-menu-item index="1">首页</el-menu-item>
+                            <el-menu-item index="2">文档</el-menu-item>
+                            <el-menu-item index="3">关于</el-menu-item>
+                        </el-menu>
+                    </div>
+                </el-header>
+
+                <el-main>
+                    <section class="hero">
+                        <div class="container">
+                            <el-row :gutter="20" align="middle">
+                                <el-col :span="14">
+                                    <h1 style="margin:0 0 8px 0">欢迎来到重构页面</h1>
+                                    <p style="margin:0 0 16px 0;color:#55606a">此页面使用 Vue 3 + Element Plus 构建，提供响应式、可访问且美观的 UI 基础。</p>
+                                    <el-button type="primary" @click="onPrimary">开始使用</el-button>
+                                    <el-button @click="onDocs">查看文档</el-button>
+                                </el-col>
+                                <el-col :span="10">
+                                    <el-card>
+                                        <h3>关键特性</h3>
+                                        <ul>
+                                            <li>响应式布局</li>
+                                            <li>可定制主题</li>
+                                            <li>组件化开发</li>
+                                        </ul>
+                                    </el-card>
+                                </el-col>
+                            </el-row>
+
+                            <div class="card-grid">
+                                <el-card>
+                                    <h4>页面示例</h4>
+                                    <p>卡片与列表、表单和对话框可直接组合使用。</p>
+                                </el-card>
+                                <el-card>
+                                    <h4>表单</h4>
+                                    <p>内置校验和易用的表单布局。</p>
+                                </el-card>
+                                <el-card>
+                                    <h4>表格</h4>
+                                    <p>支持排序、筛选与分页。</p>
+                                </el-card>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div class="container" style="margin-top:24px">
+                        <el-card>
+                            <div slot="header" style="display:flex;justify-content:space-between;align-items:center">
+                                <span>示例表单</span>
+                                <el-button type="text" @click="resetForm">重置</el-button>
+                            </div>
+                            <el-form :model="form" :rules="rules" ref="demoForm" label-width="100px">
+                                <el-form-item label="姓名" prop="name">
+                                    <el-input v-model="form.name"></el-input>
+                                </el-form-item>
+                                <el-form-item label="邮箱" prop="email">
+                                    <el-input v-model="form.email"></el-input>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-button type="primary" @click="submitForm">提交</el-button>
+                                </el-form-item>
+                            </el-form>
+                        </el-card>
+                    </div>
+                </el-main>
+
+                <el-footer style="text-align:center">© 2026 重构页面 · Built with Element Plus</el-footer>
+            </el-container>
+        </div>
+
+        <script src="https://unpkg.com/vue@3.4.4/dist/vue.global.prod.js"></script>
+        <script src="https://unpkg.com/element-plus@2.3.11/dist/index.full.min.js"></script>
+        <script>
+            const { createApp, ref } = Vue;
+            const app = createApp({
+                setup() {
+                    const activeMenu = ref('1');
+                    const form = ref({ name: '', email: '' });
+                    const rules = {
+                        name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
+                        email: [{ required: true, message: '请输入邮箱', trigger: 'blur' }, { type: 'email', message: '邮箱格式不正确', trigger: ['blur','change'] }]
+                    };
+                    const demoForm = ref(null);
+                    function onPrimary() { window.scrollTo({ top: 300, behavior: 'smooth' }); }
+                    function onDocs() { alert('导航到文档（示例）'); }
+                    function submitForm() {
+                        demoForm.value.validate((valid) => {
+                            if (valid) {
+                                ElMessage.success('提交成功');
+                            } else {
+                                ElMessage.error('请修正表单错误');
+                            }
+                        });
+                    }
+                    function resetForm() { demoForm.value.resetFields(); }
+                    return { activeMenu, form, rules, demoForm, onPrimary, onDocs, submitForm, resetForm };
+                }
+            });
+            app.use(ElementPlus);
+            app.mount('#app');
+        </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>雨猫矩阵</title>
@@ -23,8 +155,8 @@
                             <img src="mc/pic/avatar.png" alt="Minecraft Server Project">
                         </div>
                         <div class="card-content">
-                            <h2>落雨岛 Minecraft</h2>
-                            <p>一个使用 Element 构建的 Minecraft 服务器主页。</p>
+                            <h2>落雨岛</h2>
+                            <p>一个使用 Element 构建的服务器主页。</p>
                         </div>
                     </a>
                 </div>
