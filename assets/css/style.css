@@ -2,13 +2,17 @@
     --bg-color: #f8f9fa;
     --text-color: #212529;
     --card-bg: #ffffff;
-    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --card-shadow-hover: 0 8px 12px rgba(0, 0, 0, 0.15);
-    --title-color: #343a40;
-    --subtitle-color: #6c757d;
-    --border-radius: 16px;
-    --transition-duration: 400ms;
-    --transition-timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --card-shadow: 0 6px 20px rgba(35, 41, 59, 0.06);
+    --card-shadow-hover: 0 10px 30px rgba(35, 41, 59, 0.08);
+    --title-color: #2b2f36;
+    --subtitle-color: #6b7280;
+    --border-radius: 12px;
+    --transition-duration: 260ms;
+    --transition-timing: cubic-bezier(.2,.8,.2,1);
+    --primary-color: #3b82f6;
+    --success-color: #10b981;
+    --danger-color: #ef4444;
+    --muted-bg: #f6f8fb;
 }
 
 * {
@@ -19,115 +23,106 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background-color: var(--bg-color);
+    background-color: var(--muted-bg);
     color: var(--text-color);
     line-height: 1.6;
 }
 
 .container {
-    max-width: 960px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 32px 24px;
 }
 
-.header {
+/* 旧 header 样式已移除，使用 .el-header 进行控制 */
+
+/* legacy grid hidden (replaced by el-row/el-col) */
+.project-grid { display:none; }
+
+/* Element-like 基础兼容样式（用于在不引入 Vue 的情况下模仿布局） */
+.el-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.el-header {
+    padding: 24px 0;
     text-align: center;
-    margin-bottom: 60px;
+    background: transparent;
+}
+.el-main {
+    flex: 1 0 auto;
+    padding: 24px 0;
+}
+.el-footer {
+    padding: 24px 0;
+    text-align: center;
+}
+.el-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    justify-content: center;
+}
+.el-col {
+    box-sizing: border-box;
 }
 
-.header h1 {
-    font-size: 2.5rem;
-    color: var(--title-color);
-    margin-bottom: 10px;
+/* 卡片和内容统一间距 */
+.el-card.project-card {
+    padding: 0;
+    overflow: hidden;
 }
+.el-card .card-content { padding: 20px; }
+.el-card.placeholder { border-style: dashed; border-color: rgba(45,55,72,0.08); background: transparent; }
 
-.header .subtitle {
-    font-size: 1.1rem;
-    color: var(--subtitle-color);
+/* 按钮样式（仿 Element） */
+.el-btn {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 6px;
+    background: var(--primary-color);
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.95rem;
 }
+.el-btn--plain { background: transparent; color: var(--primary-color); border: 1px solid rgba(59,130,246,0.12); }
 
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
+/* 备案徽章微调：白底与边距，移动端隐藏 */
+.icp-badge {
+    right: 18px;
+    bottom: 18px;
+    padding: 6px 8px;
+    background: #fff;
+    border-radius: 8px;
 }
+.icp-badge img { height: 36px; }
 
-.project-card {
+/* 使 el-card 使用现有卡片样式 */
+.el-card.project-card {
     background-color: var(--card-bg);
     border-radius: var(--border-radius);
     box-shadow: var(--card-shadow);
     overflow: hidden;
     text-decoration: none;
-    color: inherit;
-    transition: transform var(--transition-duration) var(--transition-timing), box-shadow var(--transition-duration) var(--transition-timing);
-}
-
-.project-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--card-shadow-hover);
-}
-
-.project-card .card-image {
-    width: 100%;
-    height: 180px;
-    overflow: hidden;
-}
-
-.project-card .card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.project-card .card-content {
-    padding: 24px;
-}
-
-.project-card h2 {
-    font-size: 1.4rem;
-    color: var(--title-color);
-    margin-bottom: 8px;
-}
-
-.project-card p {
-    font-size: 1rem;
-    color: var(--subtitle-color);
-}
-
-.project-card.placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    border: 2px dashed #dee2e6;
-    background: transparent;
-    box-shadow: none;
-}
-.project-card.placeholder:hover {
-    transform: none;
-    box-shadow: none;
-    border-color: #ced4da;
-}
-
-
-.footer {
-    text-align: center;
-    margin-top: 80px;
-    color: var(--subtitle-color);
-}
-
-/* 悬挂备案徽章样式 */
-.icp-badge {
-    position: fixed;
-    right: 16px;
-    bottom: 16px;
-    z-index: 9999;
-    display: inline-block;
-    border-radius: 8px;
+    /* 旧 .project-card 规则已移除；使用 .el-card 作为主样式 */
     overflow: hidden;
     box-shadow: 0 6px 18px rgba(0,0,0,0.12);
     transition: transform 180ms ease, opacity 180ms ease;
 }
+    .el-card.project-card {
+        background-color: var(--card-bg);
+        border-radius: var(--border-radius);
+        box-shadow: var(--card-shadow);
+        overflow: hidden;
+        text-decoration: none;
+        transition: transform var(--transition-duration) var(--transition-timing), box-shadow var(--transition-duration) var(--transition-timing);
+        display: block;
+    }
+    .el-card.project-card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--card-shadow-hover);
+    }
 .icp-badge img {
     display: block;
     height: 40px;
@@ -137,4 +132,48 @@ body {
 .icp-badge:hover {
     transform: translateY(-6px);
     opacity: 0.95;
+}
+
+/* 细化：Element 风格的页眉/卡片/页脚 */
+.el-header h1 {
+    font-size: 2rem;
+    color: var(--title-color);
+    margin-bottom: 6px;
+}
+.el-header {
+    background: linear-gradient(90deg, rgba(59,130,246,0.06), rgba(59,130,246,0.02));
+    border-bottom: 1px solid rgba(30,41,59,0.04);
+}
+.el-header .subtitle {
+    color: var(--subtitle-color);
+    font-size: 1rem;
+}
+.el-card .card-image {
+    height: 160px;
+    overflow: hidden;
+}
+.el-card .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.el-card .card-content {
+    padding: 18px 20px;
+}
+.el-card h2 {
+    font-size: 1.25rem;
+    margin: 0 0 6px 0;
+    color: var(--primary-color);
+}
+.el-card p {
+    margin: 0;
+    color: var(--subtitle-color);
+}
+.el-footer p { margin: 0; color: var(--subtitle-color); }
+
+@media (max-width: 640px) {
+    .container { padding: 20px 12px; }
+    .el-card .card-image { height: 120px; }
+    .icp-badge { right: 8px; bottom: 8px; }
+    .icp-badge { display: none; }
 }

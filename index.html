@@ -5,37 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>雨猫矩阵</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Element 风格基础样式（仅 CSS，未引入 Vue/组件） -->
+    <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
 </head>
 <body>
-
-    <div class="container">
-        <header class="header" data-animate-on-scroll>
+    <div class="el-container container">
+        <header class="el-header header" data-animate-on-scroll>
             <h1>Raincat's Projects</h1>
             <p class="subtitle">一个用于存放项目的静态空间</p>
         </header>
 
-        <main class="project-grid">
-            <a href="mc/" class="project-card" data-animate-on-scroll data-animation-delay="100">
-                <div class="card-image">
-                    <img src="mc/pic/avatar.png" alt="Minecraft Server Project">
+        <main class="el-main">
+            <div class="el-row project-grid" gutter="30">
+                <div class="el-col project-col" style="flex:1 1 320px; max-width:420px;">
+                    <a href="mc/" class="el-card project-card" data-animate-on-scroll data-animation-delay="100">
+                        <div class="card-image">
+                            <img src="mc/pic/avatar.png" alt="Minecraft Server Project">
+                        </div>
+                        <div class="card-content">
+                            <h2>落雨岛 Minecraft</h2>
+                            <p>一个使用 Element 构建的 Minecraft 服务器主页。</p>
+                        </div>
+                    </a>
                 </div>
-                <div class="card-content">
-                    <h2>落雨岛 Minecraft</h2>
-                    <p>一个使用原生 HTML/CSS/JS 构建的 Minecraft 服务器主页。</p>
-                </div>
-            </a>
-            
-            <!-- 更多项目可以被添加在这里 -->
-            <div class="project-card placeholder" data-animate-on-scroll data-animation-delay="200">
-                <div class="card-content">
-                    <h2>敬请期待</h2>
-                    <p>更多有趣的项目正在路上。</p>
+
+                <div class="el-col project-col" style="flex:1 1 320px; max-width:420px;">
+                    <div class="el-card project-card placeholder" data-animate-on-scroll data-animation-delay="200">
+                        <div class="card-content">
+                            <h2>敬请期待</h2>
+                            <p>更多有趣的项目正在路上。</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </main>
 
-        <footer class="footer">
+        <footer class="el-footer footer">
             <p>© 2024 xllit</p>
         </footer>
     </div>
