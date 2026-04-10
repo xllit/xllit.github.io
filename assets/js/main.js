@@ -48,12 +48,44 @@
         threshold: 0.1
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
+    function observeAll() {
         const elementsToAnimate = document.querySelectorAll('[data-animate-on-scroll]');
         elementsToAnimate.forEach(element => {
             element.style.opacity = DEFAULTS.opacityFrom.toString();
-            observer.observe(element);
+            if ('IntersectionObserver' in window) {
+                observer.observe(element);
+            } else {
+                // fallback: simple on-scroll check
+                element.classList.add('no-io');
+            }
         });
+    }
+
+    // simple fallback for browsers without IntersectionObserver
+    function fallbackScrollCheck() {
+        const els = document.querySelectorAll('.no-io');
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        els.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < vh * 0.9) {
+                animate(el);
+                el.classList.remove('no-io');
+            }
+        });
+        if (document.querySelectorAll('.no-io').length === 0) {
+            window.removeEventListener('scroll', fallbackScrollCheck);
+            window.removeEventListener('resize', fallbackScrollCheck);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        observeAll();
+        if (!('IntersectionObserver' in window)) {
+            window.addEventListener('scroll', fallbackScrollCheck, { passive: true });
+            window.addEventListener('resize', fallbackScrollCheck);
+            // run once in case some elements are already visible
+            fallbackScrollCheck();
+        }
     });
 
 })(window, document);
